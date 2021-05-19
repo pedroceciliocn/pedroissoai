@@ -22,28 +22,30 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
-  - title: CEO
-    company: GenCoin
-    company_url: ''
+  - title: Volunteer speaker and video/content creator
+    company: UNATI-UNIVASF
+    company_url: 'http://unati.univasf.edu.br/'
     company_logo: org-gc
-    location: California
-    date_start: '2021-01-01'
+    location: Petrolina-PE
+    date_start: '2019-05-08'
     date_end: ''
     description: |2-
-        Responsibilities include:
+        I lectured on technology, social networks and applications for mobile devices aimed at the elderly in the extension           project UNATI (Universidade Aberta à Terceira Idade) at UNIVASF (Federal University of Vale do São Francisco). I also         edited and worked on content and videos about mind healthy and exercises with some colleagues from psychology and             physical education course members in the same project aimed at the elderly, only now during the covid-19 pandemic.
         
-        * Analysing
-        * Modelling
-        * Deploying
+#       Responsibilities include:
         
-  - title: Professor of Semiconductor Physics
-    company: University X
-    company_url: ''
-    company_logo: org-x
-    location: California
-    date_start: '2016-01-01'
-    date_end: '2020-12-31'
-    description: Taught electronic engineering and researched semiconductor physics.
+#       * Analysing
+#       * Modelling
+#       * Deploying
+        
+#  - title: Professor of Semiconductor Physics
+#    company: University X
+#    company_url: ''
+#    company_logo: org-x
+#    location: California
+#    date_start: '2016-01-01'
+#    date_end: '2020-12-31'
+#    description: Taught electronic engineering and researched semiconductor physics.
 
 design:
   columns: '2'

@@ -2,14 +2,14 @@
 bio: I am a beginner and lazy but I am trying to develop myself in programming languages and data science, as well as management, economy, social sciences and statistics.
 education:
   courses:
-  - course: Bachelor in Systems Information, 2021 - current
+  - course: Bachelor Student in Systems Information
     institution: Universidade Federal de Pernambuco
-    year: 2021
-  - course: Bachelor in Management - dropped, 2019-2020
+    year: 2021-2026
+  - course: Bachelor Student in Management - dropped, 2020
     institution: Universidade Federal do Vale do São Francisco
-    year: 2009
+    year: 2019
 email: "pedroceciliocn@gmail.com"
-highlight_name: false
+highlight_name: true
 interests:
 - Data Science
 - Economics
@@ -21,7 +21,7 @@ role: Professor of Artificial Intelligence
 social:
 - icon: envelope
   icon_pack: fas
-  link: /#contact
+  link: pedroceciliocn@gmail.com
 - display:
     header: true
   icon: twitter
