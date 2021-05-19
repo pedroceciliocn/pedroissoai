@@ -35,8 +35,8 @@ social:
   icon_pack: fab
   link: https://www.linkedin.com/pedroceciliocn
 - icon: cv
-  icon_pack: fab
-  link: https://pedroceciliocn.netfly.app/media/cv.html
+  icon_pack: ai
+  link: media/cv.html
 superuser: true
 title: Pedro Neto
 ---
@@ -45,4 +45,4 @@ Pedro Neto is a student.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "media/cv.pdf" "newtab" >}}resumé{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "media/cv.pdf" "newtab" >}}cv{{< /staticref >}}.
