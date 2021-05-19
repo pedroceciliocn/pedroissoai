@@ -17,7 +17,7 @@ interests:
 organizations:
 - name: CIn - UFPE
   url: https://www.ufpe.br/sistemas-de-informacao-bacharelado-cin
-role: Professor of Artificial Intelligence
+role: Bachelor Stundent in Systems Information
 social:
 - icon: envelope
   icon_pack: fas
