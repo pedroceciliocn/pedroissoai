@@ -34,6 +34,9 @@ social:
 - icon: linkedin
   icon_pack: fab
   link: https://www.linkedin.com/pedroceciliocn
+- icon: cv
+  icon_pack: fab
+  link: https://pedroceciliocn.netfly.app/media/cv.html
 superuser: true
 title: Pedro Neto
 ---
