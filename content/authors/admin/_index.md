@@ -36,7 +36,7 @@ social:
   icon_pack: fab
   link: https://www.linkedin.com/pedroceciliocn
 - icon: cv
-  icon_pack: ai
+  icon_pack: fab
   link: media/cv.html
 - icon: facebook
   icon_pack: fab
