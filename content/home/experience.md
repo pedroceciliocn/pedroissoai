@@ -33,11 +33,11 @@ experience:
     description: |2-
         I lectured on technology, social networks and applications for mobile devices aimed at the elderly in the extension           project UNATI (Universidade Aberta à Terceira Idade) at UNIVASF (Federal University of Vale do São Francisco). I also         edited and worked on content and videos about mind healthy and exercises with some colleagues from psychology and             physical education course members in the same project aimed at the elderly, only now during the covid-19 pandemic.
         
-#       Responsibilities include:
+       Responsibilities include:
         
-#       * Analysing
-#       * Modelling
-#       * Deploying
+       * Make good contact with people of different ages and from different backgrounds and patiently exchange knowledge
+       * Produce materials that are easy to understand and suitable for the age group
+
         
 #  - title: Professor of Semiconductor Physics
 #    company: University X
