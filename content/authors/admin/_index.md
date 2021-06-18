@@ -38,7 +38,12 @@ social:
 - icon: cv
   icon_pack: ai
   link: media/cv.html
-
+- icon: facebook
+  icon_pack: fab
+  link: https://facebook.com/pedroissoai
+- icon: instagram
+  icon_pack: fab
+  link: https://instagram.com/pedroissoai
 superuser: true
 title: Pedro Neto
 ---
