@@ -42,7 +42,7 @@ item:
 - certificate_url: https://www.datacamp.com/statement-of-accomplishment/track/bc1f187365f1d876373d4bf02194090452333e65
   date_end: "2020-09-09"
   date_start: "2020-09-01"
-  description: ""
+  description: "19 complete courses totaling 76 hours of study in an introduction to the career of Data Scientist using the R language."
   organization: DataCamp
   organization_url: https://www.datacamp.com
   title: 'Data Scientist with R Track'
