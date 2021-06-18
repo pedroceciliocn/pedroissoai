@@ -24,7 +24,7 @@ social:
   link: 'mailto:pedroceciliocn@gmail.com'
 - display:
     header: true
-  icon: twitter
+- icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
   link: https://twitter.com/pedroissoai
