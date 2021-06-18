@@ -22,8 +22,8 @@ social:
 - icon: envelope
   icon_pack: fas
   link: 'mailto:pedroceciliocn@gmail.com'
-- display:
-    header: true
+# - display:
+#     header: true
 - icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
