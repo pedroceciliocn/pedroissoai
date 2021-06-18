@@ -38,11 +38,12 @@ social:
 - icon: cv
   icon_pack: ai
   link: media/cv.html
+  
 superuser: true
 title: Pedro Neto
 ---
 
-Pedro Neto is a student.
+Pedro Neto is a Systems Information student.
 
 I'm a beginner and a bit lazy but curious and committed, and I'm trying to develop myself in programming languages and data science, as well as management, economics, social sciences and statistics.
 
