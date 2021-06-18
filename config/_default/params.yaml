@@ -37,11 +37,11 @@ twitter: ''
 #   - 'Monday 10:00 to 13:00'
 #   - 'Wednesday 09:00 to 10:00'
 # appointment_url: 'https://calendly.com'
-contact_links:
-  - icon: twitter
-    icon_pack: fab
-    name: DM Me
-    link: 'https://twitter.com/pedroissoai'
+# contact_links:
+#   - icon: twitter
+#     icon_pack: fab
+#     name: DM Me
+#     link: 'https://twitter.com/pedroissoai'
   # - icon: skype
   #   icon_pack: fab
   #   name: Skype Me
@@ -157,4 +157,4 @@ cms:
   local_backend: false
 icon:
   pack:
-    ai: false
+    ai: true
