@@ -1,50 +1,75 @@
 ---
-bio: I'm a beginner and a bit lazy but curious and committed, and I'm trying to develop myself in programming languages and data science, as well as management, economics, social sciences and statistics.
-education:
-  courses:
-  - course: Bachelor Student in Systems Information
-    institution: Universidade Federal de Pernambuco
-    year: 2021-2026
-  - course: Bachelor Student in Management - dropped, 2020
-    institution: Universidade Federal do Vale do São Francisco
-    year: 2019
-email: "pedroceciliocn@gmail.com"
-highlight_name: true
-interests:
-- Data Science
-- Economics
-- Social Sciences
+# Display name
+title: Pedro Neto
+
+# Is this the primary user of the site?
+superuser: true
+
+# Role/position
+role: Systems Information Student.
+
+# Organizations/Affiliations
 organizations:
 - name: CIn - UFPE
-  url: https://www.ufpe.br/sistemas-de-informacao-bacharelado-cin
-role: Bachelor Stundent in Systems Information
+  url: "https://www.ufpe.br/sistemas-de-informacao-bacharelado-cin"
+
+# Short bio (displayed in user profile at end of posts)
+bio: I'm a beginner and a bit lazy but curious and committed, and I'm trying to develop myself in programming languages and data science, as well as management, economics, social sciences and statistics.
+
+interests:
+- Data Science
+- Management
+- Social Sciences and Economics
+
+education:
+  courses:
+  - course: Bachelor student in Systems Information
+    institution: Universidade Federal de Pernambuco
+    year: 2021 - current
+  - course: Bachelor student in Management - dropped
+    institution: Universidade Federal do Vale do São Francisco
+    year: 2019-2020
+
+
+# Social/Academic Networking
+# For available icons, see: https://sourcethemes.com/academic/docs/page-builder/#icons
+#   For an email link, use "fas" icon pack, "envelope" icon, and a link in the
+#   form "mailto:your-email@example.com" or "#contact" for contact widget.
 social:
 - icon: envelope
   icon_pack: fas
-  link: 'mailto:pedroceciliocn@gmail.com'
-  
-# - display:
-#     header: true
+  link: 'mailto:pedroceciliocn@gmail.com' #'/#contact'  # For a direct email link, use "mailto:pedroceciliocn@gmail.com".
 - icon: twitter
   icon_pack: fab
-  label: Follow me on Twitter
   link: https://twitter.com/pedroissoai
+# - icon: google-scholar
+#   icon_pack: ai
+#   link: 
 - icon: github
   icon_pack: fab
   link: https://github.com/pedroceciliocn
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/pedroceciliocn
+  link: https://linkedin.com/pedroceciliocn
+# Link to a PDF of your resume/CV from the About widget.
+# To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
 - icon: cv
   icon_pack: ai
   link: media/cv.html
-  
-superuser: true
-title: Pedro Neto
+
+# Enter email to display Gravatar (if Gravatar enabled in Config)
+email: "pedroceciliocn@gmail.com"
+
+# Highlight the author in author lists? (true/false)
+highlight_name: false
+
+# Organizational groups that you belong to (for People widget)
+#   Set this to `[]` or comment out if you are not using People widget.
+# user_groups:
+# - Researchers
+# - Visitors
 ---
 
 Pedro Neto is a Systems Information student.
 
 I'm a beginner and a bit lazy but curious and committed, and I'm trying to develop myself in programming languages and data science, as well as management, economics, social sciences and statistics.
-
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "media/cv.pdf" "newtab" >}}cv{{< /staticref >}}.
