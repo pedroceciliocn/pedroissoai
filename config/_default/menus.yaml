@@ -13,7 +13,7 @@ main:
   # - name: Courses
   #   url: courses/
   #   weight: 60
-  - name: "Home"
+  - name: Home
     url: "#about"
     weight: 10
     
@@ -21,6 +21,6 @@ main:
     url: '#contact'
     weight: 60
     
-  - name: "CV"
+  - name: CV
     url: "media/cv.html"
     weight = 70
