@@ -1,5 +1,5 @@
 ---
-bio: I am a beginner and lazy but I am trying to develop myself in programming languages and data science, as well as management, economy, social sciences and statistics.
+bio: I'm a beginner and a bit lazy but curious and committed, and I'm trying to develop myself in programming languages and data science, as well as management, economics, social sciences and statistics.
 education:
   courses:
   - course: Bachelor Student in Systems Information
@@ -21,7 +21,7 @@ role: Bachelor Stundent in Systems Information
 social:
 - icon: envelope
   icon_pack: fas
-  link: pedroceciliocn@gmail.com
+  link: 'mailto:pedroceciliocn@gmail.com'
 - display:
     header: true
   icon: twitter
@@ -43,6 +43,6 @@ title: Pedro Neto
 
 Pedro Neto is a student.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+I'm a beginner and a bit lazy but curious and committed, and I'm trying to develop myself in programming languages and data science, as well as management, economics, social sciences and statistics.
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "media/cv.pdf" "newtab" >}}cv{{< /staticref >}}.
