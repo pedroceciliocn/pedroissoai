@@ -25,8 +25,7 @@ experience:
   - title: Volunteer speaker and video/content creator
     company: UNATI-UNIVASF
     company_url: 'http://unati.univasf.edu.br/'
-    
-    # company_logo: logo_unati_proj_elipse64
+    company_logo: logo_unati_proj_elipse64
     location: Petrolina-PE
     date_start: '2019-05-08'
     date_end: ''
