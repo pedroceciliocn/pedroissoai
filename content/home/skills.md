@@ -25,7 +25,7 @@ feature:
   icon_pack: fas
   name: Statistics
 - description: 10%
-  icon: "python""
+  icon: "python"
   icon_pack: "fab"
   name: "Python"
 
