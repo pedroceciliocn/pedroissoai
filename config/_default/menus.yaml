@@ -21,6 +21,6 @@ main:
     url: '#contact'
     weight: 60
     
-  - name: CV
+  - name: "CV"
     url: "media/cv.html"
     weight = 70
