@@ -26,7 +26,7 @@ item:
 - certificate_url: https://coursera.org/share/52b3dd4d30b197dc95450bb819c1bb69
   date_end: "2021-08-14"
   date_start: "2021-07-19"
-  description: "an online non-credit course authorized by University of Michigan and offered through Coursera"
+  description: "An online non-credit course authorized by University of Michigan and offered through Coursera"
   organization: Coursera
   organization_url: https://www.coursera.org
   title: 'Introduction to Data Science in Python'

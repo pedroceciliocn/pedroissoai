@@ -28,7 +28,7 @@ experience:
     company_logo: logo_unati_proj_elipse64
     location: Petrolina-PE
     date_start: '2019-05-08'
-    date_end: ''
+    date_end: '2021-06-05'
     description: |2-
         I lectured on technology, social networks and applications for mobile devices aimed at the elderly in the extension           project UNATI (Universidade Aberta à Terceira Idade) at UNIVASF (Federal University of Vale do São Francisco). I also         edited and worked on content and videos about mind healthy and exercises with some colleagues from psychology and             physical education course members in the same project aimed at the elderly, only now during the covid-19 pandemic.
         
