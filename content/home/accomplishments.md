@@ -48,7 +48,8 @@ item:
   organization: DataCamp
   organization_url: https://www.datacamp.com
   title: 'Data Scientist with R Track'
-  url: "https://learn.datacamp.com/career-tracks/data-scientist-with-r?version=4"
+# url: "https://learn.datacamp.com/career-tracks/data-scientist-with-r?version=4"
+  url: "https://datacamp.com/profile/pedroceciliocn"
 
 design:
   columns: '2' 
