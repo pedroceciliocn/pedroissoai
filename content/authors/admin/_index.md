@@ -5,7 +5,7 @@ education:
   - course: Information Systems undegraduate - current
     institution: Universidade Federal de Pernambuco
     year: 2021 - 2026
-  - course: Management undergraduate - dropped, 2020
+  - course: Management undergraduate - dropped
     institution: Universidade Federal do Vale do São Francisco
     year: 2019 - 2020
 email: "pedroceciliocn@gmail.com"
@@ -18,7 +18,7 @@ interests:
 organizations:
 - name: CIn - UFPE
   url: https://www.ufpe.br/sistemas-de-informacao-bacharelado-cin
-role: Bachelor Stundent in Systems Information
+role: Information Systems undergraduate student
 social:
 - icon: envelope
   icon_pack: fas
@@ -43,7 +43,6 @@ superuser: true
 title: Pedro Neto
 ---
 
-Pedro Neto is an Information Systems undergraduate student.
 
 I am an Information Systems undergraduate student starting a journey (maybe slowly or even a little lazy) of learning in the field of science/data analysis. I'm curious and have been committed to developing and improving my knowledge of programming languages and data science, as well as management, economics, social sciences, statistics and everything related.
 
