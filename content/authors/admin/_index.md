@@ -35,10 +35,13 @@ social:
   link: https://github.com/pedroceciliocn
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/in/pedro-neto-8a74b71b7/
+  link: https://linkedin.com/in/pedroceciliocn
 - icon: cv
   icon_pack: ai
   link: media/cv.html
+- icon: lastfm
+  icon_pack: fab
+  link: https://last.fm/user/pedroceciliocn
 superuser: true
 title: Pedro Neto
 ---
