@@ -35,7 +35,7 @@ social:
   link: https://github.com/pedroceciliocn
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/pedroceciliocn
+  link: https://www.linkedin.com/in/pedro-neto-8a74b71b7/
 - icon: cv
   icon_pack: ai
   link: media/cv.html

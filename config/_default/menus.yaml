@@ -17,9 +17,9 @@ main:
     url: "#about"
     weight: 10
     
-  - name: Contact
-    url: '#contact'
-    weight: 60
+  # - name: Contact
+  #   url: '#contact'
+  #   weight: 60
     
   - name: CV
     url: "media/cv.html"
