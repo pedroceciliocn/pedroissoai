@@ -30,15 +30,15 @@ social:
   icon_pack: fab
   label: Follow me on Twitter
   link: https://twitter.com/pedroissoai
-- icon: github
-  icon_pack: fab
-  link: https://github.com/pedroceciliocn
 - icon: linkedin
   icon_pack: fab
   link: https://linkedin.com/in/pedroceciliocn
 - icon: cv
   icon_pack: ai
   link: media/cv.html
+- icon: github
+  icon_pack: fab
+  link: https://github.com/pedroceciliocn
 - icon: lastfm
   icon_pack: fab
   link: https://last.fm/user/pedroceciliocn
