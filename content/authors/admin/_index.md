@@ -11,10 +11,9 @@ education:
 email: "pedroceciliocn@gmail.com"
 highlight_name: true
 interests:
-- Data Science
+- Data Science/Analytics
 - Management
-- Economics
-- Social Sciences
+
 organizations:
 - name: CIn - UFPE
   url: https://www.ufpe.br/sistemas-de-informacao-bacharelado-cin
