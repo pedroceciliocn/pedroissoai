@@ -1,6 +1,12 @@
 ---
+title: "My Awesome Post"
+author: "John Doe"
+date: "2017-02-14"
 output:
-  html_document: default
+  blogdown::html_page:
+    toc: true
+    fig_width: 6
+    dev: "svg"
 ---
 ### **Tutorial**
 #### **1. Baixe o Windows 10:** 
