@@ -1,0 +1,36 @@
+---
+title: Teste Rmarkdown post
+author: Pedro Neto
+date: '2021-09-04'
+slug: teste-rmarkdown-post
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-09-04T18:54:48-03:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+```{r setup, include = FALSE}
+library(ggplot2)
+library(dplyr)
+
+smaller <- diamonds %>% 
+  filter(carat <= 2.5)
+```
+
+We have data about `r nrow(diamonds)` diamonds. Only 
+`r nrow(diamonds) - nrow(smaller)` are larger than 
+2.5 carats. The distributuon of the remainder is shown below:
+
+```{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(carat)) +
+  geom_freqpoly(binwidth = 0.01)
+```
