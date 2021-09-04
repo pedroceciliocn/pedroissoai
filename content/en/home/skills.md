@@ -24,14 +24,14 @@ feature:
   icon: "python"
   icon_pack: "fab"
   name: "Python"
-# - description: 
-#   icon: database
-#   icon_pack: fas
-#   name: SQL
-- description: 
-  icon: chart-line
+- description:
+  icon: database
   icon_pack: fas
-  name: Statistics
+  name: SQL
+# - description: 
+#   icon: chart-line
+#   icon_pack: fas
+#   name: Statistics
 
 # Uncomment to use emoji icons.
 #- icon = ":smile:"
