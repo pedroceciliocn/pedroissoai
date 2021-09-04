@@ -30,7 +30,7 @@ experience:
     date_start: '2019-05-08'
     date_end: '2021-06-05'
     description: |2-
-        Ministrei palestras sobre tecnologia, redes sociais e aplicativos para dispositivos móveis voltadas para a terceira           idade no projeto de extensão UNATI (Universidade Aberta da Terceira Idade) da UNIVASF (Universidade Federal do Vale do         São Francisco). Também editei e trabalhei em conteúdos e vídeos sobre saúde mental e exercícios com alguns colegas de         cursos de psicologia e educação física do mesmo projeto voltados para idosos, só que agora durante a pandemia         covid-19.
+        Ministrei palestras sobre tecnologia, redes sociais e aplicativos para dispositivos móveis, voltadas para a terceira idade no projeto de extensão UNATI (Universidade Aberta da Terceira Idade) da UNIVASF (Universidade Federal do Vale do São Francisco). Também editei e trabalhei em conteúdos digitais e vídeos sobre saúde mental e exercícios físicos, com alguns colegas dos cursos de psicologia e educação física do mesmo projeto, voltados para idosos, só que agora durante a pandemia         covid-19.
         
        Responsabildades e aprendizados:
         
