@@ -23,7 +23,7 @@ en:
 pt:
  languageCode: pt
  contentDir: content/pt
- title: Página do Pedro Neto.
+ title: Página do Pedro Neto
  params:
    description: Página pessoal
  menu:
