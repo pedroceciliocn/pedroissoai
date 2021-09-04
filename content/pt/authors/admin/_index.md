@@ -1,23 +1,23 @@
 ---
-bio: I am an Information Systems undergraduate student starting a journey (maybe slowly or even a little lazy) of learning in the field of science/data analysis. I'm curious and have been committed to developing and improving my knowledge of programming languages and data science, as well as management, economics, social sciences, statistics and everything related.
+bio: Sou um estudante de graduação em Sistemas de Informação iniciando uma jornada (talvez devagar ou até um pouco preguiçosa) de aprendizagem no campo da ciência / análise de dados. Sou curioso e tenho me empenhado em desenvolver e aprimorar meus conhecimentos em linguagens de programação e ciência/análise de dados, bem como em gestão/administração, e tudo mais relacionado.
 education:
   courses:
-  - course: Information Systems undegraduate - current
+  - course: Bacharelado em Sistemas de Informação - em curso
     institution: Universidade Federal de Pernambuco
     year: 2021 - 2026
-  - course: Management undergraduate - dropped
+  - course: Bacharelado em Administração - interrompido
     institution: Universidade Federal do Vale do São Francisco
     year: 2019 - 2020
 email: "pedroceciliocn@gmail.com"
 highlight_name: true
 interests:
-- Data Science/Analytics
-- Management
+- Análise/Ciência de Dados
+- Administração e afins
 
 organizations:
 - name: CIn - UFPE
   url: https://www.ufpe.br/sistemas-de-informacao-bacharelado-cin
-role: Information Systems undergraduate student
+role: Estudante de graduação em Sistemas de Informação
 social:
 - icon: envelope
   icon_pack: fas
@@ -27,7 +27,7 @@ social:
 #     header: true
 - icon: twitter
   icon_pack: fab
-  label: Follow me on Twitter
+  label: Me acompanhe no Twitter
   link: https://twitter.com/pedroissoai
 - icon: linkedin
   icon_pack: fab
@@ -46,6 +46,6 @@ title: Pedro Neto
 ---
 
 
-I am an Information Systems undergraduate student starting a journey (maybe slowly or even a little lazy) of learning in the field of science/data analysis. I'm curious and have been committed to developing and improving my knowledge of programming languages and data science, as well as management, economics, social sciences, statistics and everything related.
+Sou um estudante de graduação em Sistemas de Informação iniciando uma jornada (talvez devagar ou até um pouco preguiçosa) de aprendizagem no campo da ciência / análise de dados. Sou curioso e tenho me empenhado em desenvolver e aprimorar meus conhecimentos em linguagens de programação e ciência/análise de dados, bem como em gestão/administração, e tudo mais relacionado.
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "media/cv.pdf" "newtab" >}}cv{{< /staticref >}}.

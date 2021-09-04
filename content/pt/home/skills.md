@@ -9,7 +9,7 @@ headless: true
 # Order that this section appears on the page.
 weight: 30
 
-title: Skills
+title: Habilidades
 subtitle:
 
 # Showcase personal skills or business features.
@@ -24,14 +24,14 @@ feature:
   icon: "python"
   icon_pack: "fab"
   name: "Python"
-# - description: 
-#   icon: database
-#   icon_pack: fas
-#   name: SQL
-- description: 
-  icon: chart-line
+- description:
+  icon: database
   icon_pack: fas
-  name: Statistics
+  name: SQL
+# - description: 
+#   icon: chart-line
+#   icon_pack: fas
+#   name: Statistics
 
 # Uncomment to use emoji icons.
 #- icon = ":smile:"

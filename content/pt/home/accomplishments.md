@@ -10,7 +10,7 @@ headless: true
 weight: 50
 
 # Note: `&shy;` is used to add a 'soft' hyphen in a long heading.
-title: 'Accomplish&shy;ments'
+title: 'Conquistas'
 subtitle:
 
 # Date format
@@ -26,7 +26,7 @@ item:
 - certificate_url: https://coursera.org/share/52b3dd4d30b197dc95450bb819c1bb69
   date_end: "2021-08-14"
   date_start: "2021-07-19"
-  description: "An online non-credit course authorized by University of Michigan and offered through Coursera"
+  description: "Curso online da Universidade de Michigan oferecido pelo Coursera"
   organization: Coursera
   organization_url: https://www.coursera.org
   title: 'Introduction to Data Science in Python'
@@ -44,7 +44,7 @@ item:
 - certificate_url: https://www.datacamp.com/statement-of-accomplishment/track/bc1f187365f1d876373d4bf02194090452333e65
   date_end: "2020-09-09"
   date_start: "2020-09-01"
-  description: "19 complete courses totaling 76 hours of study in an introduction to the career of Data Scientist using the R language."
+  description: "19 cursos completados totalizando 76 horas de estudo em uma introdução para a carreira de Cientista/Analsita de Dados usando a linguagem R."
   organization: DataCamp
   organization_url: https://www.datacamp.com
   title: 'Data Scientist with R Track'

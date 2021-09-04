@@ -9,7 +9,7 @@ headless: true
 # Order that this section appears on the page.
 weight: 40
 
-title: Experience
+title: Experiência
 subtitle:
 
 # Date format for experience
@@ -22,7 +22,7 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
-  - title: Volunteer speaker and video/content creator
+  - title: Voluntário como palestrante e criador e editor de conteúdos
     company: UNATI-UNIVASF
     company_url: 'http://unati.univasf.edu.br/'
     company_logo: logo_unati_proj_elipse64
@@ -30,12 +30,12 @@ experience:
     date_start: '2019-05-08'
     date_end: '2021-06-05'
     description: |2-
-        I lectured on technology, social networks and applications for mobile devices aimed at the elderly in the extension           project UNATI (Universidade Aberta à Terceira Idade) at UNIVASF (Federal University of Vale do São Francisco). I also         edited and worked on content and videos about mind healthy and exercises with some colleagues from psychology and             physical education course members in the same project aimed at the elderly, only now during the covid-19 pandemic.
+        Ministrei palestras sobre tecnologia, redes sociais e aplicativos para dispositivos móveis voltadas para a terceira           idade no projeto de extensão UNATI (Universidade Aberta da Terceira Idade) da UNIVASF (Universidade Federal do Vale do         São Francisco). Também editei e trabalhei em conteúdos e vídeos sobre saúde mental e exercícios com alguns colegas de         cursos de psicologia e educação física do mesmo projeto voltados para idosos, só que agora durante a pandemia         covid-19.
         
-       Responsibilities include:
+       Responsabildades e aprendizados:
         
-       * Make good contact with people of different ages and from different backgrounds and patiently exchange knowledge
-       * Produce materials that are easy to understand and suitable for the age group
+       * Fazer contato com pessoas de uma faixa etária mais avançada e de diferentes origens e trocar experiências e           conhecimentos de vivência
+       * Produzir materiais que sejam fáceis de entender e adequados para a faixa etária
 
         
 #  - title: Professor of Semiconductor Physics
