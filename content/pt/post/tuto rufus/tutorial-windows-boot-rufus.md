@@ -12,28 +12,28 @@ Lembre que ele será **formatado** no processo.
 #### **3. Abra o programa Rufus:**
 Ele estará em uma pasta dentro da pasta baixada no torrent
 
-![Pasta dentro da pasta baixada.](/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/TUTORIAL IMAGEM 1.png)
+![Pasta dentro da pasta baixada.](https://pedroccneto.netlify.app/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/TUTORIAL IMAGEM 1.png)
 
-![Rufus. Abra ele.](/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/TUTORIAL IMAGEM 2.png)
+![Rufus. Abra ele.](https://pedroccneto.netlify.app/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/TUTORIAL IMAGEM 2.png)
 
 
 #### **4. Selecione o arquivo .iso baixado:**
 Na tela inicial do rufus, aperte em SELECIONAR e vá até o arquivo .iso
 
-![Tela inicial do Rufus.](/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/RUFUS prog 1.png)
+![Tela inicial do Rufus.](https://pedroccneto.netlify.app/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/RUFUS prog 1.png)
 
 
-![Abra a pasta baixada.](/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/saeleção rufus.png)
+![Abra a pasta baixada.](https://pedroccneto.netlify.app/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/saeleção rufus.png)
 
 
-![Selecione o arquivo .iso](/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/seleção rufus 2.png)
+![Selecione o arquivo .iso](https://pedroccneto.netlify.app/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/seleção rufus 2.png)
 
 
 #### **5. Escolha o pendrive que será usado com cuidado e inicie o processo:**
 No campo 'Dispositivo', verifique se o pendrive que será usado confere. **Lembre que ele será formatado no processo!**
-![Verifique o dispositivo e clique INICIAR](/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/seleção rufus 3.png)
+![Verifique o dispositivo e clique INICIAR](https://pedroccneto.netlify.app/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/seleção rufus 3.png)
 
 
 #### **6. Espere o fim do processo**
-![Pronto, teoricamente essa parte está feita!](/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/great-job-well-done.gif)
+![Pronto, teoricamente essa parte está feita!](https://pedroccneto.netlify.app/pt/post/tuto rufus/tutorial-windows-boot-rufus_files/great-job-well-done.gif)
 
