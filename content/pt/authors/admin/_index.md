@@ -2,10 +2,10 @@
 bio: Sou um estudante de graduação em Sistemas de Informação iniciando uma jornada (talvez devagar ou até um pouco preguiçosa) de aprendizagem no campo da ciência / análise de dados. Sou curioso e tenho me empenhado em desenvolver e aprimorar meus conhecimentos em linguagens de programação e ciência/análise de dados, bem como em gestão/administração, e tudo mais relacionado.
 education:
   courses:
-  - course: Bacharelado em Sistemas de Informação - em curso
+  - course: Bacharelado em Sistemas de Informação - em andamento
     institution: Universidade Federal de Pernambuco
-    year: 2021 - 2026
-  - course: Bacharelado em Administração - interrompido
+    year: 2021 - 2025
+  - course: Bacharelado em Administração - incompleto
     institution: Universidade Federal do Vale do São Francisco
     year: 2019 - 2020
 email: "pedroceciliocn@gmail.com"
