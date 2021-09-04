@@ -31,6 +31,10 @@ pt:
      - name: Início
        url: '#about'
        weight: 10
+    
+    - name: CV
+      url: "media/cv.html"
+      weight: 70
        
        
 
