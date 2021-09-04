@@ -23,15 +23,15 @@
 - id: figure
   translation: 'Figura %d:'
 - id: edit_page
-  translation: Edit this page
+  translation: Edite essa página
 - id: theme_selector
-  translation: Display preferences
+  translation: Preferências de tela
 - id: theme_light
-  translation: Light
+  translation: Claro
 - id: theme_dark
-  translation: Dark
+  translation: Noturno
 - id: theme_auto
-  translation: Automatic
+  translation: Automático
 - id: btn_preprint
   translation: Pré-impressão
 - id: btn_pdf
@@ -60,7 +60,7 @@
   translation: Interesses
 - id: education
   translation: Formação
-- id: biography
+- id: Biography
   translation: Biografia
 - id: user_profile_latest
   translation: Recentes
@@ -131,7 +131,7 @@
 - id: slides
   translation: Slides
 - id: authors
-  translation: Authors
+  translation: Autores
 - id: search
   translation: Pesquisar
 - id: search_placeholder
@@ -141,7 +141,7 @@
 - id: search_no_results
   translation: Sem resultados
 - id: search_common_queries
-  translation: Common searches
+  translation: Pesquisas frequentes
 - id: page_not_found
   translation: Página não encontrada
 - id: 404_recommendations
