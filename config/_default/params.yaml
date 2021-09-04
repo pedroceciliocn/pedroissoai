@@ -78,7 +78,7 @@ highlight: true
 highlight_languages:
   - r
   - python
-  # - latex
+  - sql
 math: false
 diagram: false
 privacy_pack: false
