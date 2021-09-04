@@ -33,7 +33,7 @@ pt:
        weight: 10
     
      - name: CV
-       url: "media/cv.html"
+       url: "media/cv-pt.html"
        weight: 70
        
        
