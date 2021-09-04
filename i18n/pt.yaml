@@ -60,8 +60,6 @@
   translation: Interesses
 - id: education
   translation: Formação
-- id: Biography
-  translation: Biografia
 - id: user_profile_latest
   translation: Recentes
 - id: see_certificate
