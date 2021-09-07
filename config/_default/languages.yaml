@@ -36,5 +36,9 @@ pt:
        url: "media/cv-pt.html"
        weight: 70
        
+     - name: Posts
+       url: '#posts'
+       weight: 20
+       
        
 
