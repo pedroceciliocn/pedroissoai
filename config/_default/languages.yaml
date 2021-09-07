@@ -37,7 +37,7 @@ pt:
        weight: 70
        
      - name: Posts
-       url: '#post'
+       url: 'post/'
        weight: 20
        
        
