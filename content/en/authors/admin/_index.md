@@ -1,5 +1,5 @@
 ---
-bio: I am an Information Systems undergraduate student starting a journey (maybe slowly or even a little lazy) of learning in the field of science/data analysis. I'm curious and have been committed to developing and improving my knowledge of programming languages and data science, as well as management, economics, social sciences, statistics and everything related.
+bio: I am an Information Systems undergraduate student starting a journey of learning in the field of science/data analysis. I'm curious and have been committed to developing and improving my knowledge of programming languages and data science, as well as management, economics, social sciences, statistics and everything related.
 education:
   courses:
   - course: Information Systems undegraduate - current
@@ -46,6 +46,6 @@ title: Pedro Neto
 ---
 
 
-I am an Information Systems undergraduate student starting a journey (maybe slowly or even a little lazy) of learning in the field of science/data analysis. I'm curious and have been committed to developing and improving my knowledge of programming languages and data science, as well as management, economics, social sciences, statistics and everything related.
+I am an Information Systems undergraduate student starting a journey of learning in the field of science/data analysis. I'm curious and have been committed to developing and improving my knowledge of programming languages and data science, as well as management, economics, social sciences, statistics and everything related.
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "media/cv.pdf" "newtab" >}}cv{{< /staticref >}}.

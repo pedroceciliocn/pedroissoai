@@ -1,5 +1,5 @@
 ---
-bio: Sou um estudante de graduação em Sistemas de Informação iniciando uma jornada (talvez devagar ou até um pouco preguiçosa) de aprendizagem no campo da ciência / análise de dados. Sou curioso e tenho me empenhado em desenvolver e aprimorar meus conhecimentos em linguagens de programação e ciência/análise de dados, bem como em gestão/administração, e tudo mais relacionado.
+bio: Sou um estudante de graduação em Sistemas de Informação iniciando uma jornada de aprendizagem no campo da ciência / análise de dados. Sou curioso e tenho me empenhado em desenvolver e aprimorar meus conhecimentos em linguagens de programação e ciência/análise de dados, bem como em gestão/administração, e tudo mais relacionado.
 education:
   courses:
   - course: Bacharelado em Sistemas de Informação - em andamento
@@ -46,6 +46,6 @@ title: Pedro Neto
 ---
 
 
-Sou um estudante de graduação em Sistemas de Informação iniciando uma jornada (talvez devagar ou até um pouco preguiçosa) de aprendizagem no campo da ciência / análise de dados. Sou curioso e tenho me empenhado em desenvolver e aprimorar meus conhecimentos em linguagens de programação e ciência/análise de dados, bem como em gestão/administração, e tudo mais relacionado.
+Sou um estudante de graduação em Sistemas de Informação iniciando uma jornada de aprendizagem no campo da ciência / análise de dados. Sou curioso e tenho me empenhado em desenvolver e aprimorar meus conhecimentos em linguagens de programação e ciência/análise de dados, bem como em gestão/administração, e tudo mais relacionado.
 
 {{< icon name="download" pack="fas" >}} Baixe meu {{< staticref "media/cv-pt.pdf" "newtab" >}}cv{{< /staticref >}}.
