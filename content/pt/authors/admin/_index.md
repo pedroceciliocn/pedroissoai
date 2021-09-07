@@ -34,7 +34,7 @@ social:
   link: https://linkedin.com/in/pedroceciliocn
 - icon: cv
   icon_pack: ai
-  link: media/cv.html
+  link: media/cv-pt.html
 - icon: github
   icon_pack: fab
   link: https://github.com/pedroceciliocn
