@@ -30,7 +30,7 @@ self_contained: false
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## Análises rápidas da discografia do Wolf Alice usando dados do Spotify e do Genius
+<!-- ## Análises rápidas da discografia do Wolf Alice usando dados do Spotify e do Genius -->
 Fiz esse post inspirado por posts do Tom MacNamara aka @Statnamara no [r-bloggers.com](https://www.r-bloggers.com/2021/01/scraping-analysing-and-visualising-lyrics-in-r/), [da Simran Vatsa no Medium](https://medium.com/@simranvatsa5/taylor-f656e2a09cc3), [do Charlie Thompson na página pessoal dele](https://www.rcharlie.com/blog/fitter-happier/) e da [Página do pacote spotifyR (criado pelo próprio RCharlie)](https://www.rcharlie.com/spotifyr/). 
 
 Caso alguém realmente queira fazer algo parecido (e mais bem feito), recomendo que siga os posts referidos ao invés do meu. Não sou grande expert e praticamente copiei um pouco de cada um deles (em alguns casos consegui inclusive copiar errado! tanto que teve coisa que não funcionou). Mas se por ventura você chegou até aqui, obrigado e vamos lá.
