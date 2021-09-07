@@ -25,6 +25,3 @@ main:
     url: "media/cv.html"
     weight: 70
     
-  - name: Posts
-    url: '#posts'
-    weight: 20
