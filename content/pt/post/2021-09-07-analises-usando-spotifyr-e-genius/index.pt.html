@@ -1,0 +1,657 @@
+---
+title: Analises usando spotifyr e genius
+author: Pedro Neto
+date: '2021-09-07'
+slug: analises-usando-spotifyr-e-genius
+categories:
+  - random
+tags:
+  - musica
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-09-07T02:48:25-03:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+<script src="{{< blogdown/postref >}}index.pt_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="análises-rápidas-da-discografia-do-wolf-alice-usando-dados-do-spotify-e-do-genius" class="section level1">
+<h1>Análises rápidas da discografia do Wolf Alice usando dados do Spotify e do Genius</h1>
+<p>Fiz esse post inspirado por posts do Tom MacNamara aka <span class="citation">@Statnamara</span> no <a href="https://www.r-bloggers.com/2021/01/scraping-analysing-and-visualising-lyrics-in-r/">r-bloggers.com</a>, <a href="https://medium.com/@simranvatsa5/taylor-f656e2a09cc3">da Simran Vatsa no Medium</a>, <a href="https://www.rcharlie.com/blog/fitter-happier/">do Charlie Thompson na página pessoal dele</a> e da <a href="https://www.rcharlie.com/spotifyr/">Página do pacote spotifyR (criado pelo próprio RCharlie)</a>.</p>
+<p>Caso alguém realmente queira fazer algo parecido, recomendo que siga os posts referidos ao invés do meu. Não sou grande expert e praticamente copiei um pouco de cada um deles (em alguns casos consegui inclusive copiar errado! tanto que teve coisa que não funcionou).</p>
+<div id="chamando-os-primeiros-pacotes" class="section level3">
+<h3>Chamando os primeiros pacotes</h3>
+<pre class="r"><code>library(tidyverse)
+library(spotifyr)</code></pre>
+<p>Ao longo do post, chamaremos mais alguns.</p>
+</div>
+<div id="autenticação-da-api-do-spotify" class="section level3">
+<h3>Autenticação da API do Spotify</h3>
+<p>Temos que pegar os dados a partir de uma conta de desenvolvedor <a href="https://developer.spotify.com/my-applications/#!/applications">nesse link</a></p>
+<p>Coloque os dados que você gerou.</p>
+<pre><code>Sys.setenv(SPOTIFY_CLIENT_ID = &#39;xxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#39;)
+Sys.setenv(SPOTIFY_CLIENT_SECRET = &#39;xxxxxxxxxxxxxxxxxxxxxxxxxxxx&#39;)
+
+access_token &lt;- spotifyr::get_spotify_access_token(
+  client_id = Sys.getenv(&quot;SPOTIFY_CLIENT_ID&quot;),
+  client_secret = Sys.getenv(&quot;SPOTIFY_CLIENT_SECRET&quot;)
+)</code></pre>
+<!--  ```{r} -->
+<!-- access_token <- spotifyr::get_spotify_authorization_code(scope = 'user-read-recently-played') -->
+<!--  ``` -->
+<p>Agora faremos breves usos do pacote spotifyR e da API do Spotify. A <a href="https://cloud.r-project.org/web/packages/spotifyr/index.html">página no CRAN</a> ou o <a href="https://github.com/charlie86/spotifyr">repositório do GitHub</a> mostram bem mais coisas.</p>
+</div>
+<div id="minhas-as-suas-na-verdade-músicas-mais-recentes-escutadas" class="section level3">
+<h3>Minhas (as suas, na verdade) músicas mais recentes escutadas</h3>
+<pre class="r"><code>library(knitr)
+library(lubridate)
+
+get_my_recently_played(limit = 5) %&gt;% 
+    mutate(artist.name = map_chr(track.artists, function(x) x$name[1]),
+           played_at = as_datetime(played_at)) %&gt;% 
+    select(track.name, artist.name, track.album.name, played_at) %&gt;% 
+    kable()</code></pre>
+<table>
+<colgroup>
+<col width="39%" />
+<col width="15%" />
+<col width="24%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">track.name</th>
+<th align="left">artist.name</th>
+<th align="left">track.album.name</th>
+<th align="left">played_at</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Movimento lento (feat. Federico Rossi)</td>
+<td align="left">Annalisa</td>
+<td align="left">Nuda10 (Deluxe Edition)</td>
+<td align="left">2021-09-06 02:56:14</td>
+</tr>
+<tr class="even">
+<td align="left">Free Falling</td>
+<td align="left">The Warning</td>
+<td align="left">Free Falling</td>
+<td align="left">2021-09-06 00:47:04</td>
+</tr>
+<tr class="odd">
+<td align="left">Three</td>
+<td align="left">Massive Attack</td>
+<td align="left">Protection</td>
+<td align="left">2021-09-04 18:27:35</td>
+</tr>
+<tr class="even">
+<td align="left">Protection</td>
+<td align="left">Massive Attack</td>
+<td align="left">Protection</td>
+<td align="left">2021-09-04 18:18:52</td>
+</tr>
+<tr class="odd">
+<td align="left">911 - Charli XCX &amp; A. G. Cook Remix</td>
+<td align="left">Lady Gaga</td>
+<td align="left">Dawn Of Chromatica</td>
+<td align="left">2021-09-03 13:56:51</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="meus-os-seus-na-verdade-artistas-favoritos-de-todos-os-tempos" class="section level3">
+<h3>Meus (os seus, na verdade) artistas favoritos de todos os tempos</h3>
+<pre class="r"><code>get_my_top_artists_or_tracks(type = &#39;artists&#39;, time_range = &#39;long_term&#39;, limit = 5) %&gt;% 
+    select(name, genres) %&gt;% 
+    rowwise %&gt;% 
+    mutate(genres = paste(genres, collapse = &#39;, &#39;)) %&gt;% 
+    ungroup %&gt;% 
+    kable()</code></pre>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">genres</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Pearl Jam</td>
+<td align="left">alternative rock, grunge, permanent wave, rock</td>
+</tr>
+<tr class="even">
+<td align="left">Wolf Alice</td>
+<td align="left">art pop, indie pop, indie rock, modern alternative rock, modern rock, rock</td>
+</tr>
+<tr class="odd">
+<td align="left">Alice In Chains</td>
+<td align="left">alternative metal, alternative rock, grunge, hard rock, nu metal, rock</td>
+</tr>
+<tr class="even">
+<td align="left">Max Richter</td>
+<td align="left">compositional ambient, post-minimalism</td>
+</tr>
+<tr class="odd">
+<td align="left">Nirvana</td>
+<td align="left">grunge, permanent wave, rock</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="minhas-de-novo-as-suas-na-verdade-músicas-favoritas-do-momento" class="section level3">
+<h3>Minhas (de novo, as suas, na verdade) músicas favoritas do momento</h3>
+<pre class="r"><code>get_my_top_artists_or_tracks(type = &#39;tracks&#39;, time_range = &#39;short_term&#39;, limit = 5) %&gt;% 
+    mutate(artist.name = map_chr(artists, function(x) x$name[1])) %&gt;% 
+    select(name, artist.name, album.name) %&gt;% 
+    kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">artist.name</th>
+<th align="left">album.name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Lipstick On The Glass</td>
+<td align="left">Wolf Alice</td>
+<td align="left">Blue Weekend</td>
+</tr>
+<tr class="even">
+<td align="left">Smile</td>
+<td align="left">Wolf Alice</td>
+<td align="left">Blue Weekend</td>
+</tr>
+<tr class="odd">
+<td align="left">Feeling Myself</td>
+<td align="left">Wolf Alice</td>
+<td align="left">Blue Weekend</td>
+</tr>
+<tr class="even">
+<td align="left">The Beach II</td>
+<td align="left">Wolf Alice</td>
+<td align="left">Blue Weekend</td>
+</tr>
+<tr class="odd">
+<td align="left">Safe From Heartbreak (if you never fall in love)</td>
+<td align="left">Wolf Alice</td>
+<td align="left">Blue Weekend</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="pegando-os-dados-do-wolf-alice" class="section level3">
+<h3>Pegando os dados do Wolf Alice</h3>
+<pre class="r"><code>wolf_alice &lt;- get_artist_audio_features(&#39;wolf alice&#39;)</code></pre>
+<div id="dando-uma-olhadela-no-que-está-disponível-sobre-a-banda" class="section level4">
+<h4>Dando uma olhadela no que está disponível sobre a banda</h4>
+<pre class="r"><code>glimpse(wolf_alice)</code></pre>
+<pre><code>## Rows: 144
+## Columns: 39
+## $ artist_name                  &lt;chr&gt; &quot;Wolf Alice&quot;, &quot;Wolf Alice&quot;, &quot;Wolf Alice&quot;,~
+## $ artist_id                    &lt;chr&gt; &quot;3btzEQD6sugImIHPMRgkwV&quot;, &quot;3btzEQD6sugImI~
+## $ album_id                     &lt;chr&gt; &quot;1VCTWaze9kuY5IDlbtR5p0&quot;, &quot;1VCTWaze9kuY5I~
+## $ album_type                   &lt;chr&gt; &quot;album&quot;, &quot;album&quot;, &quot;album&quot;, &quot;album&quot;, &quot;albu~
+## $ album_images                 &lt;list&gt; [&lt;data.frame[3 x 3]&gt;], [&lt;data.frame[3 x ~
+## $ album_release_date           &lt;chr&gt; &quot;2021-06-04&quot;, &quot;2021-06-04&quot;, &quot;2021-06-04&quot;,~
+## $ album_release_year           &lt;dbl&gt; 2021, 2021, 2021, 2021, 2021, 2021, 2021,~
+## $ album_release_date_precision &lt;chr&gt; &quot;day&quot;, &quot;day&quot;, &quot;day&quot;, &quot;day&quot;, &quot;day&quot;, &quot;day&quot;,~
+## $ danceability                 &lt;dbl&gt; 0.704, 0.494, 0.355, 0.515, 0.161, 0.460,~
+## $ energy                       &lt;dbl&gt; 0.332, 0.498, 0.623, 0.764, 0.426, 0.714,~
+## $ key                          &lt;int&gt; 8, 2, 7, 11, 3, 0, 0, 2, 7, 2, 1, 8, 2, 7~
+## $ loudness                     &lt;dbl&gt; -9.185, -5.739, -6.137, -5.238, -6.095, -~
+## $ mode                         &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1,~
+## $ speechiness                  &lt;dbl&gt; 0.0348, 0.0351, 0.0360, 0.0444, 0.0312, 0~
+## $ acousticness                 &lt;dbl&gt; 2.57e-01, 1.49e-01, 1.28e-01, 1.52e-04, 8~
+## $ instrumentalness             &lt;dbl&gt; 0.493000, 0.061600, 0.059200, 0.878000, 0~
+## $ liveness                     &lt;dbl&gt; 0.1410, 0.2610, 0.1070, 0.0640, 0.4610, 0~
+## $ valence                      &lt;dbl&gt; 0.2740, 0.2900, 0.1900, 0.3420, 0.2740, 0~
+## $ tempo                        &lt;dbl&gt; 107.982, 121.199, 93.745, 93.579, 181.783~
+## $ track_id                     &lt;chr&gt; &quot;7uELmcXg4U2iCcrXMvD8dj&quot;, &quot;0f1bOH82cQvNNZ~
+## $ analysis_url                 &lt;chr&gt; &quot;https://api.spotify.com/v1/audio-analysi~
+## $ time_signature               &lt;int&gt; 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4,~
+## $ artists                      &lt;list&gt; [&lt;data.frame[1 x 6]&gt;], [&lt;data.frame[1 x ~
+## $ available_markets            &lt;list&gt; &lt;&quot;CA&quot;, &quot;US&quot;&gt;, &lt;&quot;CA&quot;, &quot;US&quot;&gt;, &lt;&quot;CA&quot;, &quot;US&quot;&gt;~
+## $ disc_number                  &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,~
+## $ duration_ms                  &lt;int&gt; 155000, 304280, 247560, 196800, 152333, 2~
+## $ explicit                     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,~
+## $ track_href                   &lt;chr&gt; &quot;https://api.spotify.com/v1/tracks/7uELmc~
+## $ is_local                     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,~
+## $ track_name                   &lt;chr&gt; &quot;The Beach&quot;, &quot;Delicious Things&quot;, &quot;Lipstic~
+## $ track_preview_url            &lt;chr&gt; &quot;https://p.scdn.co/mp3-preview/b0fd6cf0e7~
+## $ track_number                 &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, ~
+## $ type                         &lt;chr&gt; &quot;track&quot;, &quot;track&quot;, &quot;track&quot;, &quot;track&quot;, &quot;trac~
+## $ track_uri                    &lt;chr&gt; &quot;spotify:track:7uELmcXg4U2iCcrXMvD8dj&quot;, &quot;~
+## $ external_urls.spotify        &lt;chr&gt; &quot;https://open.spotify.com/track/7uELmcXg4~
+## $ album_name                   &lt;chr&gt; &quot;Blue Weekend&quot;, &quot;Blue Weekend&quot;, &quot;Blue Wee~
+## $ key_name                     &lt;chr&gt; &quot;G#&quot;, &quot;D&quot;, &quot;G&quot;, &quot;B&quot;, &quot;D#&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;,~
+## $ mode_name                    &lt;chr&gt; &quot;major&quot;, &quot;major&quot;, &quot;major&quot;, &quot;major&quot;, &quot;majo~
+## $ key_mode                     &lt;chr&gt; &quot;G# major&quot;, &quot;D major&quot;, &quot;G major&quot;, &quot;B majo~</code></pre>
+</div>
+<div id="vamos-olhar-só-os-albums" class="section level4">
+<h4>Vamos olhar só os albums</h4>
+<pre class="r"><code>wolf_alice %&gt;% 
+  distinct(album_name)</code></pre>
+<pre><code>##                         album_name
+## 1                     Blue Weekend
+## 2                Visions Of A Life
+## 3 My Love Is Cool (Deluxe Edition)
+## 4                  My Love Is Cool</code></pre>
+</div>
+<div id="vamos-retirar-os-que-são-repetidos-ou-edições-especiais" class="section level4">
+<h4>Vamos retirar os que são ‘repetidos’ (ou edições especiais)</h4>
+<pre class="r"><code>wolf_alice &lt;- wolf_alice %&gt;% 
+  filter(!album_name %in% &quot;My Love Is Cool (Deluxe Edition)&quot;)</code></pre>
+</div>
+<div id="agora-temos-somente-os-albuns-originais" class="section level4">
+<h4>Agora temos somente os albuns ‘originais’</h4>
+<pre class="r"><code>wolf_alice %&gt;% 
+  distinct(album_name)</code></pre>
+<pre><code>##          album_name
+## 1      Blue Weekend
+## 2 Visions Of A Life
+## 3   My Love Is Cool</code></pre>
+<p>Dando uma olhada graficamente usando uma das informações dadas pela API. A coluna ‘valence’, mostra o dado de valência, ou seja, de ‘positividade’ ou ‘regozijo’ de uma faixa. Os valores vão de 0 a 1.</p>
+</div>
+</div>
+<div id="alguns-gráficos" class="section level3">
+<h3>Alguns Gráficos</h3>
+<div id="nível-de-regozijo" class="section level4">
+<h4>Nível de ‘regozijo’</h4>
+<pre class="r"><code>wolf_alice %&gt;% 
+    arrange(-valence) %&gt;% 
+    select(track_name, valence) %&gt;% 
+    head(5) %&gt;% 
+    kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">track_name</th>
+<th align="right">valence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Beautifully Unconventional</td>
+<td align="right">0.664</td>
+</tr>
+<tr class="even">
+<td align="left">Beautifully Unconventional</td>
+<td align="right">0.662</td>
+</tr>
+<tr class="odd">
+<td align="left">Beautifully Unconventional</td>
+<td align="right">0.661</td>
+</tr>
+<tr class="even">
+<td align="left">No Hard Feelings</td>
+<td align="right">0.658</td>
+</tr>
+<tr class="odd">
+<td align="left">No Hard Feelings</td>
+<td align="right">0.653</td>
+</tr>
+</tbody>
+</table>
+<p>Primeiro plot:</p>
+<pre class="r"><code>library(ggjoy)
+
+ggplot(wolf_alice, aes(x = valence, y = album_name)) + 
+    geom_joy() + 
+    theme_joy() +
+    ggtitle(&quot;Joyplot do Wolf Alices&#39;s&quot;, subtitle = &quot;Feito com os dados de valência da API do spotify usando o spotifyR&quot;) +
+    theme(axis.title = element_blank())</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/plot%20cinza-1.png" width="672" />
+Agora um plot mais colorido (inspirado no post da <a href="https://medium.com/@simranvatsa5/taylor-f656e2a09cc3">Simran Vatsa no Medium</a>):</p>
+<pre class="r"><code>wolf_alice %&gt;% ggplot(aes(x = valence, y = album_name, fill = ..x..)) + 
+  geom_density_ridges_gradient(scale = 0.9) + 
+  scale_fill_gradient(low = &quot;grey&quot;, high = &quot;blue&quot;) + 
+  theme(panel.background = element_rect(fill = &quot;white&quot;)) +
+  theme(plot.background = element_rect(fill = &quot;white&quot;)) +
+  xlim(0,1) +
+  theme_joy() +
+  theme(axis.title = element_blank()) +
+  labs(fill = &#39;Valência&#39;) +
+  ggtitle(&quot;Joyplot do Wolf Alices&#39;s&quot;, subtitle = &quot;Nível de positividade nas músicas de cada álbum&quot;) + 
+  labs(caption = &quot;(Feito com os dados de valência da API do spotify usando o spotifyR)&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/plot%20mais%20bonito-1.png" width="672" />
+<strong>Tá, mas o que essas curvas realmente significam ou mostram?</strong>
+Elas mostram a distribuição de músicas de acordo justamente com a ‘positividade’. Olhando pra cada uma delas, para cada um dos álbuns, nota-se que há um maior ‘volume’ de faixas não tão positivas assim nos 3 álbuns (por isso a maior montanha está em torno dos valores de 0~0.25).</p>
+</div>
+</div>
+<div id="agora-usando-o-genius" class="section level2">
+<h2>Agora usando o Genius</h2>
+<p>Agora tentemos usar o pacote Genius para acessar as letras do Wolf Alice:</p>
+<div id="carregando-o-pacote" class="section level4">
+<h4>Carregando o pacote</h4>
+<p>Nesse caso específico, diferente do pacote usado pro Spotify, não precisamos</p>
+<pre class="r"><code>library(genius)</code></pre>
+<p>Selecionando os albums:</p>
+<pre class="r"><code>wolf_alice_albums &lt;- tribble(
+ ~artist, ~album,
+ &quot;Wolf Alice&quot;, &quot;My Love Is Cool&quot;,
+ &quot;Wolf Alice&quot;, &quot;Visions of a Life&quot;,
+ &quot;Wolf Alice&quot;, &quot;Blue Weekend&quot;
+)
+
+
+wa_all_lyrics &lt;- wolf_alice_albums %&gt;% 
+  add_genius(artist, album)</code></pre>
+<pre><code>## Joining, by = c(&quot;album_name&quot;, &quot;track_n&quot;, &quot;track_url&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;artist&quot;, &quot;album&quot;)</code></pre>
+<p>Dando uma olhada. Fica claro que tem coisa faltando (e muita), e isso é um problema que não consegui resolver.
+Ele está relacionado com o tempo que demora pra que se obtenha uma resposta na requisição, que acaba fazendo com que trechos sumam e músicas fiquem sem letra alguma (e de formas diferentes a cada vez que o código é rodado). Pra resolver isso seria necessário fazer algum tipo de configuração ou até modificação na função para que se <em>setasse</em> esse tempo de espera até que um dado fosse recebido e em seguida, finalmente, o próximo fosse requisitado. Mas eu não sei como fazer. <em>(É meio complicado mostrar corretamente as partes faltantes das letras nesse post, logo, confie em mim)</em></p>
+<pre class="r"><code>wa_all_lyrics</code></pre>
+<pre><code>## # A tibble: 129 x 6
+##    artist     album           track_n  line lyric                  track_title  
+##    &lt;chr&gt;      &lt;chr&gt;             &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;        
+##  1 Wolf Alice My Love Is Cool       4     1 &lt;NA&gt;                   Moaning Lisa~
+##  2 Wolf Alice My Love Is Cool       4     2 She needs a lover to ~ Moaning Lisa~
+##  3 Wolf Alice My Love Is Cool       4     3 She hopes for some ot~ Moaning Lisa~
+##  4 Wolf Alice My Love Is Cool       4     4 She&#39;s over achieving,~ Moaning Lisa~
+##  5 Wolf Alice My Love Is Cool       4     5 And coming down slowl~ Moaning Lisa~
+##  6 Wolf Alice My Love Is Cool       4     6 A-ah-ah-ah-ah-ah-ah-a~ Moaning Lisa~
+##  7 Wolf Alice My Love Is Cool       4     7 Scrap the blues if th~ Moaning Lisa~
+##  8 Wolf Alice My Love Is Cool       4     8 Flash your teeth thou~ Moaning Lisa~
+##  9 Wolf Alice My Love Is Cool       4     9 A-ah-ah-ah-ah-ah-ah-a~ Moaning Lisa~
+## 10 Wolf Alice My Love Is Cool       4    10 Scrap the blues if th~ Moaning Lisa~
+## # ... with 119 more rows</code></pre>
+<p>Agora temos todas as letras de todas as músicas dos 3 álbums <strong>SO QUE NÃO!</strong>. Deu pra ver o problema descrito acima.</p>
+<!-- >Getting lyrics for albums is slightly more involved. It first calls genius_tracklist() which first calls gen_album_url() then using the handy package rvest scrapes the song titles, track numbers, and song lyric urls. Next, the song urls from the output are iterated over and fed to genius_url(). -->
+<p>Aqui acontece a mesma coisa. Cada execução, dados diferentes.</p>
+<pre class="r"><code>genius_album(artist = &#39;Wolf Alice&#39;, album = &#39;Blue Weekend&#39;, info = &#39;all&#39;)</code></pre>
+<pre><code>## Joining, by = c(&quot;album_name&quot;, &quot;track_n&quot;, &quot;track_url&quot;, &quot;track_title&quot;)</code></pre>
+<pre><code>## # A tibble: 134 x 8
+##    album_name   track_n artist  track_title  line element element_artist lyric  
+##    &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;  
+##  1 Blue Weekend       1 Wolf A~ The Beach       1 Verse 1 Wolf Alice     When w~
+##  2 Blue Weekend       1 Wolf A~ The Beach       2 Verse 1 Wolf Alice     In thu~
+##  3 Blue Weekend       1 Wolf A~ The Beach       3 Verse 1 Wolf Alice     Still ~
+##  4 Blue Weekend       1 Wolf A~ The Beach       4 Verse 1 Wolf Alice     But I&#39;~
+##  5 Blue Weekend       1 Wolf A~ The Beach       5 Chorus  Wolf Alice     Let me~
+##  6 Blue Weekend       1 Wolf A~ The Beach       6 Chorus  Wolf Alice     Let ot~
+##  7 Blue Weekend       1 Wolf A~ The Beach       7 Chorus  Wolf Alice     We don~
+##  8 Blue Weekend       1 Wolf A~ The Beach       8 Verse 2 Wolf Alice     When w~
+##  9 Blue Weekend       1 Wolf A~ The Beach       9 Verse 2 Wolf Alice     We cli~
+## 10 Blue Weekend       1 Wolf A~ The Beach      10 Verse 2 Wolf Alice     Are we~
+## # ... with 124 more rows</code></pre>
+<p>Já que o pacote genius não funfa (do jeito que eu queria), bora tentar de outra maneira, usando o pacote Geniusr.</p>
+</div>
+<div id="usando-a-api-do-genius" class="section level3">
+<h3>Usando a API do Genius</h3>
+<!-- Pegue o token lá na página de desenvolvedor do Genius. -->
+<!-- ``` -->
+<!-- token <- 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' -->
+<!-- ``` -->
+<pre><code>Sys.setenv(GENIUS_API_TOKEN = &#39;xxxxxxxxxxxxxxxxxxxxxxxxxxx&#39;)
+</code></pre>
+<p>Pegue o token lá da página de desenvolvedor do Genius e cole. Se assim não funcionar imediatamente, preste atenção na hora que rodar, o Rstudio pode pedir no console o token.</p>
+<p>Carregando o pacote <a href="https://github.com/ewenme/geniusr"><em>geniusr</em></a> e achando o ID do Wolf Alice</p>
+<pre class="r"><code>library(&quot;geniusr&quot;)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;geniusr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:spotifyr&#39;:
+## 
+##     get_album, get_artist</code></pre>
+<pre class="r"><code>search_artist(&quot;Wolf Alice&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   artist_id artist_name artist_url                           
+##       &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                                
+## 1    326078 Wolf Alice  https://genius.com/artists/Wolf-alice</code></pre>
+<pre class="r"><code>songs &lt;- get_artist_songs_df(326078) 
+
+# Pegando os ids de todas as músicas da banda
+ids &lt;- c(as.character(songs$song_id))
+
+# Criando um dataframe vazio
+allLyrics &lt;- data.frame()
+
+# # Adicionando as letras ao dataframe
+# for (id in ids) {
+#   allLyrics &lt;- rbind(get_lyrics_id(id), allLyrics)
+# }
+# # O problema é que dessa forma algumas letras ficam de fora (como no caso anterior)</code></pre>
+<p>Aqui uma outra forma de fazer o mesmo contornando o problema:</p>
+<pre class="r"><code>while (length(ids) &gt; 0) {
+  for (id in ids) {
+    tryCatch({
+      allLyrics &lt;- rbind(get_lyrics_id(id), allLyrics)
+      successful &lt;- unique(allLyrics$song_id)
+      ids &lt;- ids[!ids %in% successful]
+      # print(paste(&quot;done - &quot;, id))
+      # print(paste(&quot;New length is &quot;, length(ids))) # esses prints eram pra mostrar cada letra sendo adicionada
+    }, error = function(e){})
+  }
+}</code></pre>
+<p>Agora adicionando o album pra cada música no dataframe:</p>
+<pre class="r"><code>allIds &lt;- data.frame(song_id = unique(allLyrics$song_id))
+allIds$album &lt;- &quot;&quot;</code></pre>
+<pre class="r"><code>for (song in allIds$song_id) {
+  allIds[match(song,allIds$song_id),2] &lt;- get_song_df(song)[12]
+  # print(allIds[match(song,allIds$song_id),])
+}
+
+allLyrics &lt;- full_join(allIds, allLyrics)</code></pre>
+<p>Removendo discos aleatórios e <em>NAs</em>:</p>
+<pre class="r"><code>albuns_para_remover &lt;- c(&quot;Spotify Singles: Holiday&quot;, &quot;Demo &amp; Unreleased&quot;, &quot;Spotify Singles&quot;, &quot;Spotify Sessions&quot;,
+                         &quot;B-Sides, Demos &amp; Shit&quot;, NA, &quot;triple j Like a Version 14&quot;, &quot;Ghostbusters (Original Motion Picture Soundtrack)&quot;, &quot;&quot;)
+allLyrics &lt;- allLyrics %&gt;% 
+  filter(!album %in% albuns_para_remover) </code></pre>
+<p>Mudando o nome do ‘My Love Is Cool (Deluxe Edition)’ para apenas ‘My Love Is Cool’:</p>
+<pre class="r"><code>allLyrics$album[allLyrics$album == &quot;My Love Is Cool (Deluxe Edition)&quot;] &lt;- &quot;My Love Is Cool&quot;</code></pre>
+<p>Salvando um csv pro caso de ser necessário (um backup):</p>
+<pre class="r"><code>allLyrics %&gt;% write_csv(&quot;allLyrics.csv&quot;)</code></pre>
+<p>Dando uma olhada:</p>
+<pre class="r"><code>head(allLyrics)</code></pre>
+<pre><code>##   song_id           album                                              line
+## 1  697872 My Love Is Cool She needs a lover to escape her father and mother
+## 2  697872 My Love Is Cool      She hopes for some other way out of the hole
+## 3  697872 My Love Is Cool          She&#39;s over achieving, chasing her dreams
+## 4  697872 My Love Is Cool And coming down slowly, yeah, it&#39;s out of control
+## 5  697872 My Love Is Cool         A-ah-ah-ah-ah-ah-ah-ah-ah-ah-ah-ah-ah-ahh
+## 6  697872 My Love Is Cool           Scrap the blues if the blues don&#39;t work
+##   section_name section_artist          song_name artist_name
+## 1      Verse 1     Wolf Alice Moaning Lisa Smile  Wolf Alice
+## 2      Verse 1     Wolf Alice Moaning Lisa Smile  Wolf Alice
+## 3      Verse 1     Wolf Alice Moaning Lisa Smile  Wolf Alice
+## 4      Verse 1     Wolf Alice Moaning Lisa Smile  Wolf Alice
+## 5       Chorus     Wolf Alice Moaning Lisa Smile  Wolf Alice
+## 6       Chorus     Wolf Alice Moaning Lisa Smile  Wolf Alice</code></pre>
+<!-- #### Outra forma fazendo por album -->
+</div>
+<div id="analise-do-texto" class="section level3">
+<h3>Analise do texto</h3>
+<p>Primeiro ‘tokenizamos’ as palavras</p>
+<pre class="r"><code>allLyricsTokenised &lt;- allLyrics %&gt;%
+  tidytext::unnest_tokens(word, line)</code></pre>
+<p>Agora contando elas, temos:</p>
+<pre class="r"><code>allLyricsTokenised %&gt;%
+  count(word, sort = TRUE) %&gt;% 
+  head()</code></pre>
+<pre><code>##   word   n
+## 1    i 410
+## 2  the 363
+## 3  you 361
+## 4  and 264
+## 5   to 237
+## 6    a 195</code></pre>
+<p>Mas apareceram várias ‘stop words’, que são palavras que apenas funcionam como conectivos ou não tem significado relevante pra uma análise. Então temos que remover essas palavras.</p>
+<pre class="r"><code># removendo as stopwords
+stop_words &lt;- (stopwords::stopwords(&quot;en&quot;, source = &quot;snowball&quot;))
+tidyLyrics &lt;- allLyricsTokenised %&gt;%
+  filter(!word %in% stop_words)
+
+#e refazendo a contagem
+tidyLyrics %&gt;%
+  count(word, sort = TRUE) %&gt;% 
+  head()</code></pre>
+<pre><code>##      word   n
+## 1      ah 101
+## 2    love  76
+## 3    like  58
+## 4 friends  53
+## 5     can  50
+## 6    time  49</code></pre>
+<p><em>Love</em> foi a mais frequente (o ‘ah’ não conta né?)</p>
+<p>Agora iremos contar por album e montar uma visualização.</p>
+<pre class="r"><code>topFew &lt;- tidyLyrics %&gt;%
+  group_by(album, word) %&gt;%
+  mutate(n = row_number()) %&gt;%
+  ungroup()</code></pre>
+<pre class="r"><code># removendo colunas extras
+topFew &lt;- topFew %&gt;% 
+  select(album, word, n)
+
+# pegando o máximo pra cada palavra pra cada álbum
+topFew &lt;- topFew %&gt;%
+  group_by(album, word) %&gt;%
+  summarise(n = max(n))%&gt;%
+  ungroup()</code></pre>
+<pre class="r"><code># removendo &#39;ooh&#39;s, &#39;oh&#39;s e &#39;ah&#39;s e limitando a palavras que aparecem pelo menos 40 vezes
+topFew &lt;- topFew %&gt;% 
+  group_by(word) %&gt;%
+  mutate(total = sum(n)) %&gt;%
+  filter(total &gt;= 40,
+         word != &quot;ooh&quot;, word != &quot;oh&quot;, word != &quot;ah&quot;) %&gt;%
+  ungroup()</code></pre>
+</div>
+<div id="visualizando" class="section level3">
+<h3>Visualizando</h3>
+<pre class="r"><code># uma cor pra cada album (usei uma página pra pegar a cor predominante da capa de cada um)
+albumCol &lt;- c(&quot;#e5deaa&quot;,      # My Love Is Cool
+              &quot;#9777a0&quot;,      # Visions of a Life      
+              &quot;#48dffd&quot;)      # Blue Weekend
+names(albumCol) &lt;- c(&quot;My Love Is Cool&quot;, &quot;Visions of a Life&quot;,
+                     &quot;Blue Weekend&quot;)
+
+# usando como fatores os albums para que fiquem &#39;stackados&#39; no plot
+topFew$album &lt;- factor(topFew$album, levels = c(&quot;Blue Weekend&quot;,
+                                                &quot;Visions of a Life&quot;,
+                                                &quot;My Love Is Cool&quot;
+))</code></pre>
+<p>Agora finalmente o plot:</p>
+<pre class="r"><code>wordsPlot &lt;- ggplot(topFew) +
+  
+  geom_bar(aes(x = reorder(word, total), 
+               y = n,
+               fill = as.factor(album)),
+           colour = &quot;black&quot;,
+           stat = &quot;identity&quot;) +
+  
+  coord_flip() +
+  
+  labs(title = &quot;Wolf Alice: palavras mais usadas&quot;,
+       subtitle = &quot;As palavras que aparecem mais de 40 vezes na discografia do Wolf Alice&quot;,
+       caption = &quot;Fonte: genius.com | baseado no post do @Statnamara no r-bloggers.com&quot;,
+       y = &quot;Número de ocorrências&quot;,
+       x = &quot;Palavra&quot;,
+       fill = &quot;Álbum&quot;)+
+  
+  scale_fill_manual(values = albumCol) +
+  
+  theme(title = element_text(face = &quot;italic&quot;, size = 12), 
+        
+        panel.border = element_rect(colour = &quot;black&quot;, fill=NA, size=1),
+        panel.background = element_rect(colour = &quot;black&quot;, fill = &quot;white&quot;),
+        panel.grid.major.x = element_line(colour=&quot;grey90&quot;,size = 1, linetype = 4),
+        
+        axis.title = element_text(face = &quot;italic&quot;,size = 11, colour = &quot;black&quot;),
+        axis.ticks.length = unit(5, units = &quot;pt&quot;),
+        
+        legend.background = NULL,
+        legend.position = &quot;top&quot;,
+        legend.key.size = unit(12,&quot;pt&quot;),
+        legend.box.spacing = unit(5,&quot;pt&quot;),
+        legend.text = element_text(size = 12),
+        
+        axis.text.y = element_text(size = 12))
+
+wordsPlot</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<pre class="r"><code># salvando a imagem
+ggsave(filename = &quot;wolfalice_chart.png&quot;, plot = wordsPlot, width = 30, height = 24, units = &quot;cm&quot;,
+type = &quot;cairo&quot;)</code></pre>
+<p>Pelo gráfico o ‘My Love Is Cool’ tem uma maior proporção das palavras mais</p>
+<pre class="r"><code># criando o dataframe &#39;sentimental&#39;
+wolf_alice_sentiments &lt;- tidyLyrics %&gt;%
+  inner_join(tidytext::get_sentiments(&quot;bing&quot;))%&gt;% 
+  count(album, song_name, sentiment) %&gt;%
+  spread(sentiment, n, fill = 0) %&gt;%
+  mutate(sentiment = positive - negative)
+
+# Factor as we did above
+wolf_alice_sentiments$album &lt;- factor(wolf_alice_sentiments$album, 
+                               levels = c(&quot;My Love Is Cool&quot;,
+                                          &quot;Visions of a Life&quot;,
+                                          &quot;Blue Weekend&quot;
+                               ))
+
+
+# salvando o plot
+w_a_plot &lt;- ggplot(wolf_alice_sentiments,
+                   aes(reorder(song_name, 
+                               sentiment), 
+                       sentiment, 
+                       fill = album)) +
+  
+  geom_col(show.legend = FALSE) +
+  
+  facet_wrap(~album, 
+             ncol = 2, 
+             scales = &quot;free&quot;)+
+  
+  scale_fill_manual(values = albumCol)+
+  
+  labs(title = &quot;Wolf Alice: palavras rankeadas pelo sentimento&quot;,
+       caption = &quot;Fonte: genius.com | baseado no post do @Statnamara no r-bloggers.com&quot;,
+       y = &quot;Score de sentimento&quot;,
+       fill = &quot;Álbum&quot;)+
+  
+  theme(title = element_text(face = &quot;italic&quot;, size = 12), 
+      
+      panel.border = element_rect(colour = &quot;black&quot;, fill=NA, size=1),
+      panel.background = element_rect(colour = &quot;black&quot;, fill = &quot;white&quot;),
+      panel.grid.major.x = element_line(colour=&quot;grey90&quot;,size = 1, linetype = 4),
+      
+      axis.title.x = element_text(face = &quot;italic&quot;,size = 11, colour = &quot;black&quot;),
+      axis.title.y = element_blank(),
+      axis.ticks.length = unit(5, units = &quot;pt&quot;),
+      
+      legend.background = NULL,
+      legend.position = &quot;top&quot;,
+      legend.key.size = unit(12,&quot;pt&quot;),
+      legend.box.spacing = unit(5,&quot;pt&quot;)) +
+  
+  coord_flip()
+
+w_a_plot</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre class="r"><code># salvando a imagem
+ggsave(filename = &quot;wolf_alice_sentiment_chart.png&quot;, plot = w_a_plot, width = 36, height = 24, units = &quot;cm&quot;,
+type = &quot;cairo&quot;)</code></pre>
+<p>Pelo que está no gráfico é possível ter uma ideia de que o ‘Blue Weekend’ seria o trabalho mais positivo ‘sentimentalmente’. Enquanto isso, o ‘Visions of a Life’ seria bem mais ‘negativo’ e, o segundo álbum, ‘My Love Is Cool’, seria um meio termo.</p>
+</div>
+</div>
+<div id="referências" class="section level2">
+<h2>Referências</h2>
+<ul>
+<li>Post do Tom MacNamara aka <span class="citation">@Statnamara</span> no <a href="https://www.r-bloggers.com/2021/01/scraping-analysing-and-visualising-lyrics-in-r/">r-bloggers.com</a></li>
+<li><a href="https://medium.com/@simranvatsa5/taylor-f656e2a09cc3">Post da Simran Vatsa no Medium</a></li>
+<li><a href="https://www.rcharlie.com/blog/fitter-happier/">Post do Charlie Thompson na página pessoal dele</a></li>
+<li><a href="https://www.rcharlie.com/spotifyr/">Página do pacote spotifyR (criado pelo próprio RCharlie)</a></li>
+</ul>
+</div>
+</div>

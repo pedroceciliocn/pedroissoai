@@ -1,0 +1,535 @@
+---
+title: Analises usando spotifyr e genius
+author: Pedro Neto
+date: '2021-09-07'
+slug: analises-usando-spotifyr-e-genius
+categories:
+  - random
+tags:
+  - musica
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-09-07T02:48:25-03:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Análises rápidas da discografia do Wolf Alice usando dados do Spotify e do Genius
+Fiz esse post inspirado por posts do Tom MacNamara aka @Statnamara no [r-bloggers.com](https://www.r-bloggers.com/2021/01/scraping-analysing-and-visualising-lyrics-in-r/), [da Simran Vatsa no Medium](https://medium.com/@simranvatsa5/taylor-f656e2a09cc3), [do Charlie Thompson na página pessoal dele](https://www.rcharlie.com/blog/fitter-happier/) e da [Página do pacote spotifyR (criado pelo próprio RCharlie)](https://www.rcharlie.com/spotifyr/). 
+
+Caso alguém realmente queira fazer algo parecido, recomendo que siga os posts referidos ao invés do meu. Não sou grande expert e praticamente copiei um pouco de cada um deles (em alguns casos consegui inclusive copiar errado! tanto que teve coisa que não funcionou).
+
+
+### Chamando os primeiros pacotes
+```{r chamando pacotes, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(spotifyr)
+```
+Ao longo do post, chamaremos mais alguns.
+
+### Autenticação da API do Spotify
+Temos que pegar os dados a partir de uma conta de desenvolvedor [nesse link](https://developer.spotify.com/my-applications/#!/applications)
+
+```{r tokens for real, echo=FALSE}
+Sys.setenv(SPOTIFY_CLIENT_ID = 'a98de2fcd0f945fe846ea9601a6061a7')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'b444d741ecc04bf5bba0d9a5953d4709')
+
+access_token <- spotifyr::get_spotify_access_token(
+  client_id = Sys.getenv("SPOTIFY_CLIENT_ID"),
+  client_secret = Sys.getenv("SPOTIFY_CLIENT_SECRET")
+)
+
+```
+
+Coloque os dados que você gerou.
+```
+Sys.setenv(SPOTIFY_CLIENT_ID = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+
+access_token <- spotifyr::get_spotify_access_token(
+  client_id = Sys.getenv("SPOTIFY_CLIENT_ID"),
+  client_secret = Sys.getenv("SPOTIFY_CLIENT_SECRET")
+)
+```
+
+<!--  ```{r} -->
+<!-- access_token <- spotifyr::get_spotify_authorization_code(scope = 'user-read-recently-played') -->
+
+<!--  ``` -->
+
+Agora faremos breves usos do pacote spotifyR e da API do Spotify. A [página no CRAN](https://cloud.r-project.org/web/packages/spotifyr/index.html) ou o [repositório do GitHub](https://github.com/charlie86/spotifyr) mostram bem mais coisas.
+
+### Minhas (as suas, na verdade) músicas mais recentes escutadas
+```{r message=FALSE, warning=FALSE}
+library(knitr)
+library(lubridate)
+
+get_my_recently_played(limit = 5) %>% 
+    mutate(artist.name = map_chr(track.artists, function(x) x$name[1]),
+           played_at = as_datetime(played_at)) %>% 
+    select(track.name, artist.name, track.album.name, played_at) %>% 
+    kable()
+```
+
+### Meus (os seus, na verdade) artistas favoritos de todos os tempos
+```{r message=FALSE, warning=FALSE}
+get_my_top_artists_or_tracks(type = 'artists', time_range = 'long_term', limit = 5) %>% 
+    select(name, genres) %>% 
+    rowwise %>% 
+    mutate(genres = paste(genres, collapse = ', ')) %>% 
+    ungroup %>% 
+    kable()
+```
+
+### Minhas (de novo, as suas, na verdade) músicas favoritas do momento
+```{r}
+get_my_top_artists_or_tracks(type = 'tracks', time_range = 'short_term', limit = 5) %>% 
+    mutate(artist.name = map_chr(artists, function(x) x$name[1])) %>% 
+    select(name, artist.name, album.name) %>% 
+    kable()
+```
+
+### Pegando os dados do Wolf Alice
+```{r}
+wolf_alice <- get_artist_audio_features('wolf alice')
+```
+
+#### Dando uma olhadela no que está disponível sobre a banda
+```{r paged.print=TRUE}
+glimpse(wolf_alice)
+```
+#### Vamos olhar só os albums
+```{r}
+wolf_alice %>% 
+  distinct(album_name)
+```
+
+#### Vamos retirar os que são 'repetidos' (ou edições especiais)
+```{r}
+wolf_alice <- wolf_alice %>% 
+  filter(!album_name %in% "My Love Is Cool (Deluxe Edition)")
+```
+
+#### Agora temos somente os albuns 'originais'
+```{r}
+wolf_alice %>% 
+  distinct(album_name)
+```
+
+Dando uma olhada graficamente usando uma das informações dadas pela API. A coluna 'valence', mostra o dado de valência, ou seja, de 'positividade' ou 'regozijo' de uma faixa. Os valores vão de 0 a 1.
+
+### Alguns Gráficos
+
+#### Nível de 'regozijo'
+
+```{r regozijo wolf alice, message=FALSE, warning=FALSE}
+wolf_alice %>% 
+    arrange(-valence) %>% 
+    select(track_name, valence) %>% 
+    head(5) %>% 
+    kable()
+```
+
+Primeiro plot:
+```{r plot cinza, message=FALSE, warning=FALSE}
+library(ggjoy)
+
+ggplot(wolf_alice, aes(x = valence, y = album_name)) + 
+    geom_joy() + 
+    theme_joy() +
+    ggtitle("Joyplot do Wolf Alices's", subtitle = "Feito com os dados de valência da API do spotify usando o spotifyR") +
+    theme(axis.title = element_blank())
+```
+Agora um plot mais colorido (inspirado no post da [Simran Vatsa no Medium](https://medium.com/@simranvatsa5/taylor-f656e2a09cc3)):
+```{r plot mais bonito, message=FALSE, warning=FALSE}
+wolf_alice %>% ggplot(aes(x = valence, y = album_name, fill = ..x..)) + 
+  geom_density_ridges_gradient(scale = 0.9) + 
+  scale_fill_gradient(low = "grey", high = "blue") + 
+  theme(panel.background = element_rect(fill = "white")) +
+  theme(plot.background = element_rect(fill = "white")) +
+  xlim(0,1) +
+  theme_joy() +
+  theme(axis.title = element_blank()) +
+  labs(fill = 'Valência') +
+  ggtitle("Joyplot do Wolf Alices's", subtitle = "Nível de positividade nas músicas de cada álbum") + 
+  labs(caption = "(Feito com os dados de valência da API do spotify usando o spotifyR)")
+
+```
+**Tá, mas o que essas curvas realmente significam ou mostram?**
+Elas mostram a distribuição de músicas de acordo justamente com a 'positividade'. Olhando pra cada uma delas, para cada um dos álbuns, nota-se que há um maior 'volume' de faixas não tão positivas assim nos 3 álbuns (por isso a maior montanha está em torno dos valores de 0~0.25).
+
+## Agora usando o Genius
+
+Agora tentemos usar o pacote Genius para acessar as letras do Wolf Alice:
+
+#### Carregando o pacote
+
+Nesse caso específico, diferente do pacote usado pro Spotify, não precisamos 
+```{r message=FALSE, warning=FALSE}
+library(genius)
+```
+
+Selecionando os albums:
+```{r warning=FALSE}
+wolf_alice_albums <- tribble(
+ ~artist, ~album,
+ "Wolf Alice", "My Love Is Cool",
+ "Wolf Alice", "Visions of a Life",
+ "Wolf Alice", "Blue Weekend"
+)
+
+
+wa_all_lyrics <- wolf_alice_albums %>% 
+  add_genius(artist, album)
+
+ 
+```
+Dando uma olhada. Fica claro que tem coisa faltando (e muita), e isso é um problema que não consegui resolver.
+Ele está relacionado com o tempo que demora pra que se obtenha uma resposta na requisição, que acaba fazendo com que trechos sumam e músicas fiquem sem letra alguma (e de formas diferentes a cada vez que o código é rodado). Pra resolver isso seria necessário fazer algum tipo de configuração ou até modificação na função para que se *setasse* esse tempo de espera até que um dado fosse recebido e em seguida, finalmente, o próximo fosse requisitado. Mas eu não sei como fazer. *(É meio complicado mostrar corretamente as partes faltantes das letras nesse post, logo, confie em mim)*
+```{r}
+wa_all_lyrics
+```
+
+Agora temos todas as letras de todas as músicas dos 3 álbums **SO QUE NÃO!**. Deu pra ver o problema descrito acima.
+
+
+<!-- >Getting lyrics for albums is slightly more involved. It first calls genius_tracklist() which first calls gen_album_url() then using the handy package rvest scrapes the song titles, track numbers, and song lyric urls. Next, the song urls from the output are iterated over and fed to genius_url(). -->
+
+Aqui acontece a mesma coisa. Cada execução, dados diferentes.
+```{r}
+genius_album(artist = 'Wolf Alice', album = 'Blue Weekend', info = 'all')
+```
+
+Já que o pacote genius não funfa (do jeito que eu queria), bora tentar de outra maneira, usando o pacote Geniusr.
+
+### Usando a API do Genius
+
+```{r token genius for real, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# isso aqui só precisaria de o webscrapping la doidao funfasse
+token <- 'sYSXHBuLDFI-Afrxxj1IYUYG7s8n9tpARSxRfaQuqlm_hJgd2mCV8F7thQF-nqMT'
+```
+
+
+```{r tokens for real genius, include=FALSE}
+Sys.setenv(GENIUS_API_TOKEN = 'sYSXHBuLDFI-Afrxxj1IYUYG7s8n9tpARSxRfaQuqlm_hJgd2mCV8F7thQF-nqMT')
+
+```
+
+<!-- Pegue o token lá na página de desenvolvedor do Genius. -->
+<!-- ``` -->
+<!-- token <- 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' -->
+<!-- ``` -->
+
+```
+Sys.setenv(GENIUS_API_TOKEN = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx')
+
+```
+Pegue o token lá da página de desenvolvedor do Genius e cole. Se assim não funcionar imediatamente, preste atenção na hora que rodar, o Rstudio pode pedir no console o token.
+
+```{r eval=FALSE, include=FALSE}
+#essa parte não precisa rodar, já que no fim não funfa
+library(httr)
+
+genius_get_artists <- function(artist_name, n_results = 10) {
+    baseURL <- 'https://api.genius.com/search?q='
+    requestURL <- paste0(baseURL, gsub(' ', '%20', artist_name),
+                         '&per_page=', n_results,
+                         '&access_token=', token)
+
+    res <- GET(requestURL) %>% content %>% .$response %>% .$hits
+
+    map_df(1:length(res), function(x) {
+        tmp <- res[[x]]$result$primary_artist
+        list(
+            artist_id = tmp$id,
+            artist_name = tmp$name
+        )
+    }) %>% unique
+}
+
+genius_artists <- genius_get_artists('wolf alice')
+genius_artists
+
+```
+
+Carregando o pacote [*geniusr*](https://github.com/ewenme/geniusr) e achando o ID do Wolf Alice
+```{r warning=FALSE}
+library("geniusr")
+search_artist("Wolf Alice")
+```
+
+
+```{r message=FALSE, warning=FALSE}
+
+songs <- get_artist_songs_df(326078) 
+
+# Pegando os ids de todas as músicas da banda
+ids <- c(as.character(songs$song_id))
+
+# Criando um dataframe vazio
+allLyrics <- data.frame()
+
+# # Adicionando as letras ao dataframe
+# for (id in ids) {
+#   allLyrics <- rbind(get_lyrics_id(id), allLyrics)
+# }
+# # O problema é que dessa forma algumas letras ficam de fora (como no caso anterior)
+```
+
+Aqui uma outra forma de fazer o mesmo contornando o problema:
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+while (length(ids) > 0) {
+  for (id in ids) {
+    tryCatch({
+      allLyrics <- rbind(get_lyrics_id(id), allLyrics)
+      successful <- unique(allLyrics$song_id)
+      ids <- ids[!ids %in% successful]
+      # print(paste("done - ", id))
+      # print(paste("New length is ", length(ids))) # esses prints eram pra mostrar cada letra sendo adicionada
+    }, error = function(e){})
+  }
+}
+```
+
+Agora adicionando o album pra cada música no dataframe:
+```{r}
+allIds <- data.frame(song_id = unique(allLyrics$song_id))
+allIds$album <- ""
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+for (song in allIds$song_id) {
+  allIds[match(song,allIds$song_id),2] <- get_song_df(song)[12]
+  # print(allIds[match(song,allIds$song_id),])
+}
+
+allLyrics <- full_join(allIds, allLyrics)
+```
+
+Removendo discos aleatórios e *NAs*:
+```{r}
+albuns_para_remover <- c("Spotify Singles: Holiday", "Demo & Unreleased", "Spotify Singles", "Spotify Sessions",
+                         "B-Sides, Demos & Shit", NA, "triple j Like a Version 14", "Ghostbusters (Original Motion Picture Soundtrack)", "")
+allLyrics <- allLyrics %>% 
+  filter(!album %in% albuns_para_remover) 
+```
+
+Mudando o nome do 'My Love Is Cool (Deluxe Edition)' para apenas 'My Love Is Cool':
+```{r}
+allLyrics$album[allLyrics$album == "My Love Is Cool (Deluxe Edition)"] <- "My Love Is Cool"
+```
+
+
+Salvando um csv pro caso de ser necessário (um backup):
+```{r}
+allLyrics %>% write_csv("allLyrics.csv")
+```
+
+Dando uma olhada:
+```{r paged.print=TRUE}
+head(allLyrics)
+```
+
+<!-- #### Outra forma fazendo por album -->
+```{r eval=FALSE, include=FALSE}
+library(geniusr)
+blue_weekend_letras <- genius_album(artist = "Wolf Alice", album = "Blue Weekend", nested = FALSE)
+```
+
+### Analise do texto
+Primeiro 'tokenizamos' as palavras
+```{r}
+allLyricsTokenised <- allLyrics %>%
+  tidytext::unnest_tokens(word, line)
+```
+
+Agora contando elas, temos:
+```{r paged.print=TRUE}
+allLyricsTokenised %>%
+  count(word, sort = TRUE) %>% 
+  head()
+```
+
+
+Mas apareceram várias 'stop words', que são palavras que apenas funcionam como conectivos ou não tem significado relevante pra uma análise. Então temos que remover essas palavras.
+```{r paged.print=TRUE}
+# removendo as stopwords
+stop_words <- (stopwords::stopwords("en", source = "snowball"))
+tidyLyrics <- allLyricsTokenised %>%
+  filter(!word %in% stop_words)
+
+#e refazendo a contagem
+tidyLyrics %>%
+  count(word, sort = TRUE) %>% 
+  head()
+```
+*Love* foi a mais frequente (o 'ah' não conta né?)
+
+Agora iremos contar por album e montar uma visualização.
+
+```{r}
+topFew <- tidyLyrics %>%
+  group_by(album, word) %>%
+  mutate(n = row_number()) %>%
+  ungroup()
+```
+
+```{r message=FALSE, warning=FALSE}
+
+# removendo colunas extras
+topFew <- topFew %>% 
+  select(album, word, n)
+
+# pegando o máximo pra cada palavra pra cada álbum
+topFew <- topFew %>%
+  group_by(album, word) %>%
+  summarise(n = max(n))%>%
+  ungroup()
+```
+
+```{r}
+# removendo 'ooh's, 'oh's e 'ah's e limitando a palavras que aparecem pelo menos 40 vezes
+topFew <- topFew %>% 
+  group_by(word) %>%
+  mutate(total = sum(n)) %>%
+  filter(total >= 40,
+         word != "ooh", word != "oh", word != "ah") %>%
+  ungroup()
+```
+
+### Visualizando
+```{r}
+# uma cor pra cada album (usei uma página pra pegar a cor predominante da capa de cada um)
+albumCol <- c("#e5deaa",      # My Love Is Cool
+              "#9777a0",      # Visions of a Life      
+              "#48dffd")      # Blue Weekend
+names(albumCol) <- c("My Love Is Cool", "Visions of a Life",
+                     "Blue Weekend")
+
+# usando como fatores os albums para que fiquem 'stackados' no plot
+topFew$album <- factor(topFew$album, levels = c("Blue Weekend",
+                                                "Visions of a Life",
+                                                "My Love Is Cool"
+))
+```
+
+Agora finalmente o plot:
+```{r message=FALSE, warning=FALSE}
+wordsPlot <- ggplot(topFew) +
+  
+  geom_bar(aes(x = reorder(word, total), 
+               y = n,
+               fill = as.factor(album)),
+           colour = "black",
+           stat = "identity") +
+  
+  coord_flip() +
+  
+  labs(title = "Wolf Alice: palavras mais usadas",
+       subtitle = "As palavras que aparecem mais de 40 vezes na discografia do Wolf Alice",
+       caption = "Fonte: genius.com | baseado no post do @Statnamara no r-bloggers.com",
+       y = "Número de ocorrências",
+       x = "Palavra",
+       fill = "Álbum")+
+  
+  scale_fill_manual(values = albumCol) +
+  
+  theme(title = element_text(face = "italic", size = 12), 
+        
+        panel.border = element_rect(colour = "black", fill=NA, size=1),
+        panel.background = element_rect(colour = "black", fill = "white"),
+        panel.grid.major.x = element_line(colour="grey90",size = 1, linetype = 4),
+        
+        axis.title = element_text(face = "italic",size = 11, colour = "black"),
+        axis.ticks.length = unit(5, units = "pt"),
+        
+        legend.background = NULL,
+        legend.position = "top",
+        legend.key.size = unit(12,"pt"),
+        legend.box.spacing = unit(5,"pt"),
+        legend.text = element_text(size = 12),
+        
+        axis.text.y = element_text(size = 12))
+
+wordsPlot
+
+# salvando a imagem
+ggsave(filename = "wolfalice_chart.png", plot = wordsPlot, width = 30, height = 24, units = "cm",
+type = "cairo")
+```
+Pelo gráfico o 'My Love Is Cool' tem uma maior proporção das palavras mais 
+
+```{r message=FALSE, warning=FALSE}
+# criando o dataframe 'sentimental'
+wolf_alice_sentiments <- tidyLyrics %>%
+  inner_join(tidytext::get_sentiments("bing"))%>% 
+  count(album, song_name, sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative)
+
+# Factor as we did above
+wolf_alice_sentiments$album <- factor(wolf_alice_sentiments$album, 
+                               levels = c("My Love Is Cool",
+                                          "Visions of a Life",
+                                          "Blue Weekend"
+                               ))
+
+
+# salvando o plot
+w_a_plot <- ggplot(wolf_alice_sentiments,
+                   aes(reorder(song_name, 
+                               sentiment), 
+                       sentiment, 
+                       fill = album)) +
+  
+  geom_col(show.legend = FALSE) +
+  
+  facet_wrap(~album, 
+             ncol = 2, 
+             scales = "free")+
+  
+  scale_fill_manual(values = albumCol)+
+  
+  labs(title = "Wolf Alice: palavras rankeadas pelo sentimento",
+       caption = "Fonte: genius.com | baseado no post do @Statnamara no r-bloggers.com",
+       y = "Score de sentimento",
+       fill = "Álbum")+
+  
+  theme(title = element_text(face = "italic", size = 12), 
+      
+      panel.border = element_rect(colour = "black", fill=NA, size=1),
+      panel.background = element_rect(colour = "black", fill = "white"),
+      panel.grid.major.x = element_line(colour="grey90",size = 1, linetype = 4),
+      
+      axis.title.x = element_text(face = "italic",size = 11, colour = "black"),
+      axis.title.y = element_blank(),
+      axis.ticks.length = unit(5, units = "pt"),
+      
+      legend.background = NULL,
+      legend.position = "top",
+      legend.key.size = unit(12,"pt"),
+      legend.box.spacing = unit(5,"pt")) +
+  
+  coord_flip()
+
+w_a_plot
+
+# salvando a imagem
+ggsave(filename = "wolf_alice_sentiment_chart.png", plot = w_a_plot, width = 36, height = 24, units = "cm",
+type = "cairo")
+```
+Pelo que está no gráfico é possível ter uma ideia de que o 'Blue Weekend' seria o trabalho mais positivo 'sentimentalmente'. Enquanto isso, o 'Visions of a Life' seria bem mais 'negativo' e, o segundo álbum, 'My Love Is Cool', seria um meio termo. 
+
+## Referências
+- Post do Tom MacNamara aka @Statnamara no [r-bloggers.com](https://www.r-bloggers.com/2021/01/scraping-analysing-and-visualising-lyrics-in-r/)
+- [Post da Simran Vatsa no Medium](https://medium.com/@simranvatsa5/taylor-f656e2a09cc3)
+- [Post do Charlie Thompson na página pessoal dele](https://www.rcharlie.com/blog/fitter-happier/)
+- [Página do pacote spotifyR (criado pelo próprio RCharlie)](https://www.rcharlie.com/spotifyr/)
