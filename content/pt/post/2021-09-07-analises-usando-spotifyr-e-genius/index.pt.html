@@ -17,6 +17,7 @@ image:
   focal_point: ''
   preview_only: no
 projects: []
+self_contained: false
 ---
 
 <script src="{{< blogdown/postref >}}index.pt_files/header-attrs/header-attrs.js"></script>
@@ -59,12 +60,6 @@ get_my_recently_played(limit = 5) %&gt;%
     select(track.name, artist.name, track.album.name, played_at) %&gt;% 
     kable()</code></pre>
 <table>
-<colgroup>
-<col width="39%" />
-<col width="15%" />
-<col width="24%" />
-<col width="20%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th align="left">track.name</th>
@@ -75,34 +70,34 @@ get_my_recently_played(limit = 5) %&gt;%
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Movimento lento (feat. Federico Rossi)</td>
-<td align="left">Annalisa</td>
-<td align="left">Nuda10 (Deluxe Edition)</td>
-<td align="left">2021-09-06 02:56:14</td>
+<td align="left">Freazy</td>
+<td align="left">Wolf Alice</td>
+<td align="left">My Love Is Cool</td>
+<td align="left">2021-09-07 16:22:52</td>
 </tr>
 <tr class="even">
-<td align="left">Free Falling</td>
-<td align="left">The Warning</td>
-<td align="left">Free Falling</td>
-<td align="left">2021-09-06 00:47:04</td>
+<td align="left">Silk</td>
+<td align="left">Wolf Alice</td>
+<td align="left">My Love Is Cool</td>
+<td align="left">2021-09-07 16:19:43</td>
 </tr>
 <tr class="odd">
-<td align="left">Three</td>
-<td align="left">Massive Attack</td>
-<td align="left">Protection</td>
-<td align="left">2021-09-04 18:27:35</td>
+<td align="left">Lisbon</td>
+<td align="left">Wolf Alice</td>
+<td align="left">My Love Is Cool</td>
+<td align="left">2021-09-07 16:15:45</td>
 </tr>
 <tr class="even">
-<td align="left">Protection</td>
-<td align="left">Massive Attack</td>
-<td align="left">Protection</td>
-<td align="left">2021-09-04 18:18:52</td>
+<td align="left">You’re a Germ</td>
+<td align="left">Wolf Alice</td>
+<td align="left">My Love Is Cool</td>
+<td align="left">2021-09-07 16:12:25</td>
 </tr>
 <tr class="odd">
-<td align="left">911 - Charli XCX &amp; A. G. Cook Remix</td>
-<td align="left">Lady Gaga</td>
-<td align="left">Dawn Of Chromatica</td>
-<td align="left">2021-09-03 13:56:51</td>
+<td align="left">Your Loves Whore</td>
+<td align="left">Wolf Alice</td>
+<td align="left">My Love Is Cool</td>
+<td align="left">2021-09-07 16:09:38</td>
 </tr>
 </tbody>
 </table>
@@ -195,6 +190,7 @@ get_my_recently_played(limit = 5) %&gt;%
 </div>
 <div id="pegando-os-dados-do-wolf-alice" class="section level3">
 <h3>Pegando os dados do Wolf Alice</h3>
+<p>Pelo simples motivo de ser a minha banda favorita do momento. <a href="https://open.spotify.com/embed/artist/3btzEQD6sugImIHPMRgkwV">Ouçam</a>, é muito boa!</p>
 <pre class="r"><code>wolf_alice &lt;- get_artist_audio_features(&#39;wolf alice&#39;)</code></pre>
 <div id="dando-uma-olhadela-no-que-está-disponível-sobre-a-banda" class="section level4">
 <h4>Dando uma olhadela no que está disponível sobre a banda</h4>
@@ -355,39 +351,39 @@ wa_all_lyrics &lt;- wolf_alice_albums %&gt;%
 <p>Dando uma olhada. Fica claro que tem coisa faltando (e muita), e isso é um problema que não consegui resolver.
 Ele está relacionado com o tempo que demora pra que se obtenha uma resposta na requisição, que acaba fazendo com que trechos sumam e músicas fiquem sem letra alguma (e de formas diferentes a cada vez que o código é rodado). Pra resolver isso seria necessário fazer algum tipo de configuração ou até modificação na função para que se <em>setasse</em> esse tempo de espera até que um dado fosse recebido e em seguida, finalmente, o próximo fosse requisitado. Mas eu não sei como fazer. <em>(É meio complicado mostrar corretamente as partes faltantes das letras nesse post, logo, confie em mim)</em></p>
 <pre class="r"><code>wa_all_lyrics</code></pre>
-<pre><code>## # A tibble: 129 x 6
-##    artist     album           track_n  line lyric                  track_title  
-##    &lt;chr&gt;      &lt;chr&gt;             &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;        
-##  1 Wolf Alice My Love Is Cool       4     1 &lt;NA&gt;                   Moaning Lisa~
-##  2 Wolf Alice My Love Is Cool       4     2 She needs a lover to ~ Moaning Lisa~
-##  3 Wolf Alice My Love Is Cool       4     3 She hopes for some ot~ Moaning Lisa~
-##  4 Wolf Alice My Love Is Cool       4     4 She&#39;s over achieving,~ Moaning Lisa~
-##  5 Wolf Alice My Love Is Cool       4     5 And coming down slowl~ Moaning Lisa~
-##  6 Wolf Alice My Love Is Cool       4     6 A-ah-ah-ah-ah-ah-ah-a~ Moaning Lisa~
-##  7 Wolf Alice My Love Is Cool       4     7 Scrap the blues if th~ Moaning Lisa~
-##  8 Wolf Alice My Love Is Cool       4     8 Flash your teeth thou~ Moaning Lisa~
-##  9 Wolf Alice My Love Is Cool       4     9 A-ah-ah-ah-ah-ah-ah-a~ Moaning Lisa~
-## 10 Wolf Alice My Love Is Cool       4    10 Scrap the blues if th~ Moaning Lisa~
-## # ... with 119 more rows</code></pre>
+<pre><code>## # A tibble: 214 x 6
+##    artist     album           track_n  line lyric                    track_title
+##    &lt;chr&gt;      &lt;chr&gt;             &lt;int&gt; &lt;int&gt; &lt;chr&gt;                    &lt;chr&gt;      
+##  1 Wolf Alice My Love Is Cool       2     1 Shake your hair, have s~ Bros       
+##  2 Wolf Alice My Love Is Cool       2     2 Forget our mothers and ~ Bros       
+##  3 Wolf Alice My Love Is Cool       2     3 Oh, I&#39;m so lucky, you a~ Bros       
+##  4 Wolf Alice My Love Is Cool       2     4 Oh, there&#39;s no one, the~ Bros       
+##  5 Wolf Alice My Love Is Cool       2     5 Are your lights on?      Bros       
+##  6 Wolf Alice My Love Is Cool       2     6 Are your lights still o~ Bros       
+##  7 Wolf Alice My Love Is Cool       2     7 I&#39;ll keep you safe       Bros       
+##  8 Wolf Alice My Love Is Cool       2     8 You keep me strong       Bros       
+##  9 Wolf Alice My Love Is Cool       2     9 Remember when we cut ou~ Bros       
+## 10 Wolf Alice My Love Is Cool       2    10 We both looked like boy~ Bros       
+## # ... with 204 more rows</code></pre>
 <p>Agora temos todas as letras de todas as músicas dos 3 álbums <strong>SO QUE NÃO!</strong>. Deu pra ver o problema descrito acima.</p>
 <!-- >Getting lyrics for albums is slightly more involved. It first calls genius_tracklist() which first calls gen_album_url() then using the handy package rvest scrapes the song titles, track numbers, and song lyric urls. Next, the song urls from the output are iterated over and fed to genius_url(). -->
 <p>Aqui acontece a mesma coisa. Cada execução, dados diferentes.</p>
 <pre class="r"><code>genius_album(artist = &#39;Wolf Alice&#39;, album = &#39;Blue Weekend&#39;, info = &#39;all&#39;)</code></pre>
 <pre><code>## Joining, by = c(&quot;album_name&quot;, &quot;track_n&quot;, &quot;track_url&quot;, &quot;track_title&quot;)</code></pre>
-<pre><code>## # A tibble: 134 x 8
+<pre><code>## # A tibble: 83 x 8
 ##    album_name   track_n artist  track_title  line element element_artist lyric  
 ##    &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;  
-##  1 Blue Weekend       1 Wolf A~ The Beach       1 Verse 1 Wolf Alice     When w~
-##  2 Blue Weekend       1 Wolf A~ The Beach       2 Verse 1 Wolf Alice     In thu~
-##  3 Blue Weekend       1 Wolf A~ The Beach       3 Verse 1 Wolf Alice     Still ~
-##  4 Blue Weekend       1 Wolf A~ The Beach       4 Verse 1 Wolf Alice     But I&#39;~
-##  5 Blue Weekend       1 Wolf A~ The Beach       5 Chorus  Wolf Alice     Let me~
-##  6 Blue Weekend       1 Wolf A~ The Beach       6 Chorus  Wolf Alice     Let ot~
-##  7 Blue Weekend       1 Wolf A~ The Beach       7 Chorus  Wolf Alice     We don~
-##  8 Blue Weekend       1 Wolf A~ The Beach       8 Verse 2 Wolf Alice     When w~
-##  9 Blue Weekend       1 Wolf A~ The Beach       9 Verse 2 Wolf Alice     We cli~
-## 10 Blue Weekend       1 Wolf A~ The Beach      10 Verse 2 Wolf Alice     Are we~
-## # ... with 124 more rows</code></pre>
+##  1 Blue Weekend       2 Wolf A~ Delicious ~     1 Verse 1 Wolf Alice     Could ~
+##  2 Blue Weekend       2 Wolf A~ Delicious ~     2 Verse 1 Wolf Alice     The vi~
+##  3 Blue Weekend       2 Wolf A~ Delicious ~     3 Verse 1 Wolf Alice     Some g~
+##  4 Blue Weekend       2 Wolf A~ Delicious ~     4 Verse 1 Wolf Alice     It see~
+##  5 Blue Weekend       2 Wolf A~ Delicious ~     5 Verse 1 Wolf Alice     I&#39;m so~
+##  6 Blue Weekend       2 Wolf A~ Delicious ~     6 Verse 1 Wolf Alice     I&#39;ve o~
+##  7 Blue Weekend       2 Wolf A~ Delicious ~     7 Verse 1 Wolf Alice     Could ~
+##  8 Blue Weekend       2 Wolf A~ Delicious ~     8 Verse 1 Wolf Alice     Ask me~
+##  9 Blue Weekend       2 Wolf A~ Delicious ~     9 Chorus  Wolf Alice     I, I w~
+## 10 Blue Weekend       2 Wolf A~ Delicious ~    10 Chorus  Wolf Alice     Oh, I ~
+## # ... with 73 more rows</code></pre>
 <p>Já que o pacote genius não funfa (do jeito que eu queria), bora tentar de outra maneira, usando o pacote Geniusr.</p>
 </div>
 <div id="usando-a-api-do-genius" class="section level3">
@@ -457,19 +453,19 @@ allLyrics &lt;- allLyrics %&gt;%
 <p>Dando uma olhada:</p>
 <pre class="r"><code>head(allLyrics)</code></pre>
 <pre><code>##   song_id           album                                              line
-## 1  697872 My Love Is Cool She needs a lover to escape her father and mother
-## 2  697872 My Love Is Cool      She hopes for some other way out of the hole
-## 3  697872 My Love Is Cool          She&#39;s over achieving, chasing her dreams
-## 4  697872 My Love Is Cool And coming down slowly, yeah, it&#39;s out of control
-## 5  697872 My Love Is Cool         A-ah-ah-ah-ah-ah-ah-ah-ah-ah-ah-ah-ah-ahh
-## 6  697872 My Love Is Cool           Scrap the blues if the blues don&#39;t work
-##   section_name section_artist          song_name artist_name
-## 1      Verse 1     Wolf Alice Moaning Lisa Smile  Wolf Alice
-## 2      Verse 1     Wolf Alice Moaning Lisa Smile  Wolf Alice
-## 3      Verse 1     Wolf Alice Moaning Lisa Smile  Wolf Alice
-## 4      Verse 1     Wolf Alice Moaning Lisa Smile  Wolf Alice
-## 5       Chorus     Wolf Alice Moaning Lisa Smile  Wolf Alice
-## 6       Chorus     Wolf Alice Moaning Lisa Smile  Wolf Alice</code></pre>
+## 1 2303077 My Love Is Cool         Baby&#39;s not made of China, baby&#39;s just sad
+## 2 2303077 My Love Is Cool Tears should fall if they have to, maybe they had
+## 3 2303077 My Love Is Cool                    God knows, she&#39;s ever grateful
+## 4 2303077 My Love Is Cool                             Maybe she&#39;s going mad
+## 5 2303077 My Love Is Cool       Baby hears an echo in the back of her brain
+## 6 2303077 My Love Is Cool       Baby hears an echo in the back of her brain
+##   section_name section_artist                song_name artist_name
+## 1      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
+## 2      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
+## 3      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
+## 4      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
+## 5      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
+## 6      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice</code></pre>
 <!-- #### Outra forma fazendo por album -->
 </div>
 <div id="analise-do-texto" class="section level3">
@@ -643,6 +639,8 @@ w_a_plot</code></pre>
 ggsave(filename = &quot;wolf_alice_sentiment_chart.png&quot;, plot = w_a_plot, width = 36, height = 24, units = &quot;cm&quot;,
 type = &quot;cairo&quot;)</code></pre>
 <p>Pelo que está no gráfico é possível ter uma ideia de que o ‘Blue Weekend’ seria o trabalho mais positivo ‘sentimentalmente’. Enquanto isso, o ‘Visions of a Life’ seria bem mais ‘negativo’ e, o segundo álbum, ‘My Love Is Cool’, seria um meio termo.</p>
+<p>Lembrando também que existem maneiras muito mais bem feitas e robustas de se analisar a ‘positividade’, a ‘raiva’ e até a ‘depressividade’ de músicas de um álbum ou artista.Eu não tenho garbo e elegância para tal, logo deixo aqui referências que conseguem fazer coisas mais legais e até bonitas - vide a <a href="https://www.rcharlie.com/images/blog/fitter-happier/album_chart.html">análise do nível de tristeza das músicas do Radiohead</a> - feita pelo
+Charlie Thompson (aka RCharlie) e o <a href="http://www.rcharlie.net/sentify/">Sentify</a>, que, usando <a href="https://shiny.rstudio.com/">shiny</a>, plota um gráfico interativo, com eixos que dividem o som do artista pesquisado por você, em sentimentos (lembra bastante um ‘political compass’).</p>
 </div>
 </div>
 <div id="referências" class="section level2">

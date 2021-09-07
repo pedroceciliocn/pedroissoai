@@ -17,6 +17,7 @@ image:
   focal_point: ''
   preview_only: no
 projects: []
+self_contained: false
 ---
 
 ```{r setup, include=FALSE}
@@ -98,6 +99,9 @@ get_my_top_artists_or_tracks(type = 'tracks', time_range = 'short_term', limit =
 ```
 
 ### Pegando os dados do Wolf Alice
+Pelo simples motivo de ser a minha banda favorita do momento. [Ouçam](https://open.spotify.com/embed/artist/3btzEQD6sugImIHPMRgkwV), é muito boa!
+
+
 ```{r}
 wolf_alice <- get_artist_audio_features('wolf alice')
 ```
@@ -165,6 +169,7 @@ wolf_alice %>% ggplot(aes(x = valence, y = album_name, fill = ..x..)) +
 ```
 **Tá, mas o que essas curvas realmente significam ou mostram?**
 Elas mostram a distribuição de músicas de acordo justamente com a 'positividade'. Olhando pra cada uma delas, para cada um dos álbuns, nota-se que há um maior 'volume' de faixas não tão positivas assim nos 3 álbuns (por isso a maior montanha está em torno dos valores de 0~0.25).
+
 
 ## Agora usando o Genius
 
@@ -526,7 +531,10 @@ w_a_plot
 ggsave(filename = "wolf_alice_sentiment_chart.png", plot = w_a_plot, width = 36, height = 24, units = "cm",
 type = "cairo")
 ```
-Pelo que está no gráfico é possível ter uma ideia de que o 'Blue Weekend' seria o trabalho mais positivo 'sentimentalmente'. Enquanto isso, o 'Visions of a Life' seria bem mais 'negativo' e, o segundo álbum, 'My Love Is Cool', seria um meio termo. 
+Pelo que está no gráfico é possível ter uma ideia de que o 'Blue Weekend' seria o trabalho mais positivo 'sentimentalmente'. Enquanto isso, o 'Visions of a Life' seria bem mais 'negativo' e, o segundo álbum, 'My Love Is Cool', seria um meio termo.
+
+Lembrando também que existem maneiras muito mais bem feitas e robustas de se analisar a 'positividade', a 'raiva' e até a 'depressividade' de músicas de um álbum ou artista.Eu não tenho garbo e elegância para tal, logo deixo aqui referências que conseguem fazer coisas mais legais e até bonitas - vide a [análise do nível de tristeza das músicas do Radiohead](https://www.rcharlie.com/images/blog/fitter-happier/album_chart.html) - feita pelo 
+Charlie Thompson (aka RCharlie) e o [Sentify](http://www.rcharlie.net/sentify/), que, usando [shiny](https://shiny.rstudio.com/), plota um gráfico interativo, com eixos que dividem o som do artista pesquisado por você, em sentimentos (lembra bastante um 'political compass').
 
 ## Referências
 - Post do Tom MacNamara aka @Statnamara no [r-bloggers.com](https://www.r-bloggers.com/2021/01/scraping-analysing-and-visualising-lyrics-in-r/)
