@@ -135,9 +135,7 @@ wolf_alice %>%
   distinct(album_name)
 ```
 
-Dando uma olhada graficamente usando uma das informações dadas pela API. A coluna 'valence', mostra o dado de valência, ou seja, de 'positividade' ou 'regozijo' de uma faixa. Os valores vão de 0 a 1.
-
-### Alguns Gráficos
+Dando uma olhada usando uma das informações dadas pela API, vemos que a coluna 'valence' mostra o dado de valência, que é o nível de 'positividade' ou 'regozijo' de uma faixa. Os valores vão de 0 a 1.
 
 #### Nível de 'regozijo'
 
@@ -184,7 +182,7 @@ Agora tentemos usar o pacote Genius para acessar as letras do Wolf Alice:
 
 #### Carregando o pacote
 
-Nesse caso específico, diferente do pacote usado pro Spotify, não precisamos 
+Nesse caso específico, diferente do pacote usado pro Spotify, não precisamos (por enquanto) de um token. O pacote já facilita pra gente.
 ```{r message=FALSE, warning=FALSE}
 library(genius)
 ```
@@ -204,25 +202,25 @@ wa_all_lyrics <- wolf_alice_albums %>%
 
  
 ```
-Dando uma olhada. Fica claro que tem coisa faltando (e muita), e isso é um problema que não consegui resolver.
+Dando uma olhada. Fica claro que tem coisa faltando (e muita - por exemplo, o número da faixa no álbum), e isso é um problema que não consegui resolver.
 Ele está relacionado com o tempo que demora pra que se obtenha uma resposta na requisição, que acaba fazendo com que trechos sumam e músicas fiquem sem letra alguma (e de formas diferentes a cada vez que o código é rodado). Pra resolver isso seria necessário fazer algum tipo de configuração ou até modificação na função para que se *setasse* esse tempo de espera até que um dado fosse recebido e em seguida, finalmente, o próximo fosse requisitado. Mas eu não sei como fazer. *(É meio complicado mostrar corretamente as partes faltantes das letras nesse post, logo, confie em mim)*
 ```{r}
-wa_all_lyrics
+tail(wa_all_lyrics)
 ```
 
-Agora temos todas as letras de todas as músicas dos 3 álbums **SO QUE NÃO!**. Deu pra ver o problema descrito acima.
+Agora teríamos todas as letras de todas as músicas dos 3 álbums **só que infelizmente, não!** :disappointed_relieved:. Deu pra ver o problema descrito acima.
 
 
 <!-- >Getting lyrics for albums is slightly more involved. It first calls genius_tracklist() which first calls gen_album_url() then using the handy package rvest scrapes the song titles, track numbers, and song lyric urls. Next, the song urls from the output are iterated over and fed to genius_url(). -->
 
-Aqui acontece a mesma coisa. Cada execução, dados diferentes.
+Aqui acontece a mesma coisa. Cada execução retorna dados diferentes e faltando sempre alguma coisa.
 ```{r}
 genius_album(artist = 'Wolf Alice', album = 'Blue Weekend', info = 'all')
 ```
 
 Já que o pacote genius não funfa (do jeito que eu queria), bora tentar de outra maneira, usando o pacote Geniusr.
 
-### Usando a API do Genius
+### Usando a API do Genius e o geniusr
 
 ```{r token genius for real, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # isso aqui só precisaria de o webscrapping la doidao funfasse
@@ -244,7 +242,7 @@ Sys.setenv(GENIUS_API_TOKEN = 'sYSXHBuLDFI-Afrxxj1IYUYG7s8n9tpARSxRfaQuqlm_hJgd2
 Sys.setenv(GENIUS_API_TOKEN = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
 ```
-Pegue o token lá da página de desenvolvedor do Genius e cole. Se assim não funcionar imediatamente, preste atenção na hora que rodar, o Rstudio pode pedir no console o token.
+Pra usarmos o [*geniusr*](https://github.com/ewenme/geniusr), precisaremos de autenticação da API do Genius. Pegue o token lá da página de desenvolvedor do Genius e cole. Se assim não funcionar imediatamente, preste atenção na hora que rodar, o Rstudio pode pedir no console o token. Cole no console e continue.
 
 ```{r eval=FALSE, include=FALSE}
 #essa parte não precisa rodar, já que no fim não funfa
@@ -278,7 +276,7 @@ library("geniusr")
 search_artist("Wolf Alice")
 ```
 
-
+Agora sabemos que o ID da banda é '326078'.
 ```{r message=FALSE, warning=FALSE}
 
 songs <- get_artist_songs_df(326078) 
@@ -289,14 +287,14 @@ ids <- c(as.character(songs$song_id))
 # Criando um dataframe vazio
 allLyrics <- data.frame()
 
-# # Adicionando as letras ao dataframe
-# for (id in ids) {
-#   allLyrics <- rbind(get_lyrics_id(id), allLyrics)
-# }
-# # O problema é que dessa forma algumas letras ficam de fora (como no caso anterior)
+# Adicionando as letras ao dataframe
+for (id in ids) {
+  allLyrics <- rbind(get_lyrics_id(id), allLyrics)
+}
+# O problema é que dessa forma algumas letras ficam de fora (como no caso anterior)
 ```
 
-Aqui uma outra forma de fazer o mesmo contornando o problema:
+Aqui uma forma complementar de fazer o mesmo contornando o problema:
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
 while (length(ids) > 0) {
   for (id in ids) {
@@ -320,7 +318,7 @@ allIds$album <- ""
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
 for (song in allIds$song_id) {
   allIds[match(song,allIds$song_id),2] <- get_song_df(song)[12]
-  # print(allIds[match(song,allIds$song_id),])
+  # print(allIds[match(song,allIds$song_id),]) # outro print somente pra verificação
 }
 
 allLyrics <- full_join(allIds, allLyrics)
@@ -349,6 +347,7 @@ Dando uma olhada:
 ```{r paged.print=TRUE}
 head(allLyrics)
 ```
+Aparentemente tá tudo ok. É legal dar um View(allLyrics) pra verificar no próprio Rstudio com o csv ficou (ou então abrir o csv externamente).
 
 <!-- #### Outra forma fazendo por album -->
 ```{r eval=FALSE, include=FALSE}
@@ -373,8 +372,8 @@ allLyricsTokenised %>%
 
 Mas apareceram várias 'stop words', que são palavras que apenas funcionam como conectivos ou não tem significado relevante pra uma análise. Então temos que remover essas palavras.
 ```{r paged.print=TRUE}
-# removendo as stopwords
-stop_words <- (stopwords::stopwords("en", source = "snowball"))
+# removendo as stop words
+stop_words <- (stopwords::stopwords("en", source = "snowball")) 
 tidyLyrics <- allLyricsTokenised %>%
   filter(!word %in% stop_words)
 
@@ -383,10 +382,11 @@ tidyLyrics %>%
   count(word, sort = TRUE) %>% 
   head()
 ```
-*Love* foi a mais frequente (o 'ah' não conta né?)
+No caso de uma banda/artista/letra em pt-br é possível remover stop words da nossa língua (verificando a documentação ou mandando um ?stopwords no console, temos mais informações).
 
-Agora iremos contar por album e montar uma visualização.
+No fim, *Love* foi a mais frequente (o 'ah' não conta né? logo mais vamos retirar esse e outros casos específicos de stop words)
 
+Agora iremos contar por album e montar uma visualização:
 ```{r}
 topFew <- tidyLyrics %>%
   group_by(album, word) %>%
@@ -394,6 +394,7 @@ topFew <- tidyLyrics %>%
   ungroup()
 ```
 
+Arrumando mais um pouco:
 ```{r message=FALSE, warning=FALSE}
 
 # removendo colunas extras
@@ -407,8 +408,8 @@ topFew <- topFew %>%
   ungroup()
 ```
 
+E agora retirando mais algumas palavras ('ooh's, 'oh's e 'ah's ) e nos limitando às que aparecem menos de 40 vezes:
 ```{r}
-# removendo 'ooh's, 'oh's e 'ah's e limitando a palavras que aparecem pelo menos 40 vezes
 topFew <- topFew %>% 
   group_by(word) %>%
   mutate(total = sum(n)) %>%
@@ -418,6 +419,7 @@ topFew <- topFew %>%
 ```
 
 ### Visualizando
+Faremos mais alguns preparativos antes do plot:
 ```{r}
 # uma cor pra cada album (usei uma página pra pegar a cor predominante da capa de cada um)
 albumCol <- c("#e5deaa",      # My Love Is Cool
@@ -477,8 +479,9 @@ wordsPlot
 ggsave(filename = "wolfalice_chart.png", plot = wordsPlot, width = 30, height = 24, units = "cm",
 type = "cairo")
 ```
-Pelo gráfico o 'My Love Is Cool' tem uma maior proporção das palavras mais 
+Pelo gráfico o 'My Love Is Cool' tem uma maior proporção das palavras mais usadas nas letras  - talvez por ter mais músicas, ou as letras serem mais longas (fica aí o questionamento).
 
+Agora faremos mais alguns preparativos pro último plot:
 ```{r message=FALSE, warning=FALSE}
 # criando o dataframe 'sentimental'
 wolf_alice_sentiments <- tidyLyrics %>%
@@ -487,7 +490,7 @@ wolf_alice_sentiments <- tidyLyrics %>%
   spread(sentiment, n, fill = 0) %>%
   mutate(sentiment = positive - negative)
 
-# Factor as we did above
+# Usando os álbuns como fatores novamente, como feito no último plot
 wolf_alice_sentiments$album <- factor(wolf_alice_sentiments$album, 
                                levels = c("My Love Is Cool",
                                           "Visions of a Life",
@@ -495,7 +498,7 @@ wolf_alice_sentiments$album <- factor(wolf_alice_sentiments$album,
                                ))
 
 
-# salvando o plot
+# atribuindo o plot a uma variável (não é estritamente necessário)
 w_a_plot <- ggplot(wolf_alice_sentiments,
                    aes(reorder(song_name, 
                                sentiment), 
@@ -532,7 +535,7 @@ w_a_plot <- ggplot(wolf_alice_sentiments,
   
   coord_flip()
 
-w_a_plot
+w_a_plot # chamando o plot
 
 # salvando a imagem
 ggsave(filename = "wolf_alice_sentiment_chart.png", plot = w_a_plot, width = 36, height = 24, units = "cm",
