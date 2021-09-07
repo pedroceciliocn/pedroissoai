@@ -15,7 +15,7 @@ tags:
   - API
   - Genius
 subtitle: ''
-summary: ''
+summary: 'Breve análise de dados de músicas e álbuns usando a linguagem R e os pacotes para uso das APIs do Spotify e do Genius.'
 authors: ['Pedro Neto']
 lastmod: '2021-09-07T02:48:25-03:00'
 featured: no
@@ -106,7 +106,8 @@ get_my_top_artists_or_tracks(type = 'tracks', time_range = 'short_term', limit =
 ```
 
 ### Pegando os dados do Wolf Alice
-Pelo simples motivo de ser a minha banda favorita do momento. [Ouçam](https://open.spotify.com/embed/artist/3btzEQD6sugImIHPMRgkwV), é muito boa!
+Pelo simples motivo de ser a minha banda favorita do momento. Ouçam, é muito boa!
+{{< youtube xzH6toY_EPw >}}
 
 
 ```{r}
