@@ -11,10 +11,13 @@ authors: []
 lastmod: '2021-09-04T17:31:00-03:00'
 featured: no
 image:
-  caption: ''
-  focal_point: ''
-  preview_only: no
+  placement: 1
+  caption: ""
+  focal_point: "Center"
+  preview_only: true
+  alt_text: An optional description of the image for screen readers.
 projects: []
+
 ---
 ### **Tutorial**
 #### **1. Baixe o Windows 10:** 
