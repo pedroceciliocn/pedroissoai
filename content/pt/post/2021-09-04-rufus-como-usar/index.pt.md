@@ -17,7 +17,7 @@ image:
   preview_only: true
   alt_text: An optional description of the image for screen readers.
 projects: []
-
+private: true
 ---
 ### **Tutorial**
 #### **1. Baixe o Windows 10:** 

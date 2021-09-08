@@ -23,6 +23,7 @@ authors: ['Pedro Neto']
 lastmod: '2021-09-07T02:48:25-03:00'
 featured: no
 image:
+  placement: 2
   caption: ''
   focal_point: 'Left'
   preview_only: yes
