@@ -2,6 +2,10 @@
 title: Analises usando spotifyr e genius
 author: Pedro Neto
 date: '2021-09-07'
+output:   
+  html_document:
+    df_print: paged
+    keep_md: yes
 slug: analises-usando-spotifyr-e-genius
 categories:
   - random
@@ -25,6 +29,7 @@ image:
   preview_only: no
 projects: []
 self_contained: false
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -33,7 +38,8 @@ knitr::opts_chunk$set(echo = TRUE)
 <!-- ## Análises rápidas da discografia do Wolf Alice usando dados do Spotify e do Genius -->
 Fiz esse post inspirado por posts do Tom MacNamara aka @Statnamara no [r-bloggers.com](https://www.r-bloggers.com/2021/01/scraping-analysing-and-visualising-lyrics-in-r/), [da Simran Vatsa no Medium](https://medium.com/@simranvatsa5/taylor-f656e2a09cc3), [do Charlie Thompson na página pessoal dele](https://www.rcharlie.com/blog/fitter-happier/) e da [Página do pacote spotifyR (criado pelo próprio RCharlie)](https://www.rcharlie.com/spotifyr/). 
 
-Caso alguém realmente queira fazer algo parecido (e mais bem feito), recomendo que siga os posts referidos ao invés do meu. Não sou grande expert e praticamente copiei um pouco de cada um deles (em alguns casos consegui inclusive copiar errado! tanto que teve coisa que não funcionou). Mas se por ventura você chegou até aqui, obrigado e vamos lá.
+Recomendo para uma visão mais aprofundada, uma visita a todas essas páginas, bem como às páginas das documentações e dos repositórios dos desenvolvedores e dos pacotes usados. Dito isso, vamos lá.
+<!-- Caso alguém realmente queira fazer algo parecido (e mais bem feito), recomendo que siga os posts referidos ao invés do meu. Não sou grande expert e praticamente copiei um pouco de cada um deles (em alguns casos consegui inclusive copiar errado! tanto que teve coisa que não funcionou). Mas se por ventura você chegou até aqui, obrigado e vamos lá. -->
 
 
 ### Chamando os primeiros pacotes
@@ -46,7 +52,7 @@ Ao longo do post, chamaremos mais alguns.
 ### Autenticação da API do Spotify
 Temos que pegar os dados a partir de uma conta de desenvolvedor [nesse link](https://developer.spotify.com/my-applications/#!/applications)
 
-```{r tokens for real, echo=FALSE}
+```{r include=FALSE}
 Sys.setenv(SPOTIFY_CLIENT_ID = 'a98de2fcd0f945fe846ea9601a6061a7')
 Sys.setenv(SPOTIFY_CLIENT_SECRET = 'b444d741ecc04bf5bba0d9a5953d4709')
 
@@ -54,10 +60,23 @@ access_token <- spotifyr::get_spotify_access_token(
   client_id = Sys.getenv("SPOTIFY_CLIENT_ID"),
   client_secret = Sys.getenv("SPOTIFY_CLIENT_SECRET")
 )
+```
+
+
+```{r tokens for real, eval=FALSE, include=FALSE}
+
+
+spotify_client_id = config::get("SPOTIFY_CLIENT_ID", "spotify_keys", file = "config_env.yaml")
+spotify_client_secret = config::get("SPOTIFY_CLIENT_SECRET","spotify_keys", file = "config_env.yaml")
+
+access_token <- spotifyr::get_spotify_access_token(
+  client_id = Sys.getenv("spotify_client_id"),
+  client_secret = Sys.getenv("spotify_client_secret")
+)
 
 ```
 
-Coloque os dados que você gerou.
+Coloque os dados que você gerou. Tenha cuidado ao disponibilizar seu código (você pode acabar mostrando seus tokens). Uma solução interessante pra isso é o pacote [config](https://github.com/rstudio/config). Nele você consegue salvar suas keys em um arquivo .yaml e depois pegar elas. Com isso há a possibilidade de se adicionar o arquivo ao gitignore do repositório e esconder as chaves no código compartilhado.
 ```
 Sys.setenv(SPOTIFY_CLIENT_ID = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 Sys.setenv(SPOTIFY_CLIENT_SECRET = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
@@ -107,7 +126,6 @@ get_my_top_artists_or_tracks(type = 'tracks', time_range = 'short_term', limit =
 
 ### Pegando os dados do Wolf Alice
 Pelo simples motivo de ser a minha banda favorita do momento. Ouçam, é muito boa!
-{{< youtube xzH6toY_EPw >}}
 
 
 ```{r}
