@@ -3,8 +3,7 @@ title: Analises usando spotifyr e genius
 author: Pedro Neto
 date: '2021-09-07'
 output:   
-  html_document:
-    df_print: paged
+  html_document: 
     keep_md: yes
 slug: analises-usando-spotifyr-e-genius
 categories:
@@ -361,33 +360,29 @@ wa_all_lyrics &lt;- wolf_alice_albums %&gt;%
 Ele está relacionado com o tempo que demora pra que se obtenha uma resposta na requisição, que acaba fazendo com que trechos sumam e músicas fiquem sem letra alguma (e de formas diferentes a cada vez que o código é rodado). Pra resolver isso seria necessário fazer algum tipo de configuração ou até modificação na função para que se <em>setasse</em> esse tempo de espera até que um dado fosse recebido e em seguida, finalmente, o próximo fosse requisitado. Mas eu não sei como fazer. <em>(É meio complicado mostrar corretamente as partes faltantes das letras nesse post, logo, confie em mim)</em></p>
 <pre class="r"><code>tail(wa_all_lyrics)</code></pre>
 <pre><code>## # A tibble: 6 x 6
-##   artist     album           track_n  line lyric track_title
-##   &lt;chr&gt;      &lt;chr&gt;             &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;      
-## 1 Wolf Alice My Love Is Cool       7    NA &lt;NA&gt;  Silk       
-## 2 Wolf Alice My Love Is Cool       8    NA &lt;NA&gt;  Freazy     
-## 3 Wolf Alice My Love Is Cool       9    NA &lt;NA&gt;  Giant Peach
-## 4 Wolf Alice My Love Is Cool      10    NA &lt;NA&gt;  Swallowtail
-## 5 Wolf Alice My Love Is Cool      11    NA &lt;NA&gt;  Soapy Water
-## 6 Wolf Alice My Love Is Cool      12    NA &lt;NA&gt;  Fluffy</code></pre>
+##   artist     album             track_n  line lyric                track_title   
+##   &lt;chr&gt;      &lt;chr&gt;               &lt;int&gt; &lt;int&gt; &lt;chr&gt;                &lt;chr&gt;         
+## 1 Wolf Alice Visions of a Life      NA    15 Feed my hungry mind  Visions of a ~
+## 2 Wolf Alice Visions of a Life      NA    16 Where are you when ~ Visions of a ~
+## 3 Wolf Alice Visions of a Life      NA    17 I left this world b~ Visions of a ~
+## 4 Wolf Alice Visions of a Life      NA    18 For the world I&#39;d b~ Visions of a ~
+## 5 Wolf Alice Visions of a Life      NA    19 Feed my hungry mind  Visions of a ~
+## 6 Wolf Alice Visions of a Life      NA    20 Where are you when ~ Visions of a ~</code></pre>
 <p>Agora teríamos todas as letras de todas as músicas dos 3 álbums <strong>só que infelizmente, não!</strong> :disappointed_relieved:. Deu pra ver o problema descrito acima.</p>
 <!-- >Getting lyrics for albums is slightly more involved. It first calls genius_tracklist() which first calls gen_album_url() then using the handy package rvest scrapes the song titles, track numbers, and song lyric urls. Next, the song urls from the output are iterated over and fed to genius_url(). -->
 <p>Aqui acontece a mesma coisa. Cada execução retorna dados diferentes e faltando sempre alguma coisa.</p>
-<pre class="r"><code>genius_album(artist = &#39;Wolf Alice&#39;, album = &#39;Blue Weekend&#39;, info = &#39;all&#39;)</code></pre>
+<pre class="r"><code>tail(genius_album(artist = &#39;Wolf Alice&#39;, album = &#39;Blue Weekend&#39;, info = &#39;all&#39;))</code></pre>
 <pre><code>## Joining, by = c(&quot;album_name&quot;, &quot;track_n&quot;, &quot;track_url&quot;, &quot;track_title&quot;)</code></pre>
-<pre><code>## # A tibble: 116 x 8
-##    album_name   track_n artist  track_title  line element element_artist lyric  
-##    &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;  
-##  1 Blue Weekend       1 Wolf A~ The Beach       1 Verse 1 Wolf Alice     When w~
-##  2 Blue Weekend       1 Wolf A~ The Beach       2 Verse 1 Wolf Alice     In thu~
-##  3 Blue Weekend       1 Wolf A~ The Beach       3 Verse 1 Wolf Alice     Still ~
-##  4 Blue Weekend       1 Wolf A~ The Beach       4 Verse 1 Wolf Alice     But I&#39;~
-##  5 Blue Weekend       1 Wolf A~ The Beach       5 Chorus  Wolf Alice     Let me~
-##  6 Blue Weekend       1 Wolf A~ The Beach       6 Chorus  Wolf Alice     Let ot~
-##  7 Blue Weekend       1 Wolf A~ The Beach       7 Chorus  Wolf Alice     We don~
-##  8 Blue Weekend       1 Wolf A~ The Beach       8 Verse 2 Wolf Alice     When w~
-##  9 Blue Weekend       1 Wolf A~ The Beach       9 Verse 2 Wolf Alice     We cli~
-## 10 Blue Weekend       1 Wolf A~ The Beach      10 Verse 2 Wolf Alice     Are we~
-## # ... with 106 more rows</code></pre>
+<pre><code>## # A tibble: 6 x 8
+##   album_name   track_n artist  track_title    line element element_artist lyric 
+##   &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt; 
+## 1 Blue Weekend      10 Wolf A~ No Hard Feel~    19 Verse 3 Wolf Alice     Somet~
+## 2 Blue Weekend      10 Wolf A~ No Hard Feel~    20 Verse 3 Wolf Alice     No ha~
+## 3 Blue Weekend      10 Wolf A~ No Hard Feel~    21 Verse 3 Wolf Alice     And w~
+## 4 Blue Weekend       4 &lt;NA&gt;    Smile            NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;  
+## 5 Blue Weekend       5 &lt;NA&gt;    Safe From He~    NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;  
+## 6 Blue Weekend      11 &lt;NA&gt;    The Beach II     NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</code></pre>
+<!-- Para uma melhor visualização, usando o pacote DT. Percebe-se que há elementos faltantes. -->
 <p>Já que o pacote genius não funfa (do jeito que eu queria), bora tentar de outra maneira, usando o pacote Geniusr.</p>
 </div>
 <div id="usando-a-api-do-genius-e-o-geniusr" class="section level3">
@@ -457,20 +452,20 @@ allLyrics &lt;- allLyrics %&gt;%
 <pre class="r"><code>allLyrics %&gt;% write_csv(&quot;allLyrics.csv&quot;)</code></pre>
 <p>Dando uma olhada:</p>
 <pre class="r"><code>head(allLyrics)</code></pre>
-<pre><code>##   song_id           album                                              line
-## 1 2303077 My Love Is Cool         Baby&#39;s not made of China, baby&#39;s just sad
-## 2 2303077 My Love Is Cool Tears should fall if they have to, maybe they had
-## 3 2303077 My Love Is Cool                    God knows, she&#39;s ever grateful
-## 4 2303077 My Love Is Cool                             Maybe she&#39;s going mad
-## 5 2303077 My Love Is Cool       Baby hears an echo in the back of her brain
-## 6 2303077 My Love Is Cool       Baby hears an echo in the back of her brain
-##   section_name section_artist                song_name artist_name
-## 1      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
-## 2      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
-## 3      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
-## 4      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
-## 5      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice
-## 6      Verse 1     Wolf Alice Baby Ain’t Made of China  Wolf Alice</code></pre>
+<pre><code>##   song_id           album                                line section_name
+## 1 2149648 My Love Is Cool  Your broad shoulders, my wet tears      Verse 1
+## 2 2149648 My Love Is Cool     You&#39;re alive and I&#39;m still here      Verse 1
+## 3 2149648 My Love Is Cool   As some half-human creature thing      Verse 1
+## 4 2149648 My Love Is Cool Can you bring life to anything? Ooh      Verse 1
+## 5 2149648 My Love Is Cool     (&quot;Take this to make you better&quot;      Verse 1
+## 6 2149648 My Love Is Cool       Though eventually you&#39;ll die)      Verse 1
+##   section_artist song_name artist_name
+## 1     Wolf Alice      Silk  Wolf Alice
+## 2     Wolf Alice      Silk  Wolf Alice
+## 3     Wolf Alice      Silk  Wolf Alice
+## 4     Wolf Alice      Silk  Wolf Alice
+## 5     Wolf Alice      Silk  Wolf Alice
+## 6     Wolf Alice      Silk  Wolf Alice</code></pre>
 <p>Aparentemente tá tudo ok. É legal dar um View(allLyrics) pra verificar no próprio Rstudio com o csv ficou (ou então abrir o csv externamente).</p>
 <!-- #### Outra forma fazendo por album -->
 </div>
@@ -484,12 +479,12 @@ allLyrics &lt;- allLyrics %&gt;%
   count(word, sort = TRUE) %&gt;% 
   head()</code></pre>
 <pre><code>##   word   n
-## 1    i 532
-## 2  you 454
-## 3  the 433
-## 4  and 352
-## 5   to 303
-## 6    a 243</code></pre>
+## 1    i 545
+## 2  the 506
+## 3  you 460
+## 4  and 345
+## 5   to 325
+## 6    a 257</code></pre>
 <p>Mas apareceram várias ‘stop words’, que são palavras que apenas funcionam como conectivos ou não tem significado relevante pra uma análise. Então temos que remover essas palavras.</p>
 <pre class="r"><code># removendo as stop words
 stop_words &lt;- (stopwords::stopwords(&quot;en&quot;, source = &quot;snowball&quot;)) 
@@ -500,13 +495,13 @@ tidyLyrics &lt;- allLyricsTokenised %&gt;%
 tidyLyrics %&gt;%
   count(word, sort = TRUE) %&gt;% 
   head()</code></pre>
-<pre><code>##      word   n
-## 1      ah 130
-## 2    love  98
-## 3    time  72
-## 4    like  69
-## 5 friends  63
-## 6    just  55</code></pre>
+<pre><code>##   word   n
+## 1   ah 202
+## 2 love 110
+## 3 time  74
+## 4 like  72
+## 5  can  64
+## 6 just  64</code></pre>
 <p>No caso de uma banda/artista/letra em pt-br é possível remover stop words da nossa língua (verificando a documentação ou mandando um ?stopwords no console, temos mais informações).</p>
 <p>No fim, <em>Love</em> foi a mais frequente (o ‘ah’ não conta né? logo mais vamos retirar esse e outros casos específicos de stop words)</p>
 <p>Agora iremos contar por album e montar uma visualização:</p>

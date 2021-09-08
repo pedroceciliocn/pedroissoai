@@ -3,8 +3,7 @@ title: Analises usando spotifyr e genius
 author: Pedro Neto
 date: '2021-09-07'
 output:   
-  html_document:
-    df_print: paged
+  html_document: 
     keep_md: yes
 slug: analises-usando-spotifyr-e-genius
 categories:
@@ -234,7 +233,12 @@ Agora teríamos todas as letras de todas as músicas dos 3 álbums **só que inf
 
 Aqui acontece a mesma coisa. Cada execução retorna dados diferentes e faltando sempre alguma coisa.
 ```{r}
-genius_album(artist = 'Wolf Alice', album = 'Blue Weekend', info = 'all')
+tail(genius_album(artist = 'Wolf Alice', album = 'Blue Weekend', info = 'all'))
+```
+
+<!-- Para uma melhor visualização, usando o pacote DT. Percebe-se que há elementos faltantes. -->
+```{r usando DT, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+DT::datatable(genius_album(artist = 'Wolf Alice', album = 'Blue Weekend', info = 'all'))
 ```
 
 Já que o pacote genius não funfa (do jeito que eu queria), bora tentar de outra maneira, usando o pacote Geniusr.
