@@ -13,7 +13,7 @@ featured: no
 image:
   placement: 1
   caption: ""
-  focal_point: "Center"
+  focal_point: "Left"
   preview_only: true
   alt_text: An optional description of the image for screen readers.
 projects: []

@@ -24,8 +24,8 @@ lastmod: '2021-09-07T02:48:25-03:00'
 featured: no
 image:
   caption: ''
-  focal_point: ''
-  preview_only: no
+  focal_point: 'Left'
+  preview_only: yes
 projects: []
 self_contained: false
     
