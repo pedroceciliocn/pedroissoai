@@ -1,0 +1,379 @@
+---
+title: Analisando conversas do WhatsApp com a/o sua/seu @
+author: Pedro Neto
+date: '2021-09-09'
+slug: analisando-conversas-do-whatsapp-com-a-o-sua-seu
+categories:
+  - for fun
+  - R
+  - random
+  - análise
+tags:
+  - R
+  - whatsapp
+subtitle: ''
+summary: 'Tem curiosidade pra saber o que é mais dito no seu grupo de amigos do WhatsApp? Ou até mesmo na sua conversa com a/o @ favorita/o? Com o pacote do R, [rwhatsapp](https://github.com/JBGruber/rwhatsapp) é possível dar uma boa olhada no que você anda fofocando no app.'
+authors: []
+lastmod: '2021-09-09T09:52:01-03:00'
+featured: no
+image:
+  placement: 2
+  caption: ''
+  focal_point: 'Left'
+  preview_only: false
+projects: []
+---
+
+Tem curiosidade pra saber o que é mais dito no seu grupo de amigos do WhatsApp? Ou até mesmo na sua conversa com a/o @ favorita/o? Com o pacote do R, [rwhatsapp](https://github.com/JBGruber/rwhatsapp) é possível dar uma boa olhada no que você anda fofocando no zap.
+
+## Começando
+A primeira coisa que você tem que fazer é ir no app do Whatsapp e exportar a conversa (de um grupo ou com uma pessoa). Será perguntado se você deseja incluir mídias (melhor não) e em seguida será gerado um arquivo .txt que você pode subir pro Drive por exemplo. Baixado o arquivo, podemos começar.
+
+Carregue os pacotes que serão usados:
+```{r primeiros pacotes carregados, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(rwhatsapp)
+library(lubridate)
+```
+
+Agora vamos carregar o arquivo .txt que foi baixado:
+```{r}
+chat <- rwhatsapp::rwa_read("Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt")
+```
+Lembre de colocar o endereço correto da pasta onde está o arquivo. Um bom pacote pra facilitar a localização de arquivos que você está tentando carregar sem ter que ficar digitando um endereço enorme e chato é o [here](https://here.r-lib.org/). Ele também é interessante pra códigos que você compartilha em repositórios públicos e páginas, pois aí o nome das suas pastas não aparecem de bobeira por aí.
+Mas no caso do arquivo estar na própria pasta do projeto, é só fazer como acima: simplesmente colar o nome do arquivo e da extensão.
+
+```{r}
+distinct(chat, author)
+```
+
+
+
+
+Vamos dar uma olhadela no que foi passado pra variável chat:
+```{r}
+tail(chat)
+```
+
+```{r}
+glimpse(chat)
+```
+
+Só com o que temos disponível até aqui já podemos fazer alguns plots.
+Primeiro podemos ver quantas mensagens por dia são mandadas:
+```{r}
+chat %>%                        
+  mutate(day = date(time)) %>% 
+  count(day) %>% 
+  ggplot(aes(day, n)) +
+  geom_bar(stat = "identity") +
+  ylab("") + xlab("") +
+  ggtitle("Mensagens por dia")
+```
+
+
+Agora separando por cores: 
+```{r}
+chat %>%   
+  group_by(author) %>% 
+  mutate(day = date(time)) %>% 
+  count(day) %>% 
+  ggplot(aes(day, n, fill = author), position = "dodge") + #ainda ta feio
+  geom_bar(stat = "identity") +
+  ylab("") + xlab("") +
+  ggtitle("Mensagens por dia") +
+  labs(fill = 'Autor') +
+  theme(
+    legend.position = c(.95, .95),
+    legend.justification = c("right", "top"),
+    legend.box.just = "right",
+    legend.margin = margin(6, 6, 6, 6)
+
+    ) +
+  theme(legend.title = element_text(size=10)) +
+  theme(legend.text = element_text(size=7))  
+```
+Nota-se que há alguns dias com mais de 500 mensagens, mas essa visualização não é tão legal e interessante assim. Por abranger um conjunto muito extenso de período desde o início das conversas, não é possível extrair muito "conhecimento" do que se vê. Filtrando um período mais curto, por exemplo, uma semana ou mês, daria pra ver um pouco melhor como se comportam os participantes da conversa.
+
+Também podemos ver o número de mensagens que cada um mandou no total:
+```{r}
+chat %>% 
+  mutate(day = date(time)) %>% 
+  count(author) %>% 
+  ggplot(aes(x = reorder(author, n), y = n, fill = author)) +
+  geom_bar(stat = "identity") +
+  ylab("") + xlab("") +
+  ggtitle("Número de mensagens") +
+  theme(legend.position = "none") + 
+  geom_text(aes(label = scales::comma(n)), vjust = -.5)
+
+```
+Percebe-se que eu venci nesse quesito. Muito provavelmente por ter o costume de segmentar mais minhas mensagens em várias frases (ou seja, escrever uma sentença e logo sem seguida mandar a mensagem, sem montar um "parágrafo" completo de verdade).
+
+Outra coisa legal que dá pra fazer é verificar os emojis mais usados:
+```{r}
+chat %>% 
+  unnest(emoji) %>% 
+  count(author, emoji, sort = TRUE) %>% 
+  group_by(author) %>% 
+  top_n(n = 10, n) %>% 
+  ggplot(aes(reorder(emoji, n), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab("") +
+  xlab("") +
+  coord_flip() +
+  facet_wrap(~author, ncol = 2, scales = "free_y") +
+  ggtitle("Emojis mais usados")
+```
+Aparantemente nos gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:
+```{r message=FALSE, warning=FALSE}
+library(ggimage)
+emoji_data <- rwhatsapp::emojis %>% 
+  mutate(hex_runes1 = gsub("\\s.*", "", hex_runes)) %>% 
+  mutate(emoji_url = paste0("https://abs.twimg.com/emoji/v2/72x72/", 
+                            tolower(hex_runes1), ".png"))
+```
+
+
+Agora o plot em si:
+```{r}
+chat %>%
+  unnest(emoji) %>%
+  count(author, emoji, sort = TRUE) %>%
+  group_by(author) %>%
+  top_n(n = 10, n) %>%
+  left_join(emoji_data, by = "emoji") %>% 
+  ggplot(aes(x = reorder(emoji, n), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab("") +
+  xlab("") +
+  coord_flip() +
+  geom_image(aes(y = n + 20, image = emoji_url)) +
+  facet_wrap(~author, ncol = 2, scales = "free_y") +
+  ggtitle("Emojis mais usados") +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+```
+
+
+Com o que temos também podemos verificar as palavras mais usadas durante as conversas:
+```{r warning=FALSE}
+library("tidytext")
+chat %>%
+  unnest_tokens(input = text,
+                output = word) %>%
+  count(author, word, sort = TRUE) %>%
+  group_by(author) %>%
+  top_n(n = 6, n) %>%
+  ggplot(aes(x = reorder_within(word, n, author), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab("") +
+  xlab("") +
+  coord_flip() +
+  facet_wrap(~author, ncol = 2, scales = "free_y") +
+  scale_x_reordered() +
+  ggtitle("Palavras mais usadas") #+
+  #geom_text(aes(label = scales::comma(n)), hjust = -0.1)
+```
+Estranho não? Muitas palavras curtas e que não dizem muito, como preposições por exemplo. Além disso, aparentemente o arquivo de texto fornecido pelo WhatsApp substitui as mensagens que continham algum tipo de mídia (fotos, vídeos, gifs) por "arquivo de mídia oculto". E pelo que vemos no gráfico, aparentemente a @ me manda bastante foto (legal, gosto muito).
+
+Mas e aí? Como removemos essas palavras "insignificantes"? Essas palavras "insignificantes" são conhecidas como "stop words" e normalmente são sempre filtradas em análises de texto. Não existe um conjunto "definitivo" de quais seriam essas palavras, mas existem pacotes, como o [stopwords](https://www.rdocumentation.org/packages/stopwords/versions/2.2) que facilitam essa remoção. Através dele, podemos atribuir mais facilmente essas palavras a uma variável e depois então, usar ela pra filtrar o conjunto em análise. 
+
+```{r for real, warning=FALSE}
+library("stopwords")
+to_remove <- c(stopwords(language = "pt"),
+               "media",
+               "omitted",
+               "arquivo",
+               "mídia",
+               "oculto",
+               "é",
+               "n",
+               "não",
+               "s",
+               "sim",
+               "tô",
+               "ta",
+               "vai",
+               "pq",
+               "tá",
+               "ok",
+               "bom",
+               "pra",
+               "vc",
+               "vou",
+               "Arquivo de mídia oculto",
+               "ref",
+               "sei",
+               "lá",
+               "aí",
+               "oq",
+               "tbm",
+               "android.s.wt")
+```
+
+Na função chamada do pacote passamos a linguagem e também podemos adicionar outras palavras ao conjunto que deve ser removido (eu adicionei o "arquivo de mídia oculto").
+
+Agora o plot removendo as *stopwords*:
+```{r}
+chat %>%
+  unnest_tokens(input = text,
+                output = word) %>%
+  filter(!word %in% to_remove) %>%
+  count(author, word, sort = TRUE) %>%
+  group_by(author) %>%
+  top_n(n = 6, n) %>%
+  ggplot(aes(x = reorder_within(word, n, author), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab("") +
+  xlab("") +
+  coord_flip() +
+  facet_wrap(~author, ncol = 2, scales = "free_y") +
+  scale_x_reordered() +
+  ggtitle("Palavras mais usadas")
+```
+E aparentemente usamos muito "mozin". 
+![](images/a-lovely-tuji-heart.gif)
+
+
+Mas isso quer dizer apenas que essas seriam as palavras mais frequentes. E se quisermos ver quais as mais "frequentemente importantes"? Ou seja, as palavras que frequentemente estão na troca de mensagens e que têm um peso maior de importância. Podemos usar TF-IDF. 
+
+> O valor tf–idf (abreviação do inglês term frequency–inverse document frequency, que significa frequência do termo–inverso da frequência nos documentos), é uma medida estatística que tem o intuito de indicar a importância de uma palavra de um documento em relação a uma coleção de documentos ou em um corpus linguístico. Ela é frequentemente utilizada como fator de ponderação na recuperação de informações e na mineração de dados.
+>
+>O valor tf–idf de uma palavra aumenta proporcionalmente à medida que aumenta o número de ocorrências dela em um documento, no entanto, esse valor é equilibrado pela frequência da palavra no corpus. Isso auxilia a distinguir o fato da ocorrência de algumas palavras serem geralmente mais comuns que outras.
+> -- <cite>Wikipédia</cite>
+
+Leia mais sobre nos links da referência.
+
+```{r}
+chat %>%
+  unnest_tokens(input = text,
+                output = word) %>%
+  select(word, author) %>%
+  mutate(word = gsub(".com", "", word)) %>%
+  mutate(word = gsub("^gag", "9gag", word)) %>%
+  count(author, word, sort = TRUE) %>%
+  bind_tf_idf(term = word, document = author, n = n) %>%
+  filter(n > 10) %>%
+  group_by(author) %>%
+  top_n(n = 6, tf_idf) %>%
+  ggplot(aes(x = reorder_within(word, n, author), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab("") +
+  xlab("") +
+  coord_flip() +
+  facet_wrap(~author, ncol = 2, scales = "free_y") +
+  scale_x_reordered() +
+  ggtitle("Palavras importantes usando IF-IDF por autor")
+```
+Percebe-se que uso muito "doidera" e falo muito do meu irmão Artur, bem como "belê". As mensagens da @ parecem muito de reações a mensagens absurdas e malucas minhas. O Jack ali é simplesmente o melhor do mundo da melhor série do mundo (assistam).
+![](images/10760a7c1acfa44ec9661110064c85a5.gif)
+
+
+Podemos também verificar a diversidade de vocabulário de cada um:
+```{r}
+chat %>%
+  unnest_tokens(input = text,
+                output = word) %>%
+  filter(!word %in% to_remove) %>%
+  group_by(author) %>%
+  summarise(lex_diversity = n_distinct(word)) %>%
+  arrange(desc(lex_diversity)) %>%
+  ggplot(aes(x = reorder(author, lex_diversity),
+             y = lex_diversity,
+             fill = author)) +
+  geom_col(show.legend = FALSE) +
+  scale_y_continuous(expand = (mult = c(0, 0, 0, 500))) +
+  geom_text(aes(label = scales::comma(lex_diversity)), vjust = -.5) +
+  ylab("Palavras únicas") +
+  xlab("") +
+  ggtitle("Diversidade de vocabulário")
+```
+
+
+```{r eval=FALSE, include=FALSE}
+o_words <- chat %>%
+  unnest_tokens(input = text,
+                output = word) %>%
+  filter(author != "Pedro") %>% 
+  count(word, sort = TRUE) 
+
+chat %>%
+  unnest_tokens(input = text,
+                output = word) %>%
+  filter(!word %in% to_remove) %>%
+  filter(author == "Pedro") %>% 
+  count(word, sort = TRUE) %>% 
+  filter(!word %in% o_words$word) %>% # only select words nobody else uses
+  top_n(n = 6, n) %>%
+  ggplot(aes(x = reorder(word, n), y = n)) +
+  geom_col(show.legend = FALSE) +
+  ylab("") + xlab("") +
+  coord_flip() +
+  ggtitle("Palavras Únicas escritas por Pedro")
+```
+
+
+```{r eval=FALSE, include=FALSE}
+o_words <- chat %>%
+  unnest_tokens(input = text,
+                output = word) %>%
+  filter(author != "My Love My Love Meu Doce Encanto ❤️💕") %>% 
+  count(word, sort = TRUE) 
+
+chat %>%
+  unnest_tokens(input = text,
+                output = word) %>%
+  filter(!word %in% to_remove) %>%
+  filter(author == "My Love My Love Meu Doce Encanto ❤️💕") %>% 
+  count(word, sort = TRUE) %>% 
+  filter(!word %in% o_words$word) %>% # only select words nobody else uses
+  top_n(n = 6, n) %>%
+  ggplot(aes(x = reorder(word, n), y = n)) +
+  geom_col(show.legend = FALSE) +
+  ylab("") + xlab("") +
+  coord_flip() +
+  ggtitle("Palavras Únicas escritas por My Love My Love ❤️💕")
+```
+
+### Mapa de calor
+Dá pra fazer um mapa de calor das conversas. Quanto mais "quente" a célula, mais mensagens mandadas naquele horário específico do dia.
+```{r}
+chat %>% 
+  mutate(time = as_datetime(time),
+         hr = hour(time),
+         day= wday(time,label = TRUE)) %>% 
+  filter(!is.na(author)) %>% 
+  count(day,hr) %>% 
+  ggplot(aes(x = day,y = hr,fill = n))+
+  geom_tile()+
+  theme_light()+
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.background = element_blank(),
+    panel.grid = element_blank(),
+    panel.border = element_blank(),
+    axis.title.y = element_text(face = 'bold',size = 13),
+    axis.title.x = element_text(face = 'bold',size = 13),
+    plot.title = element_text(face = "bold",size = 16)
+  )+
+  scale_y_continuous(breaks = seq(0,23,by = 1))+
+  scale_fill_gradient(low = "yellow", high = "red", na.value = NA, name = "Nº de Mensagens")+
+  labs(x = 'Dia da Semana',
+       y = 'Hora do Dia',
+       title = "Mapa de Calor das conversas")
+```
+O horário do café da manhã (ou de acordar) parece pouco povoado de mensagens. Por outro lado, as madrugadas e horários próximos à meia noite costumam ter mais conversas.
+
+## Conclusão
+
+Era isso. Com apenas um arquivo txt e alguns pacotes do R, umas coisinhas aqui e ali, foi possível brincar um pouco. Em breve farei um post onde usarei o mesmo conjunto de dados pra montar uma nuvem de palavras bem linda.
+![](images/JACK.gif)
+
+## Referências
+
+- https://www.r-bloggers.com/2019/09/introducing-rwhatsapp/
+- https://github.com/JBGruber/rwhatsapp
+- https://towardsdatascience.com/tf-idf-for-document-ranking-from-scratch-in-python-on-real-world-dataset-796d339a4089
+- https://pt.wikipedia.org/wiki/Tf%E2%80%93idf

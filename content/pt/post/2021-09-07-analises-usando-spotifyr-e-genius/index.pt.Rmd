@@ -20,7 +20,7 @@ tags:
 subtitle: ''
 summary: 'Breve análise de dados de músicas e álbuns usando a linguagem R e os pacotes para uso das APIs do Spotify e do Genius.'
 authors: ['Pedro Neto']
-lastmod: '2021-09-07T02:48:25-03:00'
+lastmod: '2021-09-08T02:48:25-03:00'
 featured: no
 image:
   placement: 2

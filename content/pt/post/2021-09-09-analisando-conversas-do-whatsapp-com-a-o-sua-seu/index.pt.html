@@ -1,0 +1,335 @@
+---
+title: Analisando conversas do WhatsApp com a/o sua/seu @
+author: Pedro Neto
+date: '2021-09-09'
+slug: analisando-conversas-do-whatsapp-com-a-o-sua-seu
+categories:
+  - for fun
+  - R
+  - random
+  - análise
+tags:
+  - R
+  - whatsapp
+subtitle: ''
+summary: 'Tem curiosidade pra saber o que é mais dito no seu grupo de amigos do WhatsApp? Ou até mesmo na sua conversa com a/o @ favorita/o? Com o pacote do R, [rwhatsapp](https://github.com/JBGruber/rwhatsapp) é possível dar uma boa olhada no que você anda fofocando no app.'
+authors: []
+lastmod: '2021-09-09T09:52:01-03:00'
+featured: no
+image:
+  placement: 2
+  caption: ''
+  focal_point: 'Left'
+  preview_only: false
+projects: []
+---
+
+<script src="{{< blogdown/postref >}}index.pt_files/header-attrs/header-attrs.js"></script>
+
+
+<p>Tem curiosidade pra saber o que é mais dito no seu grupo de amigos do WhatsApp? Ou até mesmo na sua conversa com a/o @ favorita/o? Com o pacote do R, <a href="https://github.com/JBGruber/rwhatsapp">rwhatsapp</a> é possível dar uma boa olhada no que você anda fofocando no zap.</p>
+<div id="começando" class="section level2">
+<h2>Começando</h2>
+<p>A primeira coisa que você tem que fazer é ir no app do Whatsapp e exportar a conversa (de um grupo ou com uma pessoa). Será perguntado se você deseja incluir mídias (melhor não) e em seguida será gerado um arquivo .txt que você pode subir pro Drive por exemplo. Baixado o arquivo, podemos começar.</p>
+<p>Carregue os pacotes que serão usados:</p>
+<pre class="r"><code>library(tidyverse)
+library(rwhatsapp)
+library(lubridate)</code></pre>
+<p>Agora vamos carregar o arquivo .txt que foi baixado:</p>
+<pre class="r"><code>chat &lt;- rwhatsapp::rwa_read(&quot;Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt&quot;)</code></pre>
+<p>Lembre de colocar o endereço correto da pasta onde está o arquivo. Um bom pacote pra facilitar a localização de arquivos que você está tentando carregar sem ter que ficar digitando um endereço enorme e chato é o <a href="https://here.r-lib.org/">here</a>. Ele também é interessante pra códigos que você compartilha em repositórios públicos e páginas, pois aí o nome das suas pastas não aparecem de bobeira por aí.
+Mas no caso do arquivo estar na própria pasta do projeto, é só fazer como acima: simplesmente colar o nome do arquivo e da extensão.</p>
+<pre class="r"><code>distinct(chat, author)</code></pre>
+<pre><code>##                                                          author
+## 1 My Love My Love Meu Doce Encanto &lt;U+2764&gt;&lt;U+FE0F&gt;&lt;U+0001F495&gt;
+## 2                                                         Pedro</code></pre>
+<p>Vamos dar uma olhadela no que foi passado pra variável chat:</p>
+<pre class="r"><code>tail(chat)</code></pre>
+<pre><code>##                      time
+## 39994 2021-09-08 22:28:42
+## 39995 2021-09-08 22:28:42
+## 39996 2021-09-08 22:28:42
+## 39997 2021-09-08 22:51:42
+## 39998 2021-09-08 22:53:42
+## 39999 2021-09-08 23:03:42
+##                                                              author
+## 39994                                                         Pedro
+## 39995                                                         Pedro
+## 39996 My Love My Love Meu Doce Encanto &lt;U+2764&gt;&lt;U+FE0F&gt;&lt;U+0001F495&gt;
+## 39997 My Love My Love Meu Doce Encanto &lt;U+2764&gt;&lt;U+FE0F&gt;&lt;U+0001F495&gt;
+## 39998                                                         Pedro
+## 39999 My Love My Love Meu Doce Encanto &lt;U+2764&gt;&lt;U+FE0F&gt;&lt;U+0001F495&gt;
+##                                                         text
+## 39994 Eu ia dizer que ele participa de um momento importante
+## 39995                       Mas era a mulher lá salvando ele
+## 39996                                                  Já vi
+## 39997                                            Te amo xuxu
+## 39998                                              Tbm mozin
+## 39999                       &lt;U+2764&gt;&lt;U+FE0F&gt;&lt;U+2764&gt;&lt;U+FE0F&gt;
+##                                                              source    id
+## 39994 Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt 39994
+## 39995 Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt 39995
+## 39996 Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt 39996
+## 39997 Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt 39997
+## 39998 Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt 39998
+## 39999 Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt 39999
+##                                    emoji           emoji_name
+## 39994                               NULL                 NULL
+## 39995                               NULL                 NULL
+## 39996                               NULL                 NULL
+## 39997                               NULL                 NULL
+## 39998                               NULL                 NULL
+## 39999 &lt;U+2764&gt;&lt;U+FE0F&gt;, &lt;U+2764&gt;&lt;U+FE0F&gt; red heart, red heart</code></pre>
+<pre class="r"><code>glimpse(chat)</code></pre>
+<pre><code>## Rows: 39,999
+## Columns: 7
+## $ time       &lt;dttm&gt; 2020-10-18 22:03:42, 2020-10-18 22:03:42, 2020-10-18 22:03~
+## $ author     &lt;fct&gt; My Love My Love Meu Doce Encanto &lt;U+2764&gt;&lt;U+FE0F&gt;&lt;U+0001F49~
+## $ text       &lt;chr&gt; &quot;Ou furar o olho&quot;, &quot;Oxi kk&quot;, &quot;Eu nem uso&quot;, &quot;Deixa quieto&quot;, ~
+## $ source     &lt;chr&gt; &quot;Conversa do WhatsApp com My Love My Love Meu Doce Encanto.~
+## $ id         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, ~
+## $ emoji      &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;N~
+## $ emoji_name &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;N~</code></pre>
+<p>Só com o que temos disponível até aqui já podemos fazer alguns plots.
+Primeiro podemos ver quantas mensagens por dia são mandadas:</p>
+<pre class="r"><code>chat %&gt;%                        
+  mutate(day = date(time)) %&gt;% 
+  count(day) %&gt;% 
+  ggplot(aes(day, n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  ylab(&quot;&quot;) + xlab(&quot;&quot;) +
+  ggtitle(&quot;Mensagens por dia&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Agora separando por cores:</p>
+<pre class="r"><code>chat %&gt;%   
+  group_by(author) %&gt;% 
+  mutate(day = date(time)) %&gt;% 
+  count(day) %&gt;% 
+  ggplot(aes(day, n, fill = author), position = &quot;dodge&quot;) + #ainda ta feio
+  geom_bar(stat = &quot;identity&quot;) +
+  ylab(&quot;&quot;) + xlab(&quot;&quot;) +
+  ggtitle(&quot;Mensagens por dia&quot;) +
+  labs(fill = &#39;Autor&#39;) +
+  theme(
+    legend.position = c(.95, .95),
+    legend.justification = c(&quot;right&quot;, &quot;top&quot;),
+    legend.box.just = &quot;right&quot;,
+    legend.margin = margin(6, 6, 6, 6)
+
+    ) +
+  theme(legend.title = element_text(size=10)) +
+  theme(legend.text = element_text(size=7))  </code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+Nota-se que há alguns dias com mais de 500 mensagens, mas essa visualização não é tão legal e interessante assim. Por abranger um conjunto muito extenso de período desde o início das conversas, não é possível extrair muito “conhecimento” do que se vê. Filtrando um período mais curto, por exemplo, uma semana ou mês, daria pra ver um pouco melhor como se comportam os participantes da conversa.</p>
+<p>Também podemos ver o número de mensagens que cada um mandou no total:</p>
+<pre class="r"><code>chat %&gt;% 
+  mutate(day = date(time)) %&gt;% 
+  count(author) %&gt;% 
+  ggplot(aes(x = reorder(author, n), y = n, fill = author)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  ylab(&quot;&quot;) + xlab(&quot;&quot;) +
+  ggtitle(&quot;Número de mensagens&quot;) +
+  theme(legend.position = &quot;none&quot;) + 
+  geom_text(aes(label = scales::comma(n)), vjust = -.5)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+Percebe-se que eu venci nesse quesito. Muito provavelmente por ter o costume de segmentar mais minhas mensagens em várias frases (ou seja, escrever uma sentença e logo sem seguida mandar a mensagem, sem montar um “parágrafo” completo de verdade).</p>
+<p>Outra coisa legal que dá pra fazer é verificar os emojis mais usados:</p>
+<pre class="r"><code>chat %&gt;% 
+  unnest(emoji) %&gt;% 
+  count(author, emoji, sort = TRUE) %&gt;% 
+  group_by(author) %&gt;% 
+  top_n(n = 10, n) %&gt;% 
+  ggplot(aes(reorder(emoji, n), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab(&quot;&quot;) +
+  xlab(&quot;&quot;) +
+  coord_flip() +
+  facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
+  ggtitle(&quot;Emojis mais usados&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+Aparantemente nos gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:</p>
+<pre class="r"><code>library(ggimage)
+emoji_data &lt;- rwhatsapp::emojis %&gt;% 
+  mutate(hex_runes1 = gsub(&quot;\\s.*&quot;, &quot;&quot;, hex_runes)) %&gt;% 
+  mutate(emoji_url = paste0(&quot;https://abs.twimg.com/emoji/v2/72x72/&quot;, 
+                            tolower(hex_runes1), &quot;.png&quot;))</code></pre>
+<p>Agora o plot em si:</p>
+<pre class="r"><code>chat %&gt;%
+  unnest(emoji) %&gt;%
+  count(author, emoji, sort = TRUE) %&gt;%
+  group_by(author) %&gt;%
+  top_n(n = 10, n) %&gt;%
+  left_join(emoji_data, by = &quot;emoji&quot;) %&gt;% 
+  ggplot(aes(x = reorder(emoji, n), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab(&quot;&quot;) +
+  xlab(&quot;&quot;) +
+  coord_flip() +
+  geom_image(aes(y = n + 20, image = emoji_url)) +
+  facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
+  ggtitle(&quot;Emojis mais usados&quot;) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Com o que temos também podemos verificar as palavras mais usadas durante as conversas:</p>
+<pre class="r"><code>library(&quot;tidytext&quot;)
+chat %&gt;%
+  unnest_tokens(input = text,
+                output = word) %&gt;%
+  count(author, word, sort = TRUE) %&gt;%
+  group_by(author) %&gt;%
+  top_n(n = 6, n) %&gt;%
+  ggplot(aes(x = reorder_within(word, n, author), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab(&quot;&quot;) +
+  xlab(&quot;&quot;) +
+  coord_flip() +
+  facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
+  scale_x_reordered() +
+  ggtitle(&quot;Palavras mais usadas&quot;) #+</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>  #geom_text(aes(label = scales::comma(n)), hjust = -0.1)</code></pre>
+<p>Estranho não? Muitas palavras curtas e que não dizem muito, como preposições por exemplo. Além disso, aparentemente o arquivo de texto fornecido pelo WhatsApp substitui as mensagens que continham algum tipo de mídia (fotos, vídeos, gifs) por “arquivo de mídia oculto”. E pelo que vemos no gráfico, aparentemente a @ me manda bastante foto (legal, gosto muito).</p>
+<p>Mas e aí? Como removemos essas palavras “insignificantes”? Essas palavras “insignificantes” são conhecidas como “stop words” e normalmente são sempre filtradas em análises de texto. Não existe um conjunto “definitivo” de quais seriam essas palavras, mas existem pacotes, como o <a href="https://www.rdocumentation.org/packages/stopwords/versions/2.2">stopwords</a> que facilitam essa remoção. Através dele, podemos atribuir mais facilmente essas palavras a uma variável e depois então, usar ela pra filtrar o conjunto em análise.</p>
+<pre class="r"><code>library(&quot;stopwords&quot;)
+to_remove &lt;- c(stopwords(language = &quot;pt&quot;),
+               &quot;media&quot;,
+               &quot;omitted&quot;,
+               &quot;arquivo&quot;,
+               &quot;mídia&quot;,
+               &quot;oculto&quot;,
+               &quot;é&quot;,
+               &quot;n&quot;,
+               &quot;não&quot;,
+               &quot;s&quot;,
+               &quot;sim&quot;,
+               &quot;tô&quot;,
+               &quot;ta&quot;,
+               &quot;vai&quot;,
+               &quot;pq&quot;,
+               &quot;tá&quot;,
+               &quot;ok&quot;,
+               &quot;bom&quot;,
+               &quot;pra&quot;,
+               &quot;vc&quot;,
+               &quot;vou&quot;,
+               &quot;Arquivo de mídia oculto&quot;,
+               &quot;ref&quot;,
+               &quot;sei&quot;,
+               &quot;lá&quot;,
+               &quot;aí&quot;,
+               &quot;oq&quot;,
+               &quot;tbm&quot;,
+               &quot;android.s.wt&quot;)</code></pre>
+<p>Na função chamada do pacote passamos a linguagem e também podemos adicionar outras palavras ao conjunto que deve ser removido (eu adicionei o “arquivo de mídia oculto”).</p>
+<p>Agora o plot removendo as <em>stopwords</em>:</p>
+<pre class="r"><code>chat %&gt;%
+  unnest_tokens(input = text,
+                output = word) %&gt;%
+  filter(!word %in% to_remove) %&gt;%
+  count(author, word, sort = TRUE) %&gt;%
+  group_by(author) %&gt;%
+  top_n(n = 6, n) %&gt;%
+  ggplot(aes(x = reorder_within(word, n, author), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab(&quot;&quot;) +
+  xlab(&quot;&quot;) +
+  coord_flip() +
+  facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
+  scale_x_reordered() +
+  ggtitle(&quot;Palavras mais usadas&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+E aparentemente usamos muito “mozin”.
+<img src="images/a-lovely-tuji-heart.gif" /></p>
+<p>Mas isso quer dizer apenas que essas seriam as palavras mais frequentes. E se quisermos ver quais as mais “frequentemente importantes”? Ou seja, as palavras que frequentemente estão na troca de mensagens e que têm um peso maior de importância. Podemos usar TF-IDF.</p>
+<blockquote>
+<p>O valor tf–idf (abreviação do inglês term frequency–inverse document frequency, que significa frequência do termo–inverso da frequência nos documentos), é uma medida estatística que tem o intuito de indicar a importância de uma palavra de um documento em relação a uma coleção de documentos ou em um corpus linguístico. Ela é frequentemente utilizada como fator de ponderação na recuperação de informações e na mineração de dados.</p>
+<p>O valor tf–idf de uma palavra aumenta proporcionalmente à medida que aumenta o número de ocorrências dela em um documento, no entanto, esse valor é equilibrado pela frequência da palavra no corpus. Isso auxilia a distinguir o fato da ocorrência de algumas palavras serem geralmente mais comuns que outras.
+– <cite>Wikipédia</cite></p>
+</blockquote>
+<p>Leia mais sobre nos links da referência.</p>
+<pre class="r"><code>chat %&gt;%
+  unnest_tokens(input = text,
+                output = word) %&gt;%
+  select(word, author) %&gt;%
+  mutate(word = gsub(&quot;.com&quot;, &quot;&quot;, word)) %&gt;%
+  mutate(word = gsub(&quot;^gag&quot;, &quot;9gag&quot;, word)) %&gt;%
+  count(author, word, sort = TRUE) %&gt;%
+  bind_tf_idf(term = word, document = author, n = n) %&gt;%
+  filter(n &gt; 10) %&gt;%
+  group_by(author) %&gt;%
+  top_n(n = 6, tf_idf) %&gt;%
+  ggplot(aes(x = reorder_within(word, n, author), y = n, fill = author)) +
+  geom_col(show.legend = FALSE) +
+  ylab(&quot;&quot;) +
+  xlab(&quot;&quot;) +
+  coord_flip() +
+  facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
+  scale_x_reordered() +
+  ggtitle(&quot;Palavras importantes usando IF-IDF por autor&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+Percebe-se que uso muito “doidera” e falo muito do meu irmão Artur, bem como “belê”. As mensagens da @ parecem muito de reações a mensagens absurdas e malucas minhas. O Jack ali é simplesmente o melhor do mundo da melhor série do mundo (assistam).
+<img src="images/10760a7c1acfa44ec9661110064c85a5.gif" /></p>
+<p>Podemos também verificar a diversidade de vocabulário de cada um:</p>
+<pre class="r"><code>chat %&gt;%
+  unnest_tokens(input = text,
+                output = word) %&gt;%
+  filter(!word %in% to_remove) %&gt;%
+  group_by(author) %&gt;%
+  summarise(lex_diversity = n_distinct(word)) %&gt;%
+  arrange(desc(lex_diversity)) %&gt;%
+  ggplot(aes(x = reorder(author, lex_diversity),
+             y = lex_diversity,
+             fill = author)) +
+  geom_col(show.legend = FALSE) +
+  scale_y_continuous(expand = (mult = c(0, 0, 0, 500))) +
+  geom_text(aes(label = scales::comma(lex_diversity)), vjust = -.5) +
+  ylab(&quot;Palavras únicas&quot;) +
+  xlab(&quot;&quot;) +
+  ggtitle(&quot;Diversidade de vocabulário&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div id="mapa-de-calor" class="section level3">
+<h3>Mapa de calor</h3>
+<p>Dá pra fazer um mapa de calor das conversas. Quanto mais “quente” a célula, mais mensagens mandadas naquele horário específico do dia.</p>
+<pre class="r"><code>chat %&gt;% 
+  mutate(time = as_datetime(time),
+         hr = hour(time),
+         day= wday(time,label = TRUE)) %&gt;% 
+  filter(!is.na(author)) %&gt;% 
+  count(day,hr) %&gt;% 
+  ggplot(aes(x = day,y = hr,fill = n))+
+  geom_tile()+
+  theme_light()+
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.background = element_blank(),
+    panel.grid = element_blank(),
+    panel.border = element_blank(),
+    axis.title.y = element_text(face = &#39;bold&#39;,size = 13),
+    axis.title.x = element_text(face = &#39;bold&#39;,size = 13),
+    plot.title = element_text(face = &quot;bold&quot;,size = 16)
+  )+
+  scale_y_continuous(breaks = seq(0,23,by = 1))+
+  scale_fill_gradient(low = &quot;yellow&quot;, high = &quot;red&quot;, na.value = NA, name = &quot;Nº de Mensagens&quot;)+
+  labs(x = &#39;Dia da Semana&#39;,
+       y = &#39;Hora do Dia&#39;,
+       title = &quot;Mapa de Calor das conversas&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+O horário do café da manhã (ou de acordar) parece pouco povoado de mensagens. Por outro lado, as madrugadas e horários próximos à meia noite costumam ter mais conversas.</p>
+</div>
+</div>
+<div id="conclusão" class="section level2">
+<h2>Conclusão</h2>
+<p>Era isso. Com apenas um arquivo txt e alguns pacotes do R, umas coisinhas aqui e ali, foi possível brincar um pouco. Em breve farei um post onde usarei o mesmo conjunto de dados pra montar uma nuvem de palavras bem linda.
+<img src="images/JACK.gif" /></p>
+</div>
+<div id="referências" class="section level2">
+<h2>Referências</h2>
+<ul>
+<li><a href="https://www.r-bloggers.com/2019/09/introducing-rwhatsapp/" class="uri">https://www.r-bloggers.com/2019/09/introducing-rwhatsapp/</a></li>
+<li><a href="https://github.com/JBGruber/rwhatsapp" class="uri">https://github.com/JBGruber/rwhatsapp</a></li>
+<li><a href="https://towardsdatascience.com/tf-idf-for-document-ranking-from-scratch-in-python-on-real-world-dataset-796d339a4089" class="uri">https://towardsdatascience.com/tf-idf-for-document-ranking-from-scratch-in-python-on-real-world-dataset-796d339a4089</a></li>
+<li><a href="https://pt.wikipedia.org/wiki/Tf%E2%80%93idf" class="uri">https://pt.wikipedia.org/wiki/Tf%E2%80%93idf</a></li>
+</ul>
+</div>
