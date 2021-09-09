@@ -43,6 +43,8 @@ chat <- rwhatsapp::rwa_read("Conversa do WhatsApp com My Love My Love Meu Doce E
 Lembre de colocar o endereço correto da pasta onde está o arquivo. Um bom pacote pra facilitar a localização de arquivos que você está tentando carregar sem ter que ficar digitando um endereço enorme e chato é o [here](https://here.r-lib.org/). Ele também é interessante pra códigos que você compartilha em repositórios públicos e páginas, pois aí o nome das suas pastas não aparecem de bobeira por aí.
 Mas no caso do arquivo estar na própria pasta do projeto, é só fazer como acima: simplesmente colar o nome do arquivo e da extensão.
 
+Mais uma observação: **cuidado pra não deixar um arquivo desses por aí dando sopa**
+
 ```{r}
 distinct(chat, author)
 ```
@@ -54,10 +56,11 @@ Vamos dar uma olhadela no que foi passado pra variável chat:
 ```{r}
 tail(chat)
 ```
+Ih vazou a gente falando sobre masterchef. Continuando então...
 
-```{r}
-glimpse(chat)
-```
+<!-- ```{r} -->
+<!-- glimpse(chat) -->
+<!-- ``` -->
 
 Só com o que temos disponível até aqui já podemos fazer alguns plots.
 Primeiro podemos ver quantas mensagens por dia são mandadas:

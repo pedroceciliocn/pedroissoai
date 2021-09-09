@@ -39,6 +39,7 @@ library(lubridate)</code></pre>
 <pre class="r"><code>chat &lt;- rwhatsapp::rwa_read(&quot;Conversa do WhatsApp com My Love My Love Meu Doce Encanto.txt&quot;)</code></pre>
 <p>Lembre de colocar o endereço correto da pasta onde está o arquivo. Um bom pacote pra facilitar a localização de arquivos que você está tentando carregar sem ter que ficar digitando um endereço enorme e chato é o <a href="https://here.r-lib.org/">here</a>. Ele também é interessante pra códigos que você compartilha em repositórios públicos e páginas, pois aí o nome das suas pastas não aparecem de bobeira por aí.
 Mas no caso do arquivo estar na própria pasta do projeto, é só fazer como acima: simplesmente colar o nome do arquivo e da extensão.</p>
+<p>Mais uma observação: <strong>cuidado pra não deixar um arquivo desses por aí dando sopa</strong></p>
 <pre class="r"><code>distinct(chat, author)</code></pre>
 <pre><code>##                                                          author
 ## 1 My Love My Love Meu Doce Encanto &lt;U+2764&gt;&lt;U+FE0F&gt;&lt;U+0001F495&gt;
@@ -46,12 +47,12 @@ Mas no caso do arquivo estar na própria pasta do projeto, é só fazer como aci
 <p>Vamos dar uma olhadela no que foi passado pra variável chat:</p>
 <pre class="r"><code>tail(chat)</code></pre>
 <pre><code>##                      time
-## 39994 2021-09-08 22:28:42
-## 39995 2021-09-08 22:28:42
-## 39996 2021-09-08 22:28:42
-## 39997 2021-09-08 22:51:42
-## 39998 2021-09-08 22:53:42
-## 39999 2021-09-08 23:03:42
+## 39994 2021-09-08 22:28:19
+## 39995 2021-09-08 22:28:19
+## 39996 2021-09-08 22:28:19
+## 39997 2021-09-08 22:51:19
+## 39998 2021-09-08 22:53:19
+## 39999 2021-09-08 23:03:19
 ##                                                              author
 ## 39994                                                         Pedro
 ## 39995                                                         Pedro
@@ -80,16 +81,10 @@ Mas no caso do arquivo estar na própria pasta do projeto, é só fazer como aci
 ## 39997                               NULL                 NULL
 ## 39998                               NULL                 NULL
 ## 39999 &lt;U+2764&gt;&lt;U+FE0F&gt;, &lt;U+2764&gt;&lt;U+FE0F&gt; red heart, red heart</code></pre>
-<pre class="r"><code>glimpse(chat)</code></pre>
-<pre><code>## Rows: 39,999
-## Columns: 7
-## $ time       &lt;dttm&gt; 2020-10-18 22:03:42, 2020-10-18 22:03:42, 2020-10-18 22:03~
-## $ author     &lt;fct&gt; My Love My Love Meu Doce Encanto &lt;U+2764&gt;&lt;U+FE0F&gt;&lt;U+0001F49~
-## $ text       &lt;chr&gt; &quot;Ou furar o olho&quot;, &quot;Oxi kk&quot;, &quot;Eu nem uso&quot;, &quot;Deixa quieto&quot;, ~
-## $ source     &lt;chr&gt; &quot;Conversa do WhatsApp com My Love My Love Meu Doce Encanto.~
-## $ id         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, ~
-## $ emoji      &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;N~
-## $ emoji_name &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;N~</code></pre>
+<p>Ih vazou a gente falando sobre masterchef. Continuando então…</p>
+<!-- ```{r} -->
+<!-- glimpse(chat) -->
+<!-- ``` -->
 <p>Só com o que temos disponível até aqui já podemos fazer alguns plots.
 Primeiro podemos ver quantas mensagens por dia são mandadas:</p>
 <pre class="r"><code>chat %&gt;%                        
@@ -99,7 +94,7 @@ Primeiro podemos ver quantas mensagens por dia são mandadas:</p>
   geom_bar(stat = &quot;identity&quot;) +
   ylab(&quot;&quot;) + xlab(&quot;&quot;) +
   ggtitle(&quot;Mensagens por dia&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Agora separando por cores:</p>
 <pre class="r"><code>chat %&gt;%   
   group_by(author) %&gt;% 
@@ -119,7 +114,7 @@ Primeiro podemos ver quantas mensagens por dia são mandadas:</p>
     ) +
   theme(legend.title = element_text(size=10)) +
   theme(legend.text = element_text(size=7))  </code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 Nota-se que há alguns dias com mais de 500 mensagens, mas essa visualização não é tão legal e interessante assim. Por abranger um conjunto muito extenso de período desde o início das conversas, não é possível extrair muito “conhecimento” do que se vê. Filtrando um período mais curto, por exemplo, uma semana ou mês, daria pra ver um pouco melhor como se comportam os participantes da conversa.</p>
 <p>Também podemos ver o número de mensagens que cada um mandou no total:</p>
 <pre class="r"><code>chat %&gt;% 
@@ -131,7 +126,7 @@ Nota-se que há alguns dias com mais de 500 mensagens, mas essa visualização n
   ggtitle(&quot;Número de mensagens&quot;) +
   theme(legend.position = &quot;none&quot;) + 
   geom_text(aes(label = scales::comma(n)), vjust = -.5)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 Percebe-se que eu venci nesse quesito. Muito provavelmente por ter o costume de segmentar mais minhas mensagens em várias frases (ou seja, escrever uma sentença e logo sem seguida mandar a mensagem, sem montar um “parágrafo” completo de verdade).</p>
 <p>Outra coisa legal que dá pra fazer é verificar os emojis mais usados:</p>
 <pre class="r"><code>chat %&gt;% 
@@ -146,7 +141,7 @@ Percebe-se que eu venci nesse quesito. Muito provavelmente por ter o costume de 
   coord_flip() +
   facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
   ggtitle(&quot;Emojis mais usados&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 Aparantemente nos gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:</p>
 <pre class="r"><code>library(ggimage)
 emoji_data &lt;- rwhatsapp::emojis %&gt;% 
@@ -170,7 +165,7 @@ emoji_data &lt;- rwhatsapp::emojis %&gt;%
   ggtitle(&quot;Emojis mais usados&quot;) +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank())</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Com o que temos também podemos verificar as palavras mais usadas durante as conversas:</p>
 <pre class="r"><code>library(&quot;tidytext&quot;)
 chat %&gt;%
@@ -187,7 +182,7 @@ chat %&gt;%
   facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
   scale_x_reordered() +
   ggtitle(&quot;Palavras mais usadas&quot;) #+</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <pre class="r"><code>  #geom_text(aes(label = scales::comma(n)), hjust = -0.1)</code></pre>
 <p>Estranho não? Muitas palavras curtas e que não dizem muito, como preposições por exemplo. Além disso, aparentemente o arquivo de texto fornecido pelo WhatsApp substitui as mensagens que continham algum tipo de mídia (fotos, vídeos, gifs) por “arquivo de mídia oculto”. E pelo que vemos no gráfico, aparentemente a @ me manda bastante foto (legal, gosto muito).</p>
 <p>Mas e aí? Como removemos essas palavras “insignificantes”? Essas palavras “insignificantes” são conhecidas como “stop words” e normalmente são sempre filtradas em análises de texto. Não existe um conjunto “definitivo” de quais seriam essas palavras, mas existem pacotes, como o <a href="https://www.rdocumentation.org/packages/stopwords/versions/2.2">stopwords</a> que facilitam essa remoção. Através dele, podemos atribuir mais facilmente essas palavras a uma variável e depois então, usar ela pra filtrar o conjunto em análise.</p>
@@ -238,7 +233,7 @@ to_remove &lt;- c(stopwords(language = &quot;pt&quot;),
   facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
   scale_x_reordered() +
   ggtitle(&quot;Palavras mais usadas&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 E aparentemente usamos muito “mozin”.
 <img src="images/a-lovely-tuji-heart.gif" /></p>
 <p>Mas isso quer dizer apenas que essas seriam as palavras mais frequentes. E se quisermos ver quais as mais “frequentemente importantes”? Ou seja, as palavras que frequentemente estão na troca de mensagens e que têm um peso maior de importância. Podemos usar TF-IDF.</p>
@@ -267,7 +262,7 @@ E aparentemente usamos muito “mozin”.
   facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
   scale_x_reordered() +
   ggtitle(&quot;Palavras importantes usando IF-IDF por autor&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 Percebe-se que uso muito “doidera” e falo muito do meu irmão Artur, bem como “belê”. As mensagens da @ parecem muito de reações a mensagens absurdas e malucas minhas. O Jack ali é simplesmente o melhor do mundo da melhor série do mundo (assistam).
 <img src="images/10760a7c1acfa44ec9661110064c85a5.gif" /></p>
 <p>Podemos também verificar a diversidade de vocabulário de cada um:</p>
@@ -287,7 +282,7 @@ Percebe-se que uso muito “doidera” e falo muito do meu irmão Artur, bem com
   ylab(&quot;Palavras únicas&quot;) +
   xlab(&quot;&quot;) +
   ggtitle(&quot;Diversidade de vocabulário&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <div id="mapa-de-calor" class="section level3">
 <h3>Mapa de calor</h3>
 <p>Dá pra fazer um mapa de calor das conversas. Quanto mais “quente” a célula, mais mensagens mandadas naquele horário específico do dia.</p>
@@ -315,7 +310,7 @@ Percebe-se que uso muito “doidera” e falo muito do meu irmão Artur, bem com
   labs(x = &#39;Dia da Semana&#39;,
        y = &#39;Hora do Dia&#39;,
        title = &quot;Mapa de Calor das conversas&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 O horário do café da manhã (ou de acordar) parece pouco povoado de mensagens. Por outro lado, as madrugadas e horários próximos à meia noite costumam ter mais conversas.</p>
 </div>
 </div>
