@@ -96,7 +96,7 @@ chat %>%
   theme(legend.title = element_text(size=10)) +
   theme(legend.text = element_text(size=7))  
 ```
-Nota-se que há alguns dias com mais de 500 mensagens, mas essa visualização não é tão legal e interessante assim. Por abranger um conjunto muito extenso de período desde o início das conversas, não é possível extrair muito "conhecimento" do que se vê. Filtrando um período mais curto, por exemplo, uma semana ou mês, daria pra ver um pouco melhor como se comportam os participantes da conversa.
+Nota-se que há alguns dias com mais de 500 mensagens, mas essa visualização não é tão legal e interessante assim. Por abranger um conjunto muito grande de mensagens, num período longo desde o início das conversas, não é possível extrair muito "conhecimento" do que se vê. Filtrando um período mais curto, por exemplo, uma semana ou mês, daria pra ver um pouco melhor como se comportam os participantes da conversa.
 
 Também podemos ver o número de mensagens que cada um mandou no total:
 ```{r}
@@ -128,7 +128,7 @@ chat %>%
   facet_wrap(~author, ncol = 2, scales = "free_y") +
   ggtitle("Emojis mais usados")
 ```
-Aparantemente nos gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:
+Aparentemente nós gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:
 ```{r message=FALSE, warning=FALSE}
 library(ggimage)
 emoji_data <- rwhatsapp::emojis %>% 

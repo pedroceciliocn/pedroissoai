@@ -47,12 +47,12 @@ Mas no caso do arquivo estar na própria pasta do projeto, é só fazer como aci
 <p>Vamos dar uma olhadela no que foi passado pra variável chat:</p>
 <pre class="r"><code>tail(chat)</code></pre>
 <pre><code>##                      time
-## 39994 2021-09-08 22:28:19
-## 39995 2021-09-08 22:28:19
-## 39996 2021-09-08 22:28:19
-## 39997 2021-09-08 22:51:19
-## 39998 2021-09-08 22:53:19
-## 39999 2021-09-08 23:03:19
+## 39994 2021-09-08 22:28:41
+## 39995 2021-09-08 22:28:41
+## 39996 2021-09-08 22:28:41
+## 39997 2021-09-08 22:51:41
+## 39998 2021-09-08 22:53:41
+## 39999 2021-09-08 23:03:41
 ##                                                              author
 ## 39994                                                         Pedro
 ## 39995                                                         Pedro
@@ -115,7 +115,7 @@ Primeiro podemos ver quantas mensagens por dia são mandadas:</p>
   theme(legend.title = element_text(size=10)) +
   theme(legend.text = element_text(size=7))  </code></pre>
 <p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-5-1.png" width="672" />
-Nota-se que há alguns dias com mais de 500 mensagens, mas essa visualização não é tão legal e interessante assim. Por abranger um conjunto muito extenso de período desde o início das conversas, não é possível extrair muito “conhecimento” do que se vê. Filtrando um período mais curto, por exemplo, uma semana ou mês, daria pra ver um pouco melhor como se comportam os participantes da conversa.</p>
+Nota-se que há alguns dias com mais de 500 mensagens, mas essa visualização não é tão legal e interessante assim. Por abranger um conjunto muito grande de mensagens, num período longo desde o início das conversas, não é possível extrair muito “conhecimento” do que se vê. Filtrando um período mais curto, por exemplo, uma semana ou mês, daria pra ver um pouco melhor como se comportam os participantes da conversa.</p>
 <p>Também podemos ver o número de mensagens que cada um mandou no total:</p>
 <pre class="r"><code>chat %&gt;% 
   mutate(day = date(time)) %&gt;% 
@@ -142,7 +142,7 @@ Percebe-se que eu venci nesse quesito. Muito provavelmente por ter o costume de 
   facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
   ggtitle(&quot;Emojis mais usados&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-7-1.png" width="672" />
-Aparantemente nos gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:</p>
+Aparentemente nós gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:</p>
 <pre class="r"><code>library(ggimage)
 emoji_data &lt;- rwhatsapp::emojis %&gt;% 
   mutate(hex_runes1 = gsub(&quot;\\s.*&quot;, &quot;&quot;, hex_runes)) %&gt;% 
