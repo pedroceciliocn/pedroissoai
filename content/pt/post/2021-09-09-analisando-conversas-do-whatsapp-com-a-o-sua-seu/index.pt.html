@@ -47,12 +47,12 @@ Mas no caso do arquivo estar na própria pasta do projeto, é só fazer como aci
 <p>Vamos dar uma olhadela no que foi passado pra variável chat:</p>
 <pre class="r"><code>tail(chat)</code></pre>
 <pre><code>##                      time
-## 39994 2021-09-08 22:28:41
-## 39995 2021-09-08 22:28:41
-## 39996 2021-09-08 22:28:41
-## 39997 2021-09-08 22:51:41
-## 39998 2021-09-08 22:53:41
-## 39999 2021-09-08 23:03:41
+## 39994 2021-09-08 22:28:25
+## 39995 2021-09-08 22:28:25
+## 39996 2021-09-08 22:28:25
+## 39997 2021-09-08 22:51:25
+## 39998 2021-09-08 22:53:25
+## 39999 2021-09-08 23:03:25
 ##                                                              author
 ## 39994                                                         Pedro
 ## 39995                                                         Pedro
@@ -142,7 +142,7 @@ Percebe-se que eu venci nesse quesito. Muito provavelmente por ter o costume de 
   facet_wrap(~author, ncol = 2, scales = &quot;free_y&quot;) +
   ggtitle(&quot;Emojis mais usados&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/unnamed-chunk-7-1.png" width="672" />
-Aparentemente nós gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:</p>
+Aparentemente nos gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:</p>
 <pre class="r"><code>library(ggimage)
 emoji_data &lt;- rwhatsapp::emojis %&gt;% 
   mutate(hex_runes1 = gsub(&quot;\\s.*&quot;, &quot;&quot;, hex_runes)) %&gt;% 

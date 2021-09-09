@@ -128,7 +128,7 @@ chat %>%
   facet_wrap(~author, ncol = 2, scales = "free_y") +
   ggtitle("Emojis mais usados")
 ```
-Aparentemente nós gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:
+Aparentemente nos gostamos muito e somos um tanto quanto emocionados. Mas o gráfico não ficou tão bonito com esses emojis sem cor. Vamos tentar melhorar isso fazendo uma preparação para que, usando o ggimage, pra ficar mais bonitinho:
 ```{r message=FALSE, warning=FALSE}
 library(ggimage)
 emoji_data <- rwhatsapp::emojis %>% 
