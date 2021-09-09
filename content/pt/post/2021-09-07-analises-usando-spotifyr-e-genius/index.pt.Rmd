@@ -26,7 +26,7 @@ image:
   placement: 2
   caption: ''
   focal_point: 'Left'
-  preview_only: yes
+  preview_only: false
 projects: []
 self_contained: false
     
