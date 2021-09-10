@@ -168,12 +168,12 @@ wolf_alice %>%
 
 Primeiro plot:
 ```{r plot cinza, message=FALSE, warning=FALSE}
-library(ggjoy)
+library(ggridges)
 
 ggplot(wolf_alice, aes(x = valence, y = album_name)) + 
-    geom_joy() + 
-    theme_joy() +
-    ggtitle("Joyplot do Wolf Alices's", subtitle = "Feito com os dados de valência da API do spotify usando o spotifyR") +
+    geom_density_ridges() + 
+    theme_ridges() +
+    ggtitle("Ridgeplot do Wolf Alices's", subtitle = "Feito com os dados de valência da API do spotify usando o spotifyR") +
     theme(axis.title = element_blank())
 ```
 Agora um plot mais colorido (inspirado no post da [Simran Vatsa no Medium](https://medium.com/@simranvatsa5/taylor-f656e2a09cc3)):
@@ -184,16 +184,23 @@ wolf_alice %>% ggplot(aes(x = valence, y = album_name, fill = ..x..)) +
   theme(panel.background = element_rect(fill = "white")) +
   theme(plot.background = element_rect(fill = "white")) +
   xlim(0,1) +
-  theme_joy() +
+  theme_ridges() +
   theme(axis.title = element_blank()) +
   labs(fill = 'Valência') +
-  ggtitle("Joyplot do Wolf Alices's", subtitle = "Nível de positividade nas músicas de cada álbum") + 
+  ggtitle("Ridgeplot do Wolf Alices's", subtitle = "Nível de positividade nas músicas de cada álbum") + 
   labs(caption = "(Feito com os dados de valência da API do spotify usando o spotifyR)")
 
 ```
 **Tá, mas o que essas curvas realmente significam ou mostram?**
 Elas mostram a distribuição de músicas de acordo justamente com a 'positividade'. Olhando pra cada uma delas, para cada um dos álbuns, nota-se que há um maior 'volume' de faixas não tão positivas assim nos 3 álbuns (por isso a maior montanha está em torno dos valores de 0~0.25).
 
+#### Update e observação importante:
+
+>Na primeira versão do texto, usamos o pacote ggjoy e suas funções, bem como o termo "Joyplot". O nome parece um bom trocadilho, mas tem uma história por trás não tão legal assim. O termo "joyplot" se popularizou por conta da capa do álbum do "Unknown Pleasures" da banda de rock inglesa *Joy Division*, que apresentava curvas que pareciam um "relevo montanhoso". A capa foi desenhada pelo designer da gravadora da banda na época, utilizando imagens feitas por um estudante de astronomia que investigava as estrelas através de rádiotelescópios. O problema é que o nome da banda fazia referência a grupos de mulheres judias, que nos campos de concentração da 2ª guerra, eram mantidas como escravas sexuais dos soldados nazistas. A banda retirou o nome do livro "House of Dolls", de 1953, que retratava esses acontecimentos horríveis praticados pelo regime nazista. Os autores do pacote ggjoy decidiram então, para que não continuasse o uso de um nome que remetia a algo tão pesado e triste (apesar do nome parecer inicialmente remeter à felicidade), mudar o nome dele para ggridge, bem como mudar o nome de todas as funções que usavam o termo joy.
+
+![Capa do álbum Unknown Pleasures, da banda Joy Division](images/876677.jpg)
+
+Leia mais em: [Goodbye joyplots: It’s time to find a better name for the plots formerly known as “joyplots.”](https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/)
 
 ## Agora usando o Genius
 
@@ -578,3 +585,5 @@ Charlie Thompson (aka RCharlie) e o [Sentify](http://www.rcharlie.net/sentify/),
 - [Post da Simran Vatsa no Medium](https://medium.com/@simranvatsa5/taylor-f656e2a09cc3)
 - [Post do Charlie Thompson na página pessoal dele](https://www.rcharlie.com/blog/fitter-happier/)
 - [Página do pacote spotifyR (criado pelo próprio RCharlie)](https://www.rcharlie.com/spotifyr/)
+-[Capa icônica de ‘Unknown Pleasures’ é analisada por astrofísico: 'Um dos fenômenos mais extremos da natureza'](https://rollingstone.uol.com.br/noticia/capa-iconica-de-unknown-pleasures-e-analisada-por-astrofisico-um-dos-fenomenos-mais-extremos-da-natureza/)
+-[Goodbye joyplots](https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/)

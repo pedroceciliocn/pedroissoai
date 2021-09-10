@@ -20,7 +20,7 @@ tags:
 subtitle: ''
 summary: 'Breve análise de dados de músicas e álbuns usando a linguagem R e os pacotes para uso das APIs do Spotify e do Genius.'
 authors: ['Pedro Neto']
-lastmod: '2021-09-07T02:48:25-03:00'
+lastmod: '2021-09-08T02:48:25-03:00'
 featured: no
 image:
   placement: 2
@@ -130,8 +130,8 @@ get_my_recently_played(limit = 5) %&gt;%
     kable()</code></pre>
 <table>
 <colgroup>
-<col width="17%" />
-<col width="82%" />
+<col width="18%" />
+<col width="81%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -146,7 +146,7 @@ get_my_recently_played(limit = 5) %&gt;%
 </tr>
 <tr class="even">
 <td align="left">Wolf Alice</td>
-<td align="left">art pop, indie pop, indie rock, modern alternative rock, modern rock, rock</td>
+<td align="left">indie pop, indie rock, modern alternative rock, modern rock, rock</td>
 </tr>
 <tr class="odd">
 <td align="left">Alice In Chains</td>
@@ -318,12 +318,12 @@ get_my_recently_played(limit = 5) %&gt;%
 </tbody>
 </table>
 <p>Primeiro plot:</p>
-<pre class="r"><code>library(ggjoy)
+<pre class="r"><code>library(ggridges)
 
 ggplot(wolf_alice, aes(x = valence, y = album_name)) + 
-    geom_joy() + 
-    theme_joy() +
-    ggtitle(&quot;Joyplot do Wolf Alices&#39;s&quot;, subtitle = &quot;Feito com os dados de valência da API do spotify usando o spotifyR&quot;) +
+    geom_density_ridges() + 
+    theme_ridges() +
+    ggtitle(&quot;Ridgeplot do Wolf Alices&#39;s&quot;, subtitle = &quot;Feito com os dados de valência da API do spotify usando o spotifyR&quot;) +
     theme(axis.title = element_blank())</code></pre>
 <p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/plot%20cinza-1.png" width="672" />
 Agora um plot mais colorido (inspirado no post da <a href="https://medium.com/@simranvatsa5/taylor-f656e2a09cc3">Simran Vatsa no Medium</a>):</p>
@@ -333,14 +333,25 @@ Agora um plot mais colorido (inspirado no post da <a href="https://medium.com/@s
   theme(panel.background = element_rect(fill = &quot;white&quot;)) +
   theme(plot.background = element_rect(fill = &quot;white&quot;)) +
   xlim(0,1) +
-  theme_joy() +
+  theme_ridges() +
   theme(axis.title = element_blank()) +
   labs(fill = &#39;Valência&#39;) +
-  ggtitle(&quot;Joyplot do Wolf Alices&#39;s&quot;, subtitle = &quot;Nível de positividade nas músicas de cada álbum&quot;) + 
+  ggtitle(&quot;Ridgeplot do Wolf Alices&#39;s&quot;, subtitle = &quot;Nível de positividade nas músicas de cada álbum&quot;) + 
   labs(caption = &quot;(Feito com os dados de valência da API do spotify usando o spotifyR)&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index.pt_files/figure-html/plot%20mais%20bonito-1.png" width="672" />
 <strong>Tá, mas o que essas curvas realmente significam ou mostram?</strong>
 Elas mostram a distribuição de músicas de acordo justamente com a ‘positividade’. Olhando pra cada uma delas, para cada um dos álbuns, nota-se que há um maior ‘volume’ de faixas não tão positivas assim nos 3 álbuns (por isso a maior montanha está em torno dos valores de 0~0.25).</p>
+</div>
+<div id="update-e-observação-importante" class="section level4">
+<h4>Update e observação importante:</h4>
+<blockquote>
+<p>Na primeira versão do texto, usamos o pacote ggjoy e suas funções, bem como o termo “Joyplot”. O nome parece um bom trocadilho, mas tem uma história por trás não tão legal assim. O termo “joyplot” se popularizou por conta da capa do álbum do “Unknown Pleasures” da banda de rock inglesa <em>Joy Division</em>, que apresentava curvas que pareciam um “relevo montanhoso”. A capa foi desenhada pelo designer da gravadora da banda na época, utilizando imagens feitas por um estudante de astronomia que investigava as estrelas através de rádiotelescópios. O problema é que o nome da banda fazia referência a grupos de mulheres judias, que nos campos de concentração da 2ª guerra, eram mantidas como escravas sexuais dos soldados nazistas. A banda retirou o nome do livro “House of Dolls”, de 1953, que retratava esses acontecimentos horríveis praticados pelo regime nazista. Os autores do pacote ggjoy decidiram então, para que não continuasse o uso de um nome que remetia a algo tão pesado e triste (apesar do nome parecer inicialmente remeter à felicidade), mudar o nome dele para ggridge, bem como mudar o nome de todas as funções que usavam o termo joy.</p>
+</blockquote>
+<div class="figure">
+<img src="images/876677.jpg" alt="" />
+<p class="caption">Capa do álbum Unknown Pleasures, da banda Joy Division</p>
+</div>
+<p>Leia mais em: <a href="https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/">Goodbye joyplots: It’s time to find a better name for the plots formerly known as “joyplots.”</a></p>
 </div>
 </div>
 <div id="agora-usando-o-genius" class="section level2">
@@ -385,10 +396,10 @@ Ele está relacionado com o tempo que demora pra que se obtenha uma resposta na 
 ##   &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;
 ## 1 Blue Weekend      11 Wolf A~ The Beach II      20 Verse 2 Wolf Alice     Happ~
 ## 2 Blue Weekend       1 &lt;NA&gt;    The Beach         NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt; 
-## 3 Blue Weekend       4 &lt;NA&gt;    Smile             NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt; 
+## 3 Blue Weekend       2 &lt;NA&gt;    Delicious Thi~    NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt; 
 ## 4 Blue Weekend       5 &lt;NA&gt;    Safe From Hea~    NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt; 
-## 5 Blue Weekend       6 &lt;NA&gt;    How Can I Mak~    NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt; 
-## 6 Blue Weekend       7 &lt;NA&gt;    Play the Grea~    NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</code></pre>
+## 5 Blue Weekend       7 &lt;NA&gt;    Play the Grea~    NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt; 
+## 6 Blue Weekend      10 &lt;NA&gt;    No Hard Feeli~    NA &lt;NA&gt;    &lt;NA&gt;           &lt;NA&gt;</code></pre>
 <!-- Para uma melhor visualização, usando o pacote DT. Percebe-se que há elementos faltantes. -->
 <p>Já que o pacote genius não funfa (do jeito que eu queria), bora tentar de outra maneira, usando o pacote Geniusr.</p>
 </div>
@@ -462,20 +473,20 @@ allLyrics &lt;- allLyrics %&gt;%
 <pre class="r"><code>allLyrics %&gt;% write_csv(&quot;allLyrics.csv&quot;)</code></pre>
 <p>Dando uma olhada:</p>
 <pre class="r"><code>head(allLyrics)</code></pre>
-<pre><code>##   song_id        album                                              line
-## 1 6525048 Blue Weekend                           He&#39;s had so many lovers
-## 2 6525048 Blue Weekend              Don&#39;t mean he&#39;s been pleasing anyone
-## 3 6525048 Blue Weekend                      Doesn&#39;t matter &#39;bout numbers
-## 4 6525048 Blue Weekend When it&#39;s breaking news that it takes two to love
-## 5 6525048 Blue Weekend                       I was always taught to give
-## 6 6525048 Blue Weekend                             Give and make it good
-##   section_name section_artist      song_name artist_name
-## 1      Verse 1     Wolf Alice Feeling Myself  Wolf Alice
-## 2      Verse 1     Wolf Alice Feeling Myself  Wolf Alice
-## 3      Verse 1     Wolf Alice Feeling Myself  Wolf Alice
-## 4      Verse 1     Wolf Alice Feeling Myself  Wolf Alice
-## 5      Verse 1     Wolf Alice Feeling Myself  Wolf Alice
-## 6      Verse 1     Wolf Alice Feeling Myself  Wolf Alice</code></pre>
+<pre><code>##   song_id             album                                  line section_name
+## 1 3101719 Visions of a Life          I watch you and your friends      Verse 1
+## 2 3101719 Visions of a Life         You stick out so sorely, girl      Verse 1
+## 3 3101719 Visions of a Life        Did you grow up a poorly girl?      Verse 1
+## 4 3101719 Visions of a Life       Girls who don’t go out and play      Verse 1
+## 5 3101719 Visions of a Life            Are you at your wits&#39; end?      Verse 1
+## 6 3101719 Visions of a Life With these meaningless conversations?      Verse 1
+##   section_artist                  song_name artist_name
+## 1     Wolf Alice Beautifully Unconventional  Wolf Alice
+## 2     Wolf Alice Beautifully Unconventional  Wolf Alice
+## 3     Wolf Alice Beautifully Unconventional  Wolf Alice
+## 4     Wolf Alice Beautifully Unconventional  Wolf Alice
+## 5     Wolf Alice Beautifully Unconventional  Wolf Alice
+## 6     Wolf Alice Beautifully Unconventional  Wolf Alice</code></pre>
 <p>Aparentemente tá tudo ok. É legal dar um View(allLyrics) pra verificar no próprio Rstudio com o csv ficou (ou então abrir o csv externamente).</p>
 <!-- #### Outra forma fazendo por album -->
 </div>
@@ -489,12 +500,12 @@ allLyrics &lt;- allLyrics %&gt;%
   count(word, sort = TRUE) %&gt;% 
   head()</code></pre>
 <pre><code>##   word   n
-## 1    i 500
-## 2  you 443
-## 3  the 412
-## 4  and 317
-## 5   to 292
-## 6    a 259</code></pre>
+## 1    i 535
+## 2  the 483
+## 3  you 477
+## 4  and 329
+## 5   to 295
+## 6   me 253</code></pre>
 <p>Mas apareceram várias ‘stop words’, que são palavras que apenas funcionam como conectivos ou não tem significado relevante pra uma análise. Então temos que remover essas palavras.</p>
 <pre class="r"><code># removendo as stop words
 stop_words &lt;- (stopwords::stopwords(&quot;en&quot;, source = &quot;snowball&quot;)) 
@@ -507,11 +518,11 @@ tidyLyrics %&gt;%
   head()</code></pre>
 <pre><code>##      word   n
 ## 1      ah 173
-## 2    love  82
-## 3    like  71
-## 4    just  62
-## 5 friends  57
-## 6     can  52</code></pre>
+## 2    love  94
+## 3    like  78
+## 4     can  67
+## 5 friends  60
+## 6    just  59</code></pre>
 <p>No caso de uma banda/artista/letra em pt-br é possível remover stop words da nossa língua (verificando a documentação ou mandando um ?stopwords no console, temos mais informações).</p>
 <p>No fim, <em>Love</em> foi a mais frequente (o ‘ah’ não conta né? logo mais vamos retirar esse e outros casos específicos de stop words)</p>
 <p>Agora iremos contar por album e montar uma visualização:</p>
@@ -664,6 +675,8 @@ Charlie Thompson (aka RCharlie) e o <a href="http://www.rcharlie.net/sentify/">S
 <li>Post do Tom MacNamara aka <span class="citation">@Statnamara</span> no <a href="https://www.r-bloggers.com/2021/01/scraping-analysing-and-visualising-lyrics-in-r/">r-bloggers.com</a></li>
 <li><a href="https://medium.com/@simranvatsa5/taylor-f656e2a09cc3">Post da Simran Vatsa no Medium</a></li>
 <li><a href="https://www.rcharlie.com/blog/fitter-happier/">Post do Charlie Thompson na página pessoal dele</a></li>
-<li><a href="https://www.rcharlie.com/spotifyr/">Página do pacote spotifyR (criado pelo próprio RCharlie)</a></li>
+<li><a href="https://www.rcharlie.com/spotifyr/">Página do pacote spotifyR (criado pelo próprio RCharlie)</a>
+-<a href="https://rollingstone.uol.com.br/noticia/capa-iconica-de-unknown-pleasures-e-analisada-por-astrofisico-um-dos-fenomenos-mais-extremos-da-natureza/">Capa icônica de ‘Unknown Pleasures’ é analisada por astrofísico: ‘Um dos fenômenos mais extremos da natureza’</a>
+-<a href="https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/">Goodbye joyplots</a></li>
 </ul>
 </div>
