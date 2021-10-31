@@ -1,0 +1,437 @@
+---
+title: "Dicionários e Tuplas"
+subtitle: "Monitoria P1 SI 2021.1"  
+author: 
+  - "Pedro Neto @pccn"
+  - "Tel: (87)99995-2777"
+# date: '`r Sys.Date()`' #atualizar isso
+date: "08/11/2021"
+encoding: "UTF-8"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: 
+    includes:
+      after_body: insert-logo.html
+  
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#FF961C",
+  inverse_header_color = "#FFFFFF"
+)
+```
+
+```{css, echo = FALSE}
+# .remark-slide-content {
+#   font-size: 28px;
+#   padding: 20px 80px 20px 80px;
+# }
+.remark-code, .remark-inline-code {
+  background: #f0f0f0;
+}
+.remark-code {
+  font-size: 24px;
+}
+.huge .remark-code { /*Change made here*/
+  font-size: 200% !important;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 60% !important;
+}
+```
+
+## Dicionários
+
+São estruturas de dados similares às listas, mas com propriedades de acesso diferentes. Eles são compostos por um conjunto de chaves e valores que são relacionados entre si.
+No python, criamos dicionários com `{}`. Cada um dos elementos do dicionário é uma combinação de **chave** e **valor**.
+
+Exemplo:
+```{r message=FALSE, warning=FALSE, include=FALSE, requireNamespace("tibble", quietly=TRUE)}
+tabela_1 <- data.frame(Produto = c("Alface", "Batata", "Tomate", "Feijão"),
+                       Preço = c("R$ 0,45", "R$ 1,20", "R$ 2,30", "R$ 1,50"))
+
+# tibble::as_tibble(tabela_1)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(tabela_1), format = 'html', caption = "Tabela - Preços de mercadorias", align = "l")
+```
+---
+### Dicionários
+A tabela anterior pode ser vista como um dicionário: as chaves seriam os nomes dos produtos e os valores, seus preços. Pra criar um dicionário, faríamos assim:
+
+```{python, collapse = TRUE}
+tabela = {}
+print(tabela)       # olhando o dicionário
+print(type(tabela)) # olhando o tipo
+```
+ou assim, usando a função `dict()`:
+```{python, collapse = TRUE}
+tabela = dict() 
+print(tabela) # olhando o dicionário
+```
+---
+### Dicionários
+Pra adicionar um elemento ao dicionário podemos simplesmente usar um valor atribuído ao nome do dicionário seguido de colchetes. Dentro do par de colchetes colocamos o nome da chave:
+```{python, collapse = TRUE}
+tabela["Alface"] = 0.45
+```
+Agora há um item no dicionário que mapeia a chave `'Alface'` ao valor `0.45`. Verificamos então como está o dicionário `tabela` atualmente:
+```{python, collapse = TRUE}
+print(tabela)
+```
+Usando o padrão verificado na saída, podemos também criar um dicionário já preenchido com suas chaves e valores. Basta usar `{chave: valor}`. Exemplo abaixo da tabela de preços  de mercadorias:
+```{python, collapse = TRUE}
+tabela = {"Alface": 0.45,
+          "Batata": 1.20,
+          "Tomate": 2.30,
+          "Feijão": 1.50}
+```
+---
+### Dicionários
+Verificando a tabela, temos:
+```{python, collapse = TRUE}
+print(tabela)
+```
+
+Podemos também procurar valores no dicionário através das chaves:
+```{python, collapse = TRUE}
+print(tabela["Batata"])
+```
+E até atualizar algum dos valores:
+```{python, collapse = TRUE}
+tabela["Batata"] = 1.25
+print(tabela["Batata"])
+```
+---
+### Dicionários
+Quando _printamos_ uma chave, se ela não existir no dicionário, recebemos uma exceção:
+```{python, eval = FALSE}
+print(tabela["Melancia"])
+```
+```
+## Traceback (most recent call last):
+##  File "<stdin>", line 1, in <module>
+## KeyError: 'Melancia'
+```
+Num futuro (próximo) vocês irão conhecer formas de tratar esse tipo de problema.
+
+---
+name: operadores
+### Função `len` e o operador `in`
+A função `len` lá das listas e strings também pode ser usada num dicionário:
+```{python, collapse = TRUE}
+print(len(tabela))
+```
+Outra coisa que funciona também com dicionários é o operador `in` (ou `not in`). Ele diz se a chave está no dicionário (retorna `True`) ou não (retorna `False`) e é uma forma melhor de verificar a existência de uma chave:
+```{python, collapse = TRUE}
+print("Batata" in tabela)
+print("Melancia" in tabela)
+```
+---
+name: iterando
+### Iterando dicionários
+Printando as **chaves**:
+```{python, collapse = TRUE}
+for chave in tabela:
+    print(chave)
+
+```
+--
+Printando os **valores**:
+```{python, collapse = TRUE}
+for valor in tabela:
+    print(tabela[valor])
+
+```
+---
+### Iterando dicionários
+Printando as **chaves** e os **valores**:
+```{python, collapse = TRUE}
+for chave in tabela:
+    print(chave, tabela[chave])
+
+```
+---
+
+### Usando os métodos `items()`, `keys()` e `values()`
+Com o método `values` é possível receber uma lista dos valores do dicionário:
+```{python, collapse = TRUE}
+print(tabela.values())
+```
+Com isso, podemos verificar se um valor está no dicionário. Basta passar pra uma variável essa coleção de valores e depois usar o operador `in`:
+```{python, collapse = TRUE}
+valores = tabela.values()
+print(1.20 in valores)
+```
+---
+### Usando os métodos `items()`, `keys()` e `values()`
+Agora usando o método `keys`, recebemos uma lista com as chaves do dicionário:
+```{python, collapse = TRUE}
+print(tabela.keys())
+```
+Não precisamos passar, no caso das chaves, pra uma variável pra usar o operador `in`, como já foi dito [anteriormente](#operadores).
+---
+### Usando os métodos `items()`, `keys()` e `values()`
+Outro método útil é o `items()`. Ele é um _gerador_ (assim como `keys` e `values`), que nesse caso, retorna uma lista com _tuplas_ contendo a chave e o valor de cada item do dicionário. Usando apenas um `for` com duas variáveis (por exemplo: chave e valor) podemos fazer o _desempacotamento_ desses valores em uma "andada" só do _loop_.
+
+Exemplo do uso do `items()`:
+```{python, out.width="60%", collapse = TRUE}
+print(tabela.items())
+
+```
+Percorrendo com o for:
+```{python, collapse = TRUE}
+for chave, valor in tabela.items():
+    print(chave, valor)
+```
+---
+### Usando os métodos `items()`, `keys()` e `values()`
+> Cuidado ao usar esses métodos "prontos". É aconselhável que se use o `for` da forma como foi vista [aqui](#iterando).
+---
+## Tuplas
+Tuplas são parecidas com listas mas são imutáveis. São ideais para representar listas de valores constantes.
+
+--
+### Criando uma Tupla
+Pra criar uma tupla vazia usamos parênteses:
+```{python, collapse = TRUE}
+tupla = () #uma tupla vazia
+print(tupla)
+print(type(tupla))
+```
+---
+### Tuplas
+Criamos uma tupla com vários elementos de forma muito parecida com a criação de uma lista, mas trocamos os colchetes pelos parênteses:
+```{python, collapse = TRUE}
+tupla = ("a", "b", "c")
+print(tupla, type(tupla))
+```
+Na verdade até poderíamos criá-las sem o uso dos parênteses, mas o uso é recomendado por aumentar a clareza da expressão:
+```{python, collapse = TRUE}
+tupla = "a", "b", "c"
+print(tupla, type(tupla))
+```
+
+---
+### Tuplas
+Agora, se quisermos criar uma tupla com um único elemento, precisamos usar uma vírgula:
+```{python, collapse = TRUE}
+tupla_1 = (1,)
+tupla_2 = ("a",)
+print(tupla_1, tupla_2)
+print(type(tupla_1), type(tupla_2))
+```
+Pois se omitirmos ela, acabamos por criar um inteiro ou até uma string:
+```{python, collapse = TRUE}
+tupla_3 = (1)
+tupla_4 = ("a")
+print(tupla_3, tupla_4)
+print(type(tupla_3), type(tupla_4))
+```
+
+---
+### Tuplas
+Uma tupla pode fazer uso de operações comuns em listas como _slices_ e o acesso através de índice (_index_):
+```{python include=FALSE}
+tupla = ("a", "b", "c")
+```
+```{python, collapse = TRUE}
+print(tupla[0])
+print(tupla[1:])
+print(tupla[:1])
+print(tupla * 4)
+print(len(tupla))
+```
+---
+### Tuplas
+Mas diferente de listas, seus valores não podem ser alterados através de seus índices:
+```{python, eval = FALSE}
+tupla[2] = 4
+```
+```
+## Traceback (most recent call last):
+##   File "<stdin>", line 1, in <module>
+## TypeError: 'tuple' object does not support item assignment
+```
+O que podemos fazer é apenas refazer a tupla inteira (sobrescrever), passando novos elementos:
+```{python, collapse = TRUE}
+tupla = ("a", "b", "c", "d")
+```
+Ou então concatenar uma tupla com outra:
+```{python, collapse = TRUE}
+tupla_2 = ("e", "f")
+print(tupla + tupla_2)
+```
+---
+### Tuplas
+Apesar delas serem imutáveis, se dentro de uma tupla estiver uma lista, é possível modificar o valor dessa lista:
+```{python, collapse = TRUE}
+tupla = ("a", "b", [1, 2, 3])
+tupla[2][1] = 0
+print(tupla)
+```
+
+Ou inclusive adicionar elementos (mas apenas à lista):
+```{python, collapse = TRUE}
+tupla[2].append(4)
+print(tupla)
+```
+
+---
+### Tuplas
+Também podemos usar tuplas para trocar valores de variáveis de maneira simultânea:
+```{python, collapse = TRUE}
+a, b = 10, 20 #isso seria uma operação de desempacotamento, já a criação de uma tupla seria um empacotamento
+print(a, b)
+a, b = b, a
+print(a, b)
+```
+
+---
+### Dicionários de Listas, Tuplas e Dicionários (e listas de dicionários)
+No Python há a possibilidade de se criar dicionários em que as chaves estão associadas a listas, tuplas ou até mesmo outros dicionários. Um exemplo seria o caso abaixo, de mais uma vez, um estoque de frutas, mas agora com mais uma informação disponível para acesso - a quantidade - numa lista, junto do preço:
+```{r message=FALSE, warning=FALSE, include=FALSE}
+tabela_2 <- data.frame(Produto = c("Tomate", "Alface", "Batata", "Feijão"),
+                       Quantidade = c(1000, 500, 2001, 100),
+                       Preço = c("R$ 2,30", "R$ 0,45", "R$ 1,20", "R$ 1,50"))
+
+# tibble::as_tibble(tabela_1)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(tabela_2), format = 'html', caption = "Tabela - Preços e estoque de mercadorias", align = "l")
+```
+Os nomes dos produtos continuam sendo as chaves, mas agora os valores associados a elas podem estar numa lista, ou poderiam também ser tuplas e até outros dicionários.
+---
+### Dicionários de Listas, Tuplas e Dicionários (e listas de dicionários)
+No Python há a possibilidade de se criar dicionários em que as chaves estão associadas a listas, tuplas ou até mesmo outros dicionários. Um exemplo seria o caso abaixo, de mais uma vez, um estoque de frutas, mas agora com mais uma informação disponível para acesso - a quantidade - numa lista, junto do preço:
+```{r message=FALSE, warning=FALSE, include=FALSE}
+tabela_3 <- data.frame(ID = c(21293, 46983, 48959, 10002),
+  Produto = c("Tomate", "Alface", "Batata", "Feijão"),
+                       Quantidade = c(1000, 500, 2001, 100),
+                       Preço = c("R$ 2,30", "R$ 0,45", "R$ 1,20", "R$ 1,50"))
+
+# tibble::as_tibble(tabela_1)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(tabela_3), format = 'html', caption = "Tabela - Ids, preços e estoque de mercadorias", align = "l")
+```
+Os nomes dos produtos continuam sendo as chaves, mas agora os valores associados a elas podem estar numa lista, ou poderiam também ser tuplas e até outros dicionários. **Também poderíamos usar como chaves algum tipo de numeração (ID) único pra cada produto ou em alguns outros tipos de código único, como CPFs e dados usados em cadastros.**
+
+--
+> Normalmente é assim que se usam as chaves em estruturas de dados (vocês verão mais sobre, na disciplina de Algoritmos).
+
+
+---
+### Dicionários de Listas, Tuplas e Dicionários (e listas de dicionários)
+Agora um exemplo de dicionário, usando a tabela de estoque anterior, em que processamos uma lista de operações de venda, calculando o valor total vendido e atualizando a quantidade em estoque:
+```{python, collapse = TRUE}
+estoque = {"tomate": [1000, 2.30],
+           "alface": [500, 0.45],
+           "batata": [2001, 1.20],
+           "feijão": [100, 1.50]}
+           
+venda = [["tomate", 8], ["batata", 12], ["alface", 8]]
+total = 0
+```
+
+> Continua...
+
+---
+.tiny[
+``` {python, collapse = TRUE, results = "hold"}
+print("Vendas:")
+for operacao in venda:
+    produto = operacao[0]       # aqui usamos variáveis para atribuir as chaves e os dados dos produtos
+    qtd = operacao[1]           # produto, qtd = operacao outra opção, usando _desempacotamento_
+    preco = estoque[produto][1] # como os dados são uma lista, usamos o segundo elemento dela
+    custo = preco * qtd
+    print(f"{produto:12s}: {qtd:3d} x {preco:6.2f} = {custo:6.2f}")
+    estoque[produto][0] -= qtd
+    total += custo
+print(f"Custo total : {total:21.2f}\n")
+print("Estoque:\n")
+for chave in estoque:
+    print(f"Descrição: {chave}")
+    print(f"Quantidade: {estoque[chave][0]}")
+    print(f"Preço: {estoque[chave][1]:6.2f}\n")
+```
+]
+
+---
+### Exercícios
+**1 - Seguindo o exemplo do dicionário com estoque e operações de venda, escreva um programa que solicite ao usuário o produto e a quantidade vendida. O programa então deve verificar se o nome do produto digitado existe no dicionário, e depois efetuar a baixa no estoque.**
+
+**2 - Escreva um programa que gere um dicionário, em que cada chave seja um caractere, e seu valor seja o número desse caractere encontrado em uma frase lida.**
+
+Exemplo:
+
+`I believe you - > {"I":1, "b":1, "e":3, "l":1, "i":1, "v":1, "y":1, "o":1, "u":1}`
+
+>Dica: pense num histograma.
+
+
+```{r, load_refs, include=FALSE, cache=FALSE}
+# install.packages("RefManageR")
+# install.packages("bibtex")
+
+library(RefManageR)
+RefManageR::BibOptions(
+  check.entries = FALSE,
+  style = "markdown",
+  hyperlink = "to.doc",
+  cite.style = "authoryear",
+  bib.style = "authoryear"
+)
+referencias <- RefManageR::ReadBib("MONITORIA2.bib", check = FALSE)
+```
+
+<!-- `r RefManageR::TextCite(referencias, "menezes_introducao_2019")` -->
+
+<!-- `r RefManageR::Cite(referencias, "downey_pense_2019")` -->
+
+<!-- `r RefManageR::Cite(referencias, "matthes_python_2019")` -->
+
+---
+# Referências
+
+ <!-- ```{r refs, echo=FALSE, results="asis"} -->
+ <!-- RefManageR::PrintBibliography(referencias) -->
+ <!-- ``` -->
+
+[DOWNEY, A. B. **Pense em Python: Pense Como um Cientista da Computação.** Novatec Editora, 2016.](https://penseallen.github.io/PensePython2e/)
+
+[MATTHES, E. **Python Crash Course, 2nd Edition: A Hands-On, Project-Based Introduction to Programming.** Illustrated edição ed. San Francisco, CA: No Starch Press, 2019.](https://ehmatthes.github.io/pcc/)
+
+[MENEZES, N. N. C. **Introdução à Programação com Python: Algoritmos e Lógica de Programação Para Iniciantes.** 3a edição ed. Novatec Editora, 2019.](https://python.nilo.pro.br/)
+
+---
+# Obrigado!
+
+Slides criados usando os seguintes pacotes do R:
+
+[**xaringan**](https://github.com/yihui/xaringan)<br>
+[gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+
+[remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), e [R Markdown](https://rmarkdown.rstudio.com).

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Dicionários e Tuplas</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Pedro Neto @pccn" />
+    <meta name="author" content="Tel: (87)99995-2777" />
+    <meta name="date" content="2021-08-11" />
+    <script src="test-using-xarin_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Dicionários e Tuplas
+## Monitoria P1 SI 2021.1
+### Pedro Neto <span class="citation">@pccn</span>
+### Tel: (87)99995-2777
+### 08/11/2021
+
+---
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+# .remark-slide-content {
+#   font-size: 28px;
+#   padding: 20px 80px 20px 80px;
+# }
+.remark-code, .remark-inline-code {
+  background: #f0f0f0;
+}
+.remark-code {
+  font-size: 24px;
+}
+.huge .remark-code { /*Change made here*/
+  font-size: 200% !important;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 60% !important;
+}
+&lt;/style&gt;
+
+## Dicionários
+
+São estruturas de dados similares às listas, mas com propriedades de acesso diferentes. Eles são compostos por um conjunto de chaves e valores que são relacionados entre si.
+No python, criamos dicionários com `{}`. Cada um dos elementos do dicionário é uma combinação de **chave** e **valor**.
+
+Exemplo:
+
+&lt;table&gt;
+&lt;caption&gt;Tabela - Preços de mercadorias&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Produto &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Preço &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Alface &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 0,45 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Batata &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 1,20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Tomate &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 2,30 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Feijão &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 1,50 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+### Dicionários
+A tabela anterior pode ser vista como um dicionário: as chaves seriam os nomes dos produtos e os valores, seus preços. Pra criar um dicionário, faríamos assim:
+
+
+```python
+tabela = {}
+print(tabela)       # olhando o dicionário
+## {}
+print(type(tabela)) # olhando o tipo
+## &lt;class 'dict'&gt;
+```
+ou assim, usando a função `dict()`:
+
+```python
+tabela = dict() 
+print(tabela) # olhando o dicionário
+## {}
+```
+---
+### Dicionários
+Pra adicionar um elemento ao dicionário podemos simplesmente usar um valor atribuído ao nome do dicionário seguido de colchetes. Dentro do par de colchetes colocamos o nome da chave:
+
+```python
+tabela["Alface"] = 0.45
+```
+Agora há um item no dicionário que mapeia a chave `'Alface'` ao valor `0.45`. Verificamos então como está o dicionário `tabela` atualmente:
+
+```python
+print(tabela)
+## {'Alface': 0.45}
+```
+Usando o padrão verificado na saída, podemos também criar um dicionário já preenchido com suas chaves e valores. Basta usar `{chave: valor}`. Exemplo abaixo da tabela de preços  de mercadorias:
+
+```python
+tabela = {"Alface": 0.45,
+          "Batata": 1.20,
+          "Tomate": 2.30,
+          "Feijão": 1.50}
+```
+---
+### Dicionários
+Verificando a tabela, temos:
+
+```python
+print(tabela)
+## {'Alface': 0.45, 'Batata': 1.2, 'Tomate': 2.3, 'Feijão': 1.5}
+```
+
+Podemos também procurar valores no dicionário através das chaves:
+
+```python
+print(tabela["Batata"])
+## 1.2
+```
+E até atualizar algum dos valores:
+
+```python
+tabela["Batata"] = 1.25
+print(tabela["Batata"])
+## 1.25
+```
+---
+### Dicionários
+Quando _printamos_ uma chave, se ela não existir no dicionário, recebemos uma exceção:
+
+```python
+print(tabela["Melancia"])
+```
+```
+## Traceback (most recent call last):
+##  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+## KeyError: 'Melancia'
+```
+Num futuro (próximo) vocês irão conhecer formas de tratar esse tipo de problema.
+
+---
+name: operadores
+### Função `len` e o operador `in`
+A função `len` lá das listas e strings também pode ser usada num dicionário:
+
+```python
+print(len(tabela))
+## 4
+```
+Outra coisa que funciona também com dicionários é o operador `in` (ou `not in`). Ele diz se a chave está no dicionário (retorna `True`) ou não (retorna `False`) e é uma forma melhor de verificar a existência de uma chave:
+
+```python
+print("Batata" in tabela)
+## True
+print("Melancia" in tabela)
+## False
+```
+---
+name: iterando
+### Iterando dicionários
+Printando as **chaves**:
+
+```python
+for chave in tabela:
+    print(chave)
+## Alface
+## Batata
+## Tomate
+## Feijão
+```
+--
+Printando os **valores**:
+
+```python
+for valor in tabela:
+    print(tabela[valor])
+## 0.45
+## 1.25
+## 2.3
+## 1.5
+```
+---
+### Iterando dicionários
+Printando as **chaves** e os **valores**:
+
+```python
+for chave in tabela:
+    print(chave, tabela[chave])
+## Alface 0.45
+## Batata 1.25
+## Tomate 2.3
+## Feijão 1.5
+```
+---
+
+### Usando os métodos `items()`, `keys()` e `values()`
+Com o método `values` é possível receber uma lista dos valores do dicionário:
+
+```python
+print(tabela.values())
+## dict_values([0.45, 1.25, 2.3, 1.5])
+```
+Com isso, podemos verificar se um valor está no dicionário. Basta passar pra uma variável essa coleção de valores e depois usar o operador `in`:
+
+```python
+valores = tabela.values()
+print(1.20 in valores)
+## False
+```
+---
+### Usando os métodos `items()`, `keys()` e `values()`
+Agora usando o método `keys`, recebemos uma lista com as chaves do dicionário:
+
+```python
+print(tabela.keys())
+## dict_keys(['Alface', 'Batata', 'Tomate', 'Feijão'])
+```
+Não precisamos passar, no caso das chaves, pra uma variável pra usar o operador `in`, como já foi dito [anteriormente](#operadores).
+---
+### Usando os métodos `items()`, `keys()` e `values()`
+Outro método útil é o `items()`. Ele é um _gerador_ (assim como `keys` e `values`), que nesse caso, retorna uma lista com _tuplas_ contendo a chave e o valor de cada item do dicionário. Usando apenas um `for` com duas variáveis (por exemplo: chave e valor) podemos fazer o _desempacotamento_ desses valores em uma "andada" só do _loop_.
+
+Exemplo do uso do `items()`:
+
+```python
+print(tabela.items())
+## dict_items([('Alface', 0.45), ('Batata', 1.25), ('Tomate', 2.3), ('Feijão', 1.5)])
+```
+Percorrendo com o for:
+
+```python
+for chave, valor in tabela.items():
+    print(chave, valor)
+## Alface 0.45
+## Batata 1.25
+## Tomate 2.3
+## Feijão 1.5
+```
+---
+### Usando os métodos `items()`, `keys()` e `values()`
+&gt; Cuidado ao usar esses métodos "prontos". É aconselhável que se use o `for` da forma como foi vista [aqui](#iterando).
+---
+## Tuplas
+Tuplas são parecidas com listas mas são imutáveis. São ideais para representar listas de valores constantes.
+
+--
+### Criando uma Tupla
+Pra criar uma tupla vazia usamos parênteses:
+
+```python
+tupla = () #uma tupla vazia
+print(tupla)
+## ()
+print(type(tupla))
+## &lt;class 'tuple'&gt;
+```
+---
+### Tuplas
+Criamos uma tupla com vários elementos de forma muito parecida com a criação de uma lista, mas trocamos os colchetes pelos parênteses:
+
+```python
+tupla = ("a", "b", "c")
+print(tupla, type(tupla))
+## ('a', 'b', 'c') &lt;class 'tuple'&gt;
+```
+Na verdade até poderíamos criá-las sem o uso dos parênteses, mas o uso é recomendado por aumentar a clareza da expressão:
+
+```python
+tupla = "a", "b", "c"
+print(tupla, type(tupla))
+## ('a', 'b', 'c') &lt;class 'tuple'&gt;
+```
+
+---
+### Tuplas
+Agora, se quisermos criar uma tupla com um único elemento, precisamos usar uma vírgula:
+
+```python
+tupla_1 = (1,)
+tupla_2 = ("a",)
+print(tupla_1, tupla_2)
+## (1,) ('a',)
+print(type(tupla_1), type(tupla_2))
+## &lt;class 'tuple'&gt; &lt;class 'tuple'&gt;
+```
+Pois se omitirmos ela, acabamos por criar um inteiro ou até uma string:
+
+```python
+tupla_3 = (1)
+tupla_4 = ("a")
+print(tupla_3, tupla_4)
+## 1 a
+print(type(tupla_3), type(tupla_4))
+## &lt;class 'int'&gt; &lt;class 'str'&gt;
+```
+
+---
+### Tuplas
+Uma tupla pode fazer uso de operações comuns em listas como _slices_ e o acesso através de índice (_index_):
+
+
+```python
+print(tupla[0])
+## a
+print(tupla[1:])
+## ('b', 'c')
+print(tupla[:1])
+## ('a',)
+print(tupla * 4)
+## ('a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c')
+print(len(tupla))
+## 3
+```
+---
+### Tuplas
+Mas diferente de listas, seus valores não podem ser alterados através de seus índices:
+
+```python
+tupla[2] = 4
+```
+```
+## Traceback (most recent call last):
+##   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+## TypeError: 'tuple' object does not support item assignment
+```
+O que podemos fazer é apenas refazer a tupla inteira (sobrescrever), passando novos elementos:
+
+```python
+tupla = ("a", "b", "c", "d")
+```
+Ou então concatenar uma tupla com outra:
+
+```python
+tupla_2 = ("e", "f")
+print(tupla + tupla_2)
+## ('a', 'b', 'c', 'd', 'e', 'f')
+```
+---
+### Tuplas
+Apesar delas serem imutáveis, se dentro de uma tupla estiver uma lista, é possível modificar o valor dessa lista:
+
+```python
+tupla = ("a", "b", [1, 2, 3])
+tupla[2][1] = 0
+print(tupla)
+## ('a', 'b', [1, 0, 3])
+```
+
+Ou inclusive adicionar elementos (mas apenas à lista):
+
+```python
+tupla[2].append(4)
+print(tupla)
+## ('a', 'b', [1, 0, 3, 4])
+```
+
+---
+### Tuplas
+Também podemos usar tuplas para trocar valores de variáveis de maneira simultânea:
+
+```python
+a, b = 10, 20 #isso seria uma operação de desempacotamento, já a criação de uma tupla seria um empacotamento
+print(a, b)
+## 10 20
+a, b = b, a
+print(a, b)
+## 20 10
+```
+
+---
+### Dicionários de Listas, Tuplas e Dicionários (e listas de dicionários)
+No Python há a possibilidade de se criar dicionários em que as chaves estão associadas a listas, tuplas ou até mesmo outros dicionários. Um exemplo seria o caso abaixo, de mais uma vez, um estoque de frutas, mas agora com mais uma informação disponível para acesso - a quantidade - numa lista, junto do preço:
+
+&lt;table&gt;
+&lt;caption&gt;Tabela - Preços e estoque de mercadorias&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Produto &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Quantidade &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Preço &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Tomate &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 2,30 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Alface &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 0,45 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Batata &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2001 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 1,20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Feijão &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 1,50 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+Os nomes dos produtos continuam sendo as chaves, mas agora os valores associados a elas podem estar numa lista, ou poderiam também ser tuplas e até outros dicionários.
+---
+### Dicionários de Listas, Tuplas e Dicionários (e listas de dicionários)
+No Python há a possibilidade de se criar dicionários em que as chaves estão associadas a listas, tuplas ou até mesmo outros dicionários. Um exemplo seria o caso abaixo, de mais uma vez, um estoque de frutas, mas agora com mais uma informação disponível para acesso - a quantidade - numa lista, junto do preço:
+
+&lt;table&gt;
+&lt;caption&gt;Tabela - Ids, preços e estoque de mercadorias&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Produto &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Quantidade &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Preço &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 21293 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Tomate &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 2,30 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 46983 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Alface &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 0,45 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 48959 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Batata &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2001 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 1,20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 10002 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Feijão &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R$ 1,50 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+Os nomes dos produtos continuam sendo as chaves, mas agora os valores associados a elas podem estar numa lista, ou poderiam também ser tuplas e até outros dicionários. **Também poderíamos usar como chaves algum tipo de numeração (ID) único pra cada produto ou em alguns outros tipos de código único, como CPFs e dados usados em cadastros.**
+
+--
+&gt; Normalmente é assim que se usam as chaves em estruturas de dados (vocês verão mais sobre, na disciplina de Algoritmos).
+
+
+---
+### Dicionários de Listas, Tuplas e Dicionários (e listas de dicionários)
+Agora um exemplo de dicionário, usando a tabela de estoque anterior, em que processamos uma lista de operações de venda, calculando o valor total vendido e atualizando a quantidade em estoque:
+
+```python
+estoque = {"tomate": [1000, 2.30],
+           "alface": [500, 0.45],
+           "batata": [2001, 1.20],
+           "feijão": [100, 1.50]}
+           
+venda = [["tomate", 8], ["batata", 12], ["alface", 8]]
+total = 0
+```
+
+&gt; Continua...
+
+---
+.tiny[
+
+```python
+print("Vendas:")
+for operacao in venda:
+    produto = operacao[0]       # aqui usamos variáveis para atribuir as chaves e os dados dos produtos
+    qtd = operacao[1]           # produto, qtd = operacao outra opção, usando _desempacotamento_
+    preco = estoque[produto][1] # como os dados são uma lista, usamos o segundo elemento dela
+    custo = preco * qtd
+    print(f"{produto:12s}: {qtd:3d} x {preco:6.2f} = {custo:6.2f}")
+    estoque[produto][0] -= qtd
+    total += custo
+print(f"Custo total : {total:21.2f}\n")
+print("Estoque:\n")
+for chave in estoque:
+    print(f"Descrição: {chave}")
+    print(f"Quantidade: {estoque[chave][0]}")
+    print(f"Preço: {estoque[chave][1]:6.2f}\n")
+## Vendas:
+## tomate      :   8 x   2.30 =  18.40
+## batata      :  12 x   1.20 =  14.40
+## alface      :   8 x   0.45 =   3.60
+## Custo total :                 36.40
+## 
+## Estoque:
+## 
+## Descrição: tomate
+## Quantidade: 992
+## Preço:   2.30
+## 
+## Descrição: alface
+## Quantidade: 492
+## Preço:   0.45
+## 
+## Descrição: batata
+## Quantidade: 1989
+## Preço:   1.20
+## 
+## Descrição: feijão
+## Quantidade: 100
+## Preço:   1.50
+```
+]
+
+---
+### Exercícios
+**1 - Seguindo o exemplo do dicionário com estoque e operações de venda, escreva um programa que solicite ao usuário o produto e a quantidade vendida. O programa então deve verificar se o nome do produto digitado existe no dicionário, e depois efetuar a baixa no estoque.**
+
+**2 - Escreva um programa que gere um dicionário, em que cada chave seja um caractere, e seu valor seja o número desse caractere encontrado em uma frase lida.**
+
+Exemplo:
+
+`I believe you - &gt; {"I":1, "b":1, "e":3, "l":1, "i":1, "v":1, "y":1, "o":1, "u":1}`
+
+&gt;Dica: pense num histograma.
+
+
+
+
+&lt;!-- &lt;a name=cite-menezes_introducao_2019&gt;&lt;/a&gt;[Menezes (2019)](#bib-menezes_introducao_2019) --&gt;
+
+&lt;!-- &lt;a name=cite-downey_pense_2019&gt;&lt;/a&gt;([Downey, 2019](#bib-downey_pense_2019)) --&gt;
+
+&lt;!-- &lt;a name=cite-matthes_python_2019&gt;&lt;/a&gt;([Matthes, 2019](#bib-matthes_python_2019)) --&gt;
+
+---
+# Referências
+
+ &lt;!-- ```{r refs, echo=FALSE, results="asis"} --&gt;
+ &lt;!-- RefManageR::PrintBibliography(referencias) --&gt;
+ &lt;!-- ``` --&gt;
+
+[DOWNEY, A. B. **Pense em Python: Pense Como um Cientista da Computação.** Novatec Editora, 2016.](https://penseallen.github.io/PensePython2e/)
+
+[MATTHES, E. **Python Crash Course, 2nd Edition: A Hands-On, Project-Based Introduction to Programming.** Illustrated edição ed. San Francisco, CA: No Starch Press, 2019.](https://ehmatthes.github.io/pcc/)
+
+[MENEZES, N. N. C. **Introdução à Programação com Python: Algoritmos e Lógica de Programação Para Iniciantes.** 3a edição ed. Novatec Editora, 2019.](https://python.nilo.pro.br/)
+
+---
+# Obrigado!
+
+Slides criados usando os seguintes pacotes do R:
+
+[**xaringan**](https://github.com/yihui/xaringan)&lt;br&gt;
+[gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+
+[remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), e [R Markdown](https://rmarkdown.rstudio.com).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": null
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(Símbolo-Monocromático-Preto-Logotipo-CIn-UFPE.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  bottom: 0em;
+  left: 1em;
+  width: 55px;
+  height: 64px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
