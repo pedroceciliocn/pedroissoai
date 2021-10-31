@@ -9,7 +9,9 @@ date: "08/11/2021"
 encoding: "UTF-8"
 output:
   xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js
     css: xaringan-themer.css
+    lib_dir: libs
     nature:
       slideNumberFormat: "%current%"
       highlightStyle: github
