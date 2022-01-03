@@ -21,7 +21,9 @@ date_format: Jan 2006
 #   Required fields are `title`, `company`, and `date_start`.
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
+
 experience:
+
   - title: Monitor Voluntário de Programação 1 no curso de Sistemas de Informação do CIn UFPE no semestre 2021.1
     company: CIn - UFPE
     company_url: 'https://portal.cin.ufpe.br/'
@@ -29,11 +31,8 @@ experience:
     location: Recife-PE
     date_start: '2021-09-05'
     date_end: '2021-12-24'
-    description: As atividades realizadas para a monitoria de Programação 1 (IF968) foram de bastante valia como experiência acadêmica e pessoal. Tanto a preparação dos roteiros, quanto as próprias apresentações com seus exemplos e exercícios, além do contato e troca de experiências com todos os envolvidos - alunos cursantes da disciplina, colegas que compartilharam da responsabilidade de exercer a função de monitor, o monitor chefe e o professor responsável – que demonstraram seriedade e comprometimento para com o andamento do curso e, por conseguinte, a construção dos conhecimentos relacionados aos temas abordados na disciplina, foram uma oportunidade única de crescimento pessoal e técnico.
+
     
-
-
-experience:
   - title: Voluntário como palestrante e criador e editor de conteúdos
     company: UNATI-UNIVASF
     company_url: 'http://unati.univasf.edu.br/'
