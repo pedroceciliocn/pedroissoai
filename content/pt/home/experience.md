@@ -26,7 +26,8 @@ experience:
   - title: Monitor Voluntário de Programação 1 no curso de Sistemas de Informação do CIn UFPE no semestre 2021.1
     company: CIn - UFPE
     company_url: 'https://portal.cin.ufpe.br/'
-    company_logo: 'Vertical Vermelho - Logotipo CIn-UFPE'
+    # company_logo: 'Vertical Vermelho - Logotipo CIn-UFPE'
+    company_logo: 'Símbolo Vermelho - Logotipo CIn-UFPE'
     location: Recife-PE
     date_start: '2021-09-05'
     date_end: '2021-12-24'
