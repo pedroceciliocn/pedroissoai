@@ -22,6 +22,21 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
+  - title: Teaching assistant in Programação 1 (SI) 2021.1
+    company: CIn - UFPE
+    company_url: 'https://portal.cin.ufpe.br/'
+    # company_logo: 'Vertical Vermelho - Logotipo CIn-UFPE'
+    company_logo: 'Símbolo Vermelho - Logotipo CIn-UFPE'
+    location: Recife-PE
+    date_start: '2021-09-05'
+    date_end: '2021-12-24'
+    description: |2-
+        The activities carried out for the Teaching assistant in Programação 1 (IF968) during semester 2021.1 at CIn UFPE, were very valuable as academic and personal experience. Both the preparation of the scripts and the presentations themselves with their examples and exercises, in addition to contact and exchange of experiences with everyone involved - students attending the course, colleagues who shared the responsibility of exercising the role of monitor, the head monitor and the responsible teacher – who showed seriousness and commitment to the progress of the course and therefore the construction of knowledge related to the topics covered in the discipline, were a unique opportunity for personal and technical growth.
+
+
+
+
+
   - title: Volunteer speaker and video/content creator
     company: UNATI-UNIVASF
     company_url: 'http://unati.univasf.edu.br/'
