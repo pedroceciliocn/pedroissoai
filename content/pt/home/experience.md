@@ -33,6 +33,11 @@ experience:
     date_end: '2021-12-24'
     description: |2-
         As atividades realizadas para a monitoria de Programação 1 (IF968) foram de bastante valia como experiência acadêmica e pessoal. Tanto a preparação dos roteiros, quanto as próprias apresentações com seus exemplos e exercícios, além do contato e troca de experiências com todos os envolvidos - alunos cursantes da disciplina, colegas que compartilharam da responsabilidade de exercer a função de monitor, o monitor chefe e o professor responsável – que demonstraram seriedade e comprometimento para com o andamento do curso e, por conseguinte, a construção dos conhecimentos relacionados aos temas abordados na disciplina, foram uma oportunidade única de crescimento pessoal e técnico.
+        
+        Apresentações das monitorias:
+        
+         * [Dicionários e Tuplas](https://pedroceciliocn.github.io/apresenta-o-monitoria-p1-dicionarios/#1)
+         * [Recursão](https://pedroceciliocn.github.io/apresenta-o-monitoria-p1-recurs-o/#1)
 
 
   - title: Voluntário como palestrante e criador e editor de conteúdos
@@ -51,15 +56,8 @@ experience:
        * Produzir materiais que sejam fáceis de entender e adequados para a faixa etária
 
        
-  - title: Professor of Semiconductor Physics
-    company: University X
-    company_url: ''
-    company_logo: org-x
-    location: California
-    date_start: '2016-01-01'
-    date_end: '2020-12-31'
-    description: Taught electronic engineering and researched semiconductor physics.
+
 
 design:
-  columns: ''
+  columns: '2'
 ---
