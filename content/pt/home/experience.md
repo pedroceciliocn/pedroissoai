@@ -32,7 +32,7 @@ experience:
     date_start: '2021-09-05'
     date_end: '2021-12-24'
     description: |2-
-        As atividades realizadas para a monitoria de Programação 1 (IF968) foram de bastante valia como experiência acadêmica e pessoal. Tanto a preparação dos roteiros, quanto as próprias apresentações com seus exemplos e exercícios, além do contato e troca de experiências com todos os envolvidos - alunos cursantes da disciplina, colegas que compartilharam da responsabilidade de exercer a função de monitor, o monitor chefe e o professor responsável – que demonstraram seriedade e comprometimento para com o andamento do curso e, por conseguinte, a construção dos conhecimentos relacionados aos temas abordados na disciplina, foram uma oportunidade única de crescimento pessoal e técnico.
+        As atividades realizadas para a monitoria de Programação 1 (IF968) foram de bastante valia como experiência acadêmica e pessoal. Tanto a preparação dos roteiros, quanto as apresentações com seus exemplos e exercícios, além do contato e troca de experiências com todos os envolvidos - alunos cursantes da disciplina, colegas que compartilharam da responsabilidade de exercer a função de monitor, o monitor chefe e o professor responsável – que demonstraram seriedade e comprometimento para com o andamento do curso e, por conseguinte, a construção dos conhecimentos relacionados aos temas abordados na disciplina, foram uma oportunidade única de crescimento pessoal e técnico.
         
         Apresentações das monitorias:
         
