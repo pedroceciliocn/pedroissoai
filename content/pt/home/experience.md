@@ -23,14 +23,28 @@ date_format: Jan 2006
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 
 experience:
-  - title: Monitor Voluntário de Programação 1 no curso de Sistemas de Informação do CIn UFPE no semestre 2021.1
+  - title: Software Testing Intern
+    company: Projeto CIn/Motorola · Estágio
+    company_logo: 'cin_motorola_logo'
+    location: Recife-PE
+    date_start: '2022-10-17'
+    date_end: '2024-10-17'
+    description: |2-
+        O Projeto CIn-Motorola tem foco na produção e execução de testes de software embarcado e aplicações em computação móvel. Dentro do projeto existem equipes que trabalham com diferentes produtos/serviços, sendo o estágio executado no time responsável pela plataforma de Serviços em software da Motorola Mobility. Entre principais as atividades feitas relativas à execução e/ou automação de testes em dispositivos Motorola estão – mas não se restringem à:
+        - Realização de testes automatizados no software de aparelhos celulares Motorola
+        - Criação e manutenção de códigos de automação de testes
+        - Utilização de Python, adb, pyenv, pip, docker, git e do sistema operacional Linux para configuração de ambiente e execução dos testes
+        - Cadastro e acompanhamento das falhas (crashes) encontradas durante as execuções de teste
+        - Participação em reuniões seguindo a metodologia ágil Scrum para gerenciamento das atividades
+
+  - title: Monitor Voluntário de Programação 1/Introdução a Programação no curso de Sistemas de Informação do CIn UFPE
     company: CIn - UFPE
     company_url: 'https://portal.cin.ufpe.br/'
     # company_logo: 'Vertical Vermelho - Logotipo CIn-UFPE'
     company_logo: 'Símbolo Vermelho - Logotipo CIn-UFPE'
     location: Recife-PE
     date_start: '2021-09-05'
-    date_end: '2021-12-24'
+    date_end: '2022-12-24'
     description: |2-
         As atividades realizadas para a monitoria de Programação 1 (IF968) foram de bastante valia como experiência acadêmica e pessoal. Tanto a preparação dos roteiros, quanto as apresentações com seus exemplos e exercícios, além do contato e troca de experiências com todos os envolvidos - alunos cursantes da disciplina, colegas que compartilharam da responsabilidade de exercer a função de monitor, o monitor chefe e o professor responsável – que demonstraram seriedade e comprometimento para com o andamento do curso e, por conseguinte, a construção dos conhecimentos relacionados aos temas abordados na disciplina, foram uma oportunidade única de crescimento pessoal e técnico.
         
