@@ -29,7 +29,7 @@ feature:
   icon_pack: fab
   name: Java
 - description: 
-  icon: go-original
+  icon: go-plain
   icon_pack: custom
   name: Go
 - description: 
@@ -37,12 +37,12 @@ feature:
   icon_pack: fab
   name: R
 - description:
-  icon: database
-  icon_pack: fas
-  name: SQL
+  icon: postgresql-original
+  icon_pack: custom
+  name: PostgreSQL
 - description:
-  icon: github
-  icon_pack: fab
+  icon: git-original
+  icon_pack: custom
   name: Git
 - description:
   icon: jira
@@ -77,7 +77,7 @@ feature:
   icon_pack: custom
   name: Numpy
 - description:
-  icon: django-plain
+  icon: django-plain-wordmark
   icon_pack: custom
   name: Django
 - description:
