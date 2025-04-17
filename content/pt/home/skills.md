@@ -21,7 +21,7 @@ feature:
   icon_pack: "fab"
   name: "Python"
 - description: 
-  icon: javascript
+  icon: js
   icon_pack: fab
   name: JS
 - description: 
@@ -73,13 +73,17 @@ feature:
   icon_pack: devicon
   name: MongoDb
 - description:
-  icon: postgre
+  icon: postgresql
   icon_pack: devicon
   name: PostgreSQL
 - description:
   icon: pytest
   icon_pack: devicon
   name: Pytest
+- description:
+  icon: jira
+  icon_pack: fab
+  name: jira
 # - description: 
 #   icon: chart-line
 #   icon_pack: fas
