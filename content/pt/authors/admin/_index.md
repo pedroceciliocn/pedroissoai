@@ -22,9 +22,7 @@ organizations:
   url: https://www.ufpe.br/sistemas-de-informacao-bacharelado-cin
 role: Software Engineer | QA | Automation | Python | Django | Flask | R | SQL
 social:
-- icon: envelope
-  icon_pack: fas
-  link: 'mailto:pedroceciliocn@gmail.com'
+
 
 # - display:
 #     header: true
@@ -38,17 +36,23 @@ social:
 - icon: cv
   icon_pack: ai
   link: media/pgd-cv-pccn.html
+- icon: envelope
+  icon_pack: fas
+  link: 'mailto:pedroceciliocn@gmail.com'
 - icon: github
   icon_pack: fab
   link: https://github.com/pedroceciliocn
 - icon: orcid
   icon_pack: fab
-  link: https://orcid.org/0009-0007-6186-9278 
-- icon: lastfm
+  link: https://orcid.org/0009-0007-6186-9278
+- icon: whatsapp
   icon_pack: fab
-  link: https://last.fm/user/pedroceciliocn
-- icon: letterboxd
-  icon_pack: fab
+  link: https://wa.me/5587999952777
+#- icon: lastfm
+#  icon_pack: fab
+#  link: https://last.fm/user/pedroceciliocn
+- icon: letterboxd-brands-solid
+  icon_pack: custom
   link: https://letterboxd.com/pedroissoai/ 
   
   
