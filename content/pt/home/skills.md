@@ -43,9 +43,9 @@ feature:
 - description:
   icon: linux
   icon_pack: fab
-  name: Bash
+  name: Linux
 - description:
-  icon: sheet
+  icon: excel
   icon_pack: fab
   name: Sheets
 - description:
@@ -53,7 +53,7 @@ feature:
   icon_pack: fab
   name: Selenium
 - description:
-  icon: pandas
+  icon: panda
   icon_pack: fab
   name: Pandas
 - description:
@@ -61,9 +61,41 @@ feature:
   icon_pack: fab
   name: Numpy
 - description:
-  icon: bash
+  icon: bs4
   icon_pack: devicon
-  name: bashscript
+  name: beautifulsoup
+- description:
+  icon: cypress
+  icon_pack: devicon
+  name: cypress
+- description:
+  icon: robot
+  icon_pack: devicon
+  name: RobotFramework
+- description:
+  icon: appium
+  icon_pack: devicon
+  name: Appium
+- description:
+  icon: django
+  icon_pack: devicon
+  name: Django
+- description:
+  icon: flask
+  icon_pack: devicon
+  name: Flask
+- description:
+  icon: mongodb
+  icon_pack: devicon
+  name: MongoDb
+- description:
+  icon: postgre
+  icon_pack: devicon
+  name: PostgreSQL
+- description:
+  icon: pytest
+  icon_pack: devicon
+  name: Pytest
 # - description: 
 #   icon: chart-line
 #   icon_pack: fas
