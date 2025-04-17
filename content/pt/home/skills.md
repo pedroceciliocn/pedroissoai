@@ -77,7 +77,7 @@ feature:
   icon_pack: custom
   name: Numpy
 - description:
-  icon: django-plain-wordmark
+  icon: django-plain
   icon_pack: custom
   name: Django
 - description:
