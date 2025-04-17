@@ -45,6 +45,9 @@ social:
 - icon: orcid
   icon_pack: fab
   link: https://orcid.org/0009-0007-6186-9278
+- icon: lattes
+  icon_pack: ai
+  link: https://wwws.cnpq.br/cvlattesweb/PKG_MENU.menu?f_cod=046E628CCEED0F57AB4EC313D28553C5#
 - icon: whatsapp
   icon_pack: fab
   link: https://wa.me/5587999952777
@@ -54,6 +57,7 @@ social:
 - icon: letterboxd-brands-solid
   icon_pack: custom
   link: https://letterboxd.com/pedroissoai/ 
+
   
   
   
