@@ -10,7 +10,7 @@ headless: true
 weight: 50
 
 # Note: `&shy;` is used to add a 'soft' hyphen in a long heading.
-title: 'Conquistas'
+title: 'Certificados'
 subtitle:
 
 # Date format
@@ -23,6 +23,25 @@ date_format: Jan 2006
 #   Leave other parameters empty if not required.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 item:
+- certificate_url: https://www.linkedin.com/in/pedroceciliocn/details/certifications/1736096423957/single-media-viewer?type=DOCUMENT&profileId=ACoAADJxDz8BS6UtJBhZOspIuqDi1pEsKoRncNA&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BI0GIq1DQQQ%2BXZzNWaWuXfw%3D%3D
+  date_end: "2025-01-06"
+  date_start: "2025-01-04"
+  description: "Curso online oferecido pelo Codeacademy"
+  organization: Codecademy
+  organization_url: https://www.codecademy.com/
+  title: 'BI Dashboards with Power BI Course'
+  url: "https://www.linkedin.com/company/2696602/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3Bkrnagyn%2BTAeS9fZagFzJDw%3D%3D"
+
+- certificate_url: https://www.linkedin.com/in/pedroceciliocn/details/certifications/
+  date_end: "2024-09-09"
+  date_start: "2024-09-01"
+  description: "Master the SQL fundamentals needed for business, learn how to write SQL queries, and start analyzing your data using this powerful language."
+  organization: DataCamp
+  organization_url: https://www.datacamp.com
+  title: 'SQL Fundamentals Track (PostgreSQL)'
+# url: "https://learn.datacamp.com/career-tracks/data-scientist-with-r?version=4"
+  url: "https://datacamp.com/profile/pedroceciliocn"
+  
 - certificate_url: https://coursera.org/share/52b3dd4d30b197dc95450bb819c1bb69
   date_end: "2021-08-14"
   date_start: "2021-07-19"

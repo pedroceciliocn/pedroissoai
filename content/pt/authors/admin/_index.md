@@ -12,14 +12,15 @@ email: "pedroceciliocn@gmail.com"
 highlight_name: true
 interests:
 - QA
-- Automação
-- Análise/Ciência de Dados
-- Administração e afins
+- Automação (CI/CD)
+- Análise de Dados
+- Computer Vision
+- Desenvolvimento
 
 organizations:
 - name: CIn - UFPE
   url: https://www.ufpe.br/sistemas-de-informacao-bacharelado-cin
-role: Estudante de graduação em Sistemas de Informação
+role: Software Engineer | QA | Automation | Python | Django | Flask | R | SQL
 social:
 - icon: envelope
   icon_pack: fas
@@ -27,29 +28,37 @@ social:
 
 # - display:
 #     header: true
-- icon: twitter
-  icon_pack: fab
-  label: Me acompanhe no Twitter
-  link: https://twitter.com/pedroissoai
+#- icon: twitter
+#  icon_pack: fab
+#  label: Me acompanhe no Twitter
+#  link: https://twitter.com/pedroissoai
 - icon: linkedin
   icon_pack: fab
   link: https://linkedin.com/in/pedroceciliocn
-- icon: cv
-  icon_pack: ai
-  link: media/cv-pt.html
+#- icon: cv
+#  icon_pack: ai
+#  link: media/cv-pt.html
 - icon: github
   icon_pack: fab
   link: https://github.com/pedroceciliocn
 - icon: lastfm
   icon_pack: fab
   link: https://last.fm/user/pedroceciliocn
+- icon: orcid
+  icon_pack: fab
+  link: https://orcid.org/0009-0007-6186-9278 
+- icon: fa-letterboxd
+  icon_pack: fab
+  link: https://letterboxd.com/pedroissoai/ 
+  
+  
+  
 superuser: true
 title: Pedro Neto
 ---
 
 
-Atualmente sou estudante de graduação em Sistemas de Informação pela Universidade Federal de Pernambuco (UFPE), com um forte interesse em automação de testes, engenharia de software e qualidade de produtos. No meu estágio no Projeto CIn/Motorola, atuei com automação de testes para dispositivos móveis Motorola. Minha experiência incluiu a criação e manutenção de scripts de automação de testes, execução de testes automatizados, e a utilização de ferramentas como Python, Linux, ADB, Docker, Git, também adquiri conhecimento em metodologias ágeis. Além disso, tenho um histórico diversificado em tecnologia e educação. Antes de ingressar no curso de Sistemas de Informação, estudei Administração na UNIVASF (2019-2020), onde participei do projeto de extensão UNATI (Universidade Aberta à Terceira Idade), ministrando palestras sobre tecnologia e desenvolvendo conteúdos audiovisuais com foco em saúde mental e física para a terceira idade durante a pandemia. 
-Minha trajetória tem sido marcada pela busca contínua de aprendizado e desenvolvimento de novas habilidades, tanto técnicas quanto interpessoais. Tenho me dedicado a aprimorar minhas capacidades em automação de testes e qualidade de software, bem como expandir minhas soft skills, como comunicação, trabalho em equipe e resolução de problemas em ambientes colaborativos.
-Estou sempre em busca de novos desafios e oportunidades que me permitam crescer profissional e pessoalmente, aplicando os conhecimentos adquiridos e contribuindo para o sucesso de projetos inovadores.
+Sou estudante de graduação em Sistemas de Informação pela Universidade Federal de Pernambuco (UFPE), com um forte interesse em automação, webscraping, análise de dados, engenharia de software e IA (mais precisamente em visão computacional). Fui estagiário no Projeto CIn/Motorola, onde atuei diretamente com equipes multidisciplinares do Brasil, Estados Unidos, Índia e China, desenvolvendo habilidades de colaboração em um ambiente global para garantir a qualidade de software em dispositivos móveis.
+Minha experiência incluiu a criação e manutenção de scripts de automação de testes, execução de testes automatizados, e a utilização de ferramentas como Python, Linux, ADB, Jenkins, Docker, Git, também adquiri conhecimento em metodologias ágeis. Além disso, possuo conhecimento em desenvolvimento com Django e Flask, além de, em análise de dados, manipulação de estruturas como DataFrames e aplicação de bibliotecas como Pandas, NumPy e Matplotlib para visualização e interpretação de dados.
 
-{{< icon name="download" pack="fas" >}} Baixe meu {{< staticref "media/cv-pt.pdf" "newtab" >}}cv{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Baixe meu {{< staticref "media/cv-fs-pt.pdf" "newtab" >}}cv{{< /staticref >}}.
