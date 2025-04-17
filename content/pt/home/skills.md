@@ -29,8 +29,8 @@ feature:
   icon_pack: fab
   name: Java
 - description: 
-  icon: golang
-  icon_pack: fab
+  icon: go-original
+  icon_pack: custom
   name: Go
 - description: 
   icon: r-project
@@ -45,6 +45,14 @@ feature:
   icon_pack: fab
   name: Git
 - description:
+  icon: jira
+  icon_pack: fab
+  name: jira
+- description:
+  icon: confluence-original
+  icon_pack: custom
+  name: Confluence
+- description:
   icon: jenkins
   icon_pack: fab
   name: Jenkins
@@ -56,34 +64,40 @@ feature:
   icon: linux
   icon_pack: fab
   name: Linux
-- description:
-  icon: selenium
-  icon_pack: fab
+- icon: selenium-original
+  icon_pack: custom
   name: Selenium
+  description: 
 - description:
-  icon: django
-  icon_pack: devicon
+  icon: pandas-original
+  icon_pack: custom
+  name: Pandas
+- description:
+  icon: numpy-original
+  icon_pack: custom
+  name: Numpy
+- description:
+  icon: django-plain
+  icon_pack: custom
   name: Django
 - description:
-  icon: flask
-  icon_pack: devicon
+  icon: flask-original
+  icon_pack: custom
   name: Flask
 - description:
-  icon: mongodb
-  icon_pack: devicon
+  icon: mongodb-plain
+  icon_pack: custom
   name: MongoDb
 - description:
-  icon: postgresql
-  icon_pack: devicon
+  icon: postgresql-plain
+  icon_pack: custom
   name: PostgreSQL
 - description:
-  icon: pytest
-  icon_pack: devicon
+  icon: pytest-plain
+  icon_pack: custom
   name: Pytest
-- description:
-  icon: jira
-  icon_pack: fab
-  name: jira
+
+
 # - description: 
 #   icon: chart-line
 #   icon_pack: fas
