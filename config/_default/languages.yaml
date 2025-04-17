@@ -33,7 +33,7 @@ pt:
        weight: 10
     
      - name: CV
-       url: "media/cv-fs-pt.html"
+       url: "media/pgd-cv-pccn.html"
        weight: 70
        
 #     - name: Posts
