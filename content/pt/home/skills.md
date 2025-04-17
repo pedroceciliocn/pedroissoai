@@ -17,17 +17,53 @@ subtitle:
 # - For available icons, see: https://wowchemy.com/docs/page-builder/#icons
 feature:
 - description: 
-  icon: r-project
-  icon_pack: fab
-  name: R
-- description: 
   icon: "python"
   icon_pack: "fab"
   name: "Python"
+- description: 
+  icon: r-project
+  icon_pack: fab
+  name: R
 - description:
   icon: database
   icon_pack: fas
   name: SQL
+- description:
+  icon: github
+  icon_pack: fab
+  name: Git
+- description:
+  icon: jenkins
+  icon_pack: fab
+  name: Jenkins
+- description:
+  icon: docker
+  icon_pack: fab
+  name: Docker
+- description:
+  icon: linux
+  icon_pack: fab
+  name: Bash
+- description:
+  icon: sheet
+  icon_pack: fab
+  name: Sheets
+- description:
+  icon: selenium
+  icon_pack: fab
+  name: Selenium
+- description:
+  icon: pandas
+  icon_pack: fab
+  name: Pandas
+- description:
+  icon: numpy
+  icon_pack: fab
+  name: Numpy
+- description:
+  icon: bash
+  icon_pack: devicon
+  name: bashscript
 # - description: 
 #   icon: chart-line
 #   icon_pack: fas
