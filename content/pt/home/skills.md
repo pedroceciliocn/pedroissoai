@@ -21,6 +21,18 @@ feature:
   icon_pack: "fab"
   name: "Python"
 - description: 
+  icon: javascript
+  icon_pack: fab
+  name: JS
+- description: 
+  icon: java
+  icon_pack: fab
+  name: Java
+- description: 
+  icon: golang
+  icon_pack: fab
+  name: Go
+- description: 
   icon: r-project
   icon_pack: fab
   name: R
@@ -45,37 +57,9 @@ feature:
   icon_pack: fab
   name: Linux
 - description:
-  icon: excel
-  icon_pack: fab
-  name: Sheets
-- description:
   icon: selenium
   icon_pack: fab
   name: Selenium
-- description:
-  icon: panda
-  icon_pack: fab
-  name: Pandas
-- description:
-  icon: numpy
-  icon_pack: fab
-  name: Numpy
-- description:
-  icon: bs4
-  icon_pack: devicon
-  name: beautifulsoup
-- description:
-  icon: cypress
-  icon_pack: devicon
-  name: cypress
-- description:
-  icon: robot
-  icon_pack: devicon
-  name: RobotFramework
-- description:
-  icon: appium
-  icon_pack: devicon
-  name: Appium
 - description:
   icon: django
   icon_pack: devicon
