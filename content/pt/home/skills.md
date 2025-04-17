@@ -29,7 +29,7 @@ feature:
   icon_pack: fab
   name: Java
 - description: 
-  icon: go-plain
+  icon: go-original
   icon_pack: custom
   name: Go
 - description: 
@@ -88,10 +88,6 @@ feature:
   icon: mongodb-plain
   icon_pack: custom
   name: MongoDb
-- description:
-  icon: postgresql-plain
-  icon_pack: custom
-  name: PostgreSQL
 - description:
   icon: pytest-plain
   icon_pack: custom
