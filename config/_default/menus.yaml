@@ -22,6 +22,6 @@ main:
   #   weight: 60
     
   - name: CV
-    url: "media/cv-fs-pt.pdf"
+    url: "media/pgd-cv-pccn.html"
     weight: 70
     

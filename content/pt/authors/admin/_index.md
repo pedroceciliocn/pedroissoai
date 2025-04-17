@@ -11,11 +11,11 @@ education:
 email: "pedroceciliocn@gmail.com"
 highlight_name: true
 interests:
-- QA
+- QA - Test Engineering
 - Automação (CI/CD)
 - Análise de Dados
 - Computer Vision
-- Desenvolvimento
+- Webscraping
 
 organizations:
 - name: CIn - UFPE
@@ -35,19 +35,19 @@ social:
 - icon: linkedin
   icon_pack: fab
   link: https://linkedin.com/in/pedroceciliocn
-#- icon: cv
-#  icon_pack: ai
-#  link: media/cv-pt.html
+- icon: cv
+  icon_pack: ai
+  link: media/pgd-cv-pccn.html
 - icon: github
   icon_pack: fab
   link: https://github.com/pedroceciliocn
-- icon: lastfm
-  icon_pack: fab
-  link: https://last.fm/user/pedroceciliocn
 - icon: orcid
   icon_pack: fab
   link: https://orcid.org/0009-0007-6186-9278 
-- icon: fa-letterboxd
+- icon: lastfm
+  icon_pack: fab
+  link: https://last.fm/user/pedroceciliocn
+- icon: letterboxd
   icon_pack: fab
   link: https://letterboxd.com/pedroissoai/ 
   
